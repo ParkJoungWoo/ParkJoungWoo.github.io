@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Test markdown
+title: My markdown
 subtitle: Each post also has a subtitle
 categories: markdown
 tags: [test]
