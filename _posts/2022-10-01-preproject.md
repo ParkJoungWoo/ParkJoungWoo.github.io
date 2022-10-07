@@ -130,5 +130,74 @@ ModuleNotFoundError: No module named 'djangorestframework'
 ```
 includes 에서 'djangorestframework'가 아닌 'rest_framework'로 바꿔준다.
 
+### Django template system
+1. 표현과 로직을 분리한다.
+    - 템플릿 시스템은 표현을 제어하는 도구, 표현 관련 로직
+    - 기본 목표를 넘어서는 기능은 지원하지 말아야 한다.
+2. 중복을 배제
+    - 대다수의 동적 웹사이트는 공통 디자인을 갖는다.
+    - Django 템플릿 시스템은 이러한 요소를 한곳에 쉽게 저장해, 중복 코드를 없애야 하며 이것이 템플릿 상속의 기초이다.
+#### HTTP
+추후에 기술할 프로토콜이지만 간단하게 짚고 넘어가자 \
+웹에서 이루어지는 모든 데이터 교환의 기초를 의미한다.\
+주어진 리소스가 수행할 원칙을 request method로 정의한다.\
+1. GET
+    - 서버로부터 정보를 조회할때 사용한다.
+    - body가 아닌 Query String Parameters로 전송한다.
 
+### Django URL
+URL Path Converters 
+> Variable Routing : URL 주소를 변수로 사용하기
 
+URL의 일부를 변수로 지정, view 함수의 인자로 넘긴다.
+- str
+    - '/'를 제외하고 모든 문자열과 매치
+    - 작성하지 않을 경우 기본값
+- int
+    - 0 또는 양의 정수와 매치
+- slug
+    - ASCII 문자 또는 숫자, 하이픈, 밑줄로 구성된 슬러그 문자열
+- uuid
+- path
+
+일반적으로 하나의 urls.py에서 모든 view 함수를 관리하는 것은 프로젝트 유지보수에 좋지 않다.\
+상위 디렉토리
+
+```python
+from django.urls import path, include
+urlpatterns = [
+    path('pages/', include('pages.urls')),
+]
+```
+하위 디렉토리 상황
+```python
+# articles
+urlpatterns = [
+    path('index/', views.index, name='index'),
+    ...
+# pages
+urlpatterns=[
+    path('index/', views.index, name='index'),
+    ...
+```
+url tag가 둘다 index로 동일하다.\
+이러한 상황이면 서로 다른 index 이지만 같은 객체를 가르키게 된다.\
+### URL namespace
+URL namespace를 통해서 서로 다른 앱에서 동일한 URL이름을 사용할 수 있다.\
+app_name을 지정한다.
+```python
+app_name = "pages"
+urlpatterns=[
+    path('index/', views.index, name='index')    
+...
+```
+### Django Model
+model(스키마 작성법)
+```python
+class Article(models.Model):
+    title = models.CharField(max_length=10)
+    content = models.TextField()
+```
+CharField -> 길이 제한이 있는 문자열을 넣을때\
+max_length는 필수 인자\
+TextField  -> 글자 수가 많을 때 사용
