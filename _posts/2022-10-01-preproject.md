@@ -128,7 +128,16 @@ manage : Django 프로젝트와 상호작용하는 CLI 유틸리티\
   File "<frozen importlib._bootstrap>", line 984, in _find_and_load_unlocked
 ModuleNotFoundError: No module named 'djangorestframework'
 ```
-includes 에서 'djangorestframework'가 아닌 'rest_framework'로 바꿔준다.
+includes 에서 'djangorestframework'가 아닌 'rest_framework'로 바꿔준다.\
+프로젝트 생성하기
+
+```bash
+django-admin startproject 프로젝트 명
+```
+앱 생성하기
+```bash
+python manage.py startapp 앱명
+```
 
 ### Django template system
 1. 표현과 로직을 분리한다.
