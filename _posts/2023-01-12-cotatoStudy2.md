@@ -34,10 +34,10 @@ build.gradle의 구성요소도 확인해보겠습니다.
  라이브러리를 어떤 원격 저장소에서 받을지를 결정합니다.
     - mavenCentral : 기존에 많이 쓰인 저장소, 직접 만든 라이브러리를 업로드 어려움
     - jcenter : mavenCentral의 단점을 개선한 저장소
-6. test : Test task를 추가, 본 프로젝트에서는 JUnit을 사용하기 때문에 `useJUnitPlatform()`을 사용한다.
-7. dependencies : 프로젝트 개발에 필요한 의존성들을 선언하는 곳.
+1. test : Test task를 추가, 본 프로젝트에서는 JUnit을 사용하기 때문에 `useJUnitPlatform()`을 사용한다.
+2. dependencies : 프로젝트 개발에 필요한 의존성들을 선언하는 곳.
     - 주의할 점은 어떠한 버전에 종속적인 의존성을 선언하는 것을 지양해야 합니다.
-8. implementation[^3] : 의존 라이브러리 수정시 본 모듈까지만 리빌드한다.
+3. implementation[^3] : 의존 라이브러리 수정시 본 모듈까지만 리빌드한다.
     - testImplementation : 테스트 코드를 수행할 때만 적용
     - runtimeOnly : runtime 시에만 필요한 라이브러리일 경우
     - compileOnly : 컴파일 시에만 빌드하고 빌드 결과물에는 포함하지 않는다.
@@ -60,8 +60,7 @@ jar 파일이란?\
 Maven 저장소[^4]는 일반적으로 maven artifacts가 저장되고 관리되는 공간이다.\
 한번 maven artifact가 maven 저장소에 등록되면 다른 maven 프로젝에서 검색, 포함될 수 있다. 
 
-![test](../assets/img/230112/maven.jpg)
-
+![img](../assets/img/230112/maven.jpg)
 
 org.springframework.boot 란?\
 위에서 언급한 스프링부트의 groupId이다.
