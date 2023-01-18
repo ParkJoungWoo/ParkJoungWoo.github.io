@@ -60,7 +60,7 @@ jar 파일이란?\
 Maven 저장소[^4]는 일반적으로 maven artifacts가 저장되고 관리되는 공간이다.\
 한번 maven artifact가 maven 저장소에 등록되면 다른 maven 프로젝에서 검색, 포함될 수 있다. 
 
-![img](../assets/img/230112/maven.jpg)
+![img3](/assets/img/230112/maven.jpg)
 
 org.springframework.boot 란?\
 위에서 언급한 스프링부트의 groupId이다.
