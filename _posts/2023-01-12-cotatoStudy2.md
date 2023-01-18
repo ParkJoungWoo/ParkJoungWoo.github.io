@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "코테이토 스프링 스터디 1일차 2"
-subtitle: 스프링 1일차
+title: "스프링 부트 요소와 한글 깨짐 해결"
+subtitle: 스프링 1주차
 categories: spring
 tags: [spring]
 ---
@@ -129,9 +129,6 @@ assertThat
 
 isEqualTo 
 - assertJ의 동등 비교 메소드
-
-
-
 
 [^1]:https://dlee0129.tistory.com/265
 [^2]:https://pgnt.tistory.com/134

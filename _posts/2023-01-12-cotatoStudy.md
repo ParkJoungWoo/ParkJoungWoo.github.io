@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "코테이토 스프링 스터디 1일차"
-subtitle: 스프링 1일차
+title: "스프링의 개요 알아보기"
+subtitle: 스프링 1주차
 categories: spring
 tags: [spring]
 ---
