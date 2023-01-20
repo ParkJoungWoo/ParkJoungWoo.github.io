@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Stream 문법과 JVM 알아보기"
+title: "Stream 문법 알아보기"
 subtitle: 스프링 2주차
 categories: spring
 tags: [spring]
