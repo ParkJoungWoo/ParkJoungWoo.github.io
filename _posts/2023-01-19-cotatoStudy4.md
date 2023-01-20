@@ -47,7 +47,7 @@ Execution Engine에서 인터프리터와 JIT 컴파일러는 bytecode를 해석
 그럼에도 불구하고 현재까지도 interpreter가 대부분의 실행을 담당하고 JIT 컴파일러는 실행 코드를 분석하고 기계어로 번역해 성능을 올리고 있다.
 
 ## JVM이 프로그램을 실행시키는 과정
-![img](../assets/img/230119/compile.png)
+![test](../assets/img/230119/compile.png)
 
 1. JVM은 메모리에 프로그램을 먼저 로드한다.
    - 이후 bytecode에 에러가 있는지 확인하고 검증한다.
