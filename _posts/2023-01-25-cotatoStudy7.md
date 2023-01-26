@@ -76,7 +76,7 @@ Spring security는 `커스터마이징이 가능한 인증, 인가 프레임워�
 
 이와 같은 배경으로 기능을 어떻게 구현해야 할지 고민해 보겠습니다.
 
-![googlelogin](https://www.google.com/imgres?imgurl=https%3A%2F%2Fi.stack.imgur.com%2FQUh9s.png&imgrefurl=https%3A%2F%2Fstackoverflow.com%2Fquestions%2F58781639%2Fhow-does-redfin-auto-detect-my-google-accounts-and-prompts-me-to-sign-in-with-go&tbnid=UPZ80BObwOf-WM&vet=12ahUKEwjI-sfP8OX8AhVMYJQKHTl5ClQQMygFegUIARDJAQ..i&docid=7sTX_-gvuEFoVM&w=339&h=458&q=sign%20in%20google&ved=2ahUKEwjI-sfP8OX8AhVMYJQKHTl5ClQQMygFegUIARDJAQ "많이 본 화면")
+![googlelogin](https://i.stack.imgur.com/QUh9s.png "많이 본 화면")
 
 
 위와 같이 많이 본 구글 아이디로 로그인 버튼을 누르면 어떤 개인 정보를 제공할지 나타나게 된다.
@@ -136,7 +136,7 @@ public class User extends BaseTimeEntity {
 
 바로 사용자의 직책(Role)에 따라 권한이 달라지기 때문입니다.
 
-![time](https://www.google.com/url?sa=i&url=https%3A%2F%2Fsupport.kmong.com%2Fhc%2Fko%2Farticles%2F900001965926--%25EA%25B0%259C%25EC%259D%25B8%25EC%25A0%2595%25EB%25B3%25B4-%25ED%259A%258C%25EC%259B%2590-%25ED%2583%2588%25ED%2587%25B4-%25EC%258B%259C-%25EA%25B0%259C%25EC%259D%25B8%25EC%25A0%2595%25EB%25B3%25B4%25EB%258A%2594-%25EB%25AA%25A8%25EB%2591%2590-%25EC%2582%25AD%25EC%25A0%259C%25EB%2590%2598%25EB%2582%2598%25EC%259A%2594-&psig=AOvVaw2AYmT4IeAiNUUeT9dCyPTI&ust=1674845627436000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCMDw66f05fwCFQAAAAAdAAAAABAD "개인정보보관기간")
+![time](https://support.kmong.com/hc/article_attachments/900002727666/FAQ.PNG "개인정보보관기간")
 
 기능 명세서가 친절하지 않았지만 간단히 회원 가입 약관을 통해 예를 들어보겠습니다.
 
