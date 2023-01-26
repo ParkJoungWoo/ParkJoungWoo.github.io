@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "JPA 개요와 Web layer"
+title: "Thymeleaf로 화면 구성하기"
 subtitle: 스프링 3주차
 categories: spring
 tags: [spring]
