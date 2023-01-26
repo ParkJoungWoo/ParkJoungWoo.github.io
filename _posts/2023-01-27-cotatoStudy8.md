@@ -87,3 +87,4 @@ h2-console을 사용하기 때문에 csrf(사이트 간 요청 위조)방지 옵
 2. 로그아웃을 했을 경우 "/"로 리다이렉트 됩니다.
 3. 로그인이 성공한 경우 oauth2Login()을 거쳐 엔드포인트를 설정하고 customOAuth2UserService 서비스를 제공합니다.)
 
+
