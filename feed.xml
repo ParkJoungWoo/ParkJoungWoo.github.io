@@ -1,0 +1,1788 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://parkjoungwoo.github.io/jekyll-theme-yat/feed.xml" rel="self" type="application/atom+xml" /><link href="https://parkjoungwoo.github.io/jekyll-theme-yat/" rel="alternate" type="text/html" /><updated>2023-01-27T05:57:03+00:00</updated><id>https://parkjoungwoo.github.io/jekyll-theme-yat/feed.xml</id><title type="html">정우의 블로그</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><author><name>박정우</name></author><entry><title type="html">Spring security 2편</title><link href="https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/27/cotatoStudy8.html" rel="alternate" type="text/html" title="Spring security 2편" /><published>2023-01-27T00:00:00+00:00</published><updated>2023-01-27T00:00:00+00:00</updated><id>https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/27/cotatoStudy8</id><content type="html" xml:base="https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/27/cotatoStudy8.html"><![CDATA[<p>⚠️ 본 게시물은 <code class="language-plaintext highlighter-rouge">스프링 부트와 AWS로 혼자 구현하는 웹서비스</code>를 참고도서로 활용합니다. 저작권은 본 책의 저서에게 있음을 알립니다.</p>
+
+<h2 id="5장-스프링-시큐리티">5장 스프링 시큐리티</h2>
+
+<h3 id="지난-시간엔">지난 시간엔…</h3>
+
+<ol>
+  <li>이 서비스는 유저가 게시물을 등록하는 기능이 있다.</li>
+  <li>유저는 아이디, 이름, 이메일, 사진으로 구별된다.</li>
+  <li>OAuth를 통해 로그인 과정을 Google, Naver에 위임한다.</li>
+  <li>사용자의 status(Role)에 따라 기능이 제한된다.</li>
+</ol>
+
+<p>위와 같은 기능을 가진 서비스를 구축하려고 합니다.</p>
+
+<p>또한 인증, 인가에 관련된 기능은 Spring Security의 도움을 받으려고 합니다.</p>
+
+<h3 id="entity가-있으면">Entity가 있으면?</h3>
+
+<p>저번 시간에 만든 User 클래스는 Entity클래스 입니다.</p>
+
+<iframe src="https://giphy.com/embed/M1VL81pAxfj3y" width="480" height="343" frameborder="0" class="giphy-embed" allowfullscreen=""></iframe>
+<p><a href="https://giphy.com/gifs/anthony-cheating-carmelo-M1VL81pAxfj3y">via GIPHY</a></p>
+
+<p>Entity 클래스가 있다면 그 정보를 송수신 하기 위한 DTO 클래스도 필요합니다. 또한 저장소에서 User 클래스를 CRUD해야 하기 때문에 Repository Class도 필요합니다.</p>
+
+<h3 id="의존성-추가하기">의존성 추가하기</h3>
+<p>실질적으로 Google OAuth2 기능을 사용하고 싶다는 뜻은 다시 말하면 기능 사용을 위한 의존성이 필요하다는 뜻입니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>implementation('org.springframework.boot:spring-boot-starter-oauth2-client')
+</code></pre></div></div>
+<p>의존성을 추가해 줍시다.</p>
+
+<h3 id="customizing">Customizing</h3>
+<p>저번 시간에 설명한 Spring Security의 장점은 <code class="language-plaintext highlighter-rouge">커스터 마이징</code>이 가능하다는 것입니다.</p>
+
+<p>그래서 나의 Spring 프로젝트에 대한 Spring Security 설정을 사용자 정의대로 변경할 수 있습니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>스프링 시큐리티 설정을 위해서는
+WebSecurityConfigurerAdapter라는 WebSecurityConfigurer를 만들기 위한 추상 클래스를 구현해야 합니다.
+
+WebSecurityConfigurer는 WebSecurity를 Custom하기 위한 인터페이스 입니다.
+
+WebSecurity는 SpringSecurity, Filter Chain(DelegatingFilterProxy)을 생성합니다..
+</code></pre></div></div>
+<p>위와 같이 요소별로 알아보는 것은 논지와 벗어나고 지금은 Spring의 숲을 보는 과정이기 때문에 우선은 <code class="language-plaintext highlighter-rouge">Spring Security를 설정하기 위한 클래스</code>라고 정의하겠습니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RequiredArgsConstructor</span>
+<span class="nd">@EnableWebSecurity</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SecurityConfig</span> <span class="kd">extends</span> <span class="nc">WebSecurityConfigurerAdapter</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">CustomOAuth2UserService</span>  <span class="n">customOAuth2UserService</span><span class="o">;</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configure</span><span class="o">(</span><span class="nc">HttpSecurity</span> <span class="n">http</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+        <span class="n">http</span><span class="o">.</span><span class="na">csrf</span><span class="o">().</span><span class="na">disable</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">headers</span><span class="o">().</span><span class="na">frameOptions</span><span class="o">().</span><span class="na">disable</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">and</span><span class="o">()</span>
+                    <span class="o">.</span><span class="na">authorizeRequests</span><span class="o">()</span>
+                    <span class="o">.</span><span class="na">antMatchers</span><span class="o">(</span><span class="s">"/"</span><span class="o">,</span> <span class="s">"/css/**"</span><span class="o">,</span> <span class="s">"/images/**"</span><span class="o">,</span> <span class="s">"/js/**"</span><span class="o">,</span> <span class="s">"/h2-console/**"</span><span class="o">).</span><span class="na">permitAll</span><span class="o">()</span>
+                    <span class="o">.</span><span class="na">antMatchers</span><span class="o">(</span><span class="s">"/api/v1/**"</span><span class="o">).</span><span class="na">hasRole</span><span class="o">(</span><span class="nc">Role</span><span class="o">.</span><span class="na">USER</span><span class="o">.</span><span class="na">name</span><span class="o">())</span>
+                    <span class="o">.</span><span class="na">anyRequest</span><span class="o">().</span><span class="na">authenticated</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">and</span><span class="o">()</span>
+                    <span class="o">.</span><span class="na">logout</span><span class="o">()</span>
+                        <span class="o">.</span><span class="na">logoutSuccessUrl</span><span class="o">(</span><span class="s">"/"</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">and</span><span class="o">()</span>
+                    <span class="o">.</span><span class="na">oauth2Login</span><span class="o">()</span>
+                        <span class="o">.</span><span class="na">userInfoEndpoint</span><span class="o">()</span>
+                            <span class="o">.</span><span class="na">userService</span><span class="o">(</span><span class="n">customOAuth2UserService</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>여기에서 주목해야할 점을 크게 3가지로 보겠습니다.</p>
+
+<ul>
+  <li>공격 및 권한</li>
+</ul>
+
+<p>위 클래스는 HttpSecurity라는 http관련 설정 객체를 설정을 합니다.</p>
+
+<p>h2-console을 사용하기 때문에 csrf(사이트 간 요청 위조)방지 옵션을 사용하지 않고 또한 headers().frameOptions()-(X-Frame-Options Click jacking)방지 옵션을 모두 disable화 합니다.</p>
+
+<ul>
+  <li>로그아웃을 했을 경우 “/”로 리다이렉트 됩니다.</li>
+  <li>로그인이 성공한 경우 oauth2Login()을 거쳐 엔드포인트를 설정하고 customOAuth2UserService 서비스를 제공합니다.)</li>
+</ul>
+
+<h3 id="커스텀-oauth-서비스-정의하기">커스텀 OAuth 서비스 정의하기</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>✔️사용자 Entity 정의하기
+✔️Spring Security 권한(Role) 정의하기
+✔️Spring Security Config
+❎OAuth2서비스 정의
+❎화면구현하기
+</code></pre></div></div>
+<p>이제 스프링에 대한 설정을 완료하였습니다.</p>
+
+<p>그렇다면 구글에서 OAuth로 회원 정보를 받은 이후 세션 저장, 저장소에 회원정보 등록 등 OAuth와 관련된 서비스를 정의해보겠습니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RequiredArgsConstructor</span>
+<span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomOAuth2UserService</span> <span class="kd">implements</span> <span class="nc">OAuth2UserService</span><span class="o">&lt;</span><span class="nc">OAuth2UserRequest</span><span class="o">,</span> <span class="nc">OAuth2User</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">UserRepository</span> <span class="n">userRepository</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">HttpSession</span> <span class="n">httpSession</span><span class="o">;</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nc">OAuth2User</span> <span class="nf">loadUser</span><span class="o">(</span><span class="nc">OAuth2UserRequest</span> <span class="n">userRequest</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">OAuth2AuthenticationException</span> <span class="o">{</span>
+        <span class="nc">OAuth2UserService</span><span class="o">&lt;</span><span class="nc">OAuth2UserRequest</span><span class="o">,</span> <span class="nc">OAuth2User</span><span class="o">&gt;</span> <span class="n">delegate</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DefaultOAuth2UserService</span><span class="o">();</span>
+        <span class="nc">OAuth2User</span> <span class="n">oAuth2User</span> <span class="o">=</span> <span class="n">delegate</span><span class="o">.</span><span class="na">loadUser</span><span class="o">(</span><span class="n">userRequest</span><span class="o">);</span>
+        <span class="nc">String</span> <span class="n">registrationId</span> <span class="o">=</span> <span class="n">userRequest</span><span class="o">.</span><span class="na">getClientRegistration</span><span class="o">().</span><span class="na">getRegistrationId</span><span class="o">();</span>
+        <span class="nc">String</span> <span class="n">userNameAttributeName</span> <span class="o">=</span> <span class="n">userRequest</span><span class="o">.</span><span class="na">getClientRegistration</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">getProviderDetails</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">getUserInfoEndpoint</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">getUserNameAttributeName</span><span class="o">();</span>
+        <span class="nc">OAuthAttributes</span> <span class="n">attributes</span> <span class="o">=</span> <span class="nc">OAuthAttributes</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">registrationId</span><span class="o">,</span> <span class="n">userNameAttributeName</span><span class="o">,</span> <span class="n">oAuth2User</span><span class="o">.</span><span class="na">getAttributes</span><span class="o">());</span>
+
+        <span class="nc">User</span> <span class="n">user</span> <span class="o">=</span> <span class="n">saveOrUpdate</span><span class="o">(</span><span class="n">attributes</span><span class="o">);</span>
+        <span class="n">httpSession</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"user"</span><span class="o">,</span> <span class="k">new</span> <span class="nc">SessionUser</span><span class="o">(</span><span class="n">user</span><span class="o">));</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">DefaultOAuth2User</span><span class="o">(</span>
+            <span class="nc">Collections</span><span class="o">.</span><span class="na">singleton</span><span class="o">(</span>
+                <span class="k">new</span> <span class="nf">SimpleGrantedAuthority</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="na">getRoleKey</span><span class="o">())),</span>
+                <span class="n">attributes</span><span class="o">.</span><span class="na">getAttributes</span><span class="o">(),</span>
+                <span class="n">attributes</span><span class="o">.</span><span class="na">getNameAttributeKey</span><span class="o">());</span>
+
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="nc">User</span> <span class="nf">saveOrUpdate</span><span class="o">(</span><span class="nc">OAuthAttributes</span> <span class="n">attributes</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">User</span> <span class="n">user</span> <span class="o">=</span> <span class="n">userRepository</span><span class="o">.</span><span class="na">findByEmail</span><span class="o">(</span>
+            <span class="n">attributes</span><span class="o">.</span><span class="na">getEmail</span><span class="o">())</span>
+        <span class="o">.</span><span class="na">map</span><span class="o">(</span>
+            <span class="n">entity</span> <span class="o">-&gt;</span> <span class="n">entity</span><span class="o">.</span><span class="na">update</span><span class="o">(</span><span class="n">attributes</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span> <span class="n">attributes</span><span class="o">.</span><span class="na">getPicture</span><span class="o">()))</span>
+            <span class="o">.</span><span class="na">orElse</span><span class="o">(</span><span class="n">attributes</span><span class="o">.</span><span class="na">toEntity</span><span class="o">());</span>
+        <span class="k">return</span> <span class="n">userRepository</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>코드가 길지만 뜯어 보면서 확인해봅시다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomOAuth2UserService</span> <span class="kd">implements</span> <span class="nc">OAuth2UserService</span><span class="o">&lt;</span><span class="nc">OAuth2UserRequest</span><span class="o">,</span> <span class="nc">OAuth2User</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">UserRepository</span> <span class="n">userRepository</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">HttpSession</span> <span class="n">httpSession</span><span class="o">;</span>
+    <span class="o">...</span>
+</code></pre></div></div>
+
+<ol>
+  <li>현재 작성하고 있는 기능은 서비스이기 때문에 @Service 어노테이션을 붙여줍니다.</li>
+  <li>또한 스프링에서 인터페이스로 OAuth서비스를 정의하고 있기 때문에 <code class="language-plaintext highlighter-rouge">OAuth2UserService</code>를 implements하는 것을 알 수 있습니다.</li>
+  <li>유저의 정보를 DB에 저장해야 하기 때문에 Repository를 등록합니다.</li>
+  <li>Session 방식으로 회원의 정보를 접근하기 위해 HttpSession 또한 등록합니다.</li>
+</ol>
+
+<p>-&gt; <em>이제 회원 정보를 DB에 저장할 수 있고 Session에서 회원 정보를 접근할 수 있습니다.</em></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Override</span>
+<span class="kd">public</span> <span class="nc">OAuth2User</span> <span class="nf">loadUser</span><span class="o">(</span><span class="nc">OAuth2UserRequest</span> <span class="n">userRequest</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">OAuth2AuthenticationException</span> <span class="o">{</span>
+    <span class="nc">OAuth2UserService</span><span class="o">&lt;</span><span class="nc">OAuth2UserRequest</span><span class="o">,</span> <span class="nc">OAuth2User</span><span class="o">&gt;</span> <span class="n">delegate</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DefaultOAuth2UserService</span><span class="o">();</span>
+    <span class="nc">OAuth2User</span> <span class="n">oAuth2User</span> <span class="o">=</span> <span class="n">delegate</span><span class="o">.</span><span class="na">loadUser</span><span class="o">(</span><span class="n">userRequest</span><span class="o">);</span>
+    <span class="nc">String</span> <span class="n">registrationId</span> <span class="o">=</span> <span class="n">userRequest</span><span class="o">.</span><span class="na">getClientRegistration</span><span class="o">().</span><span class="na">getRegistrationId</span><span class="o">();</span>
+    <span class="nc">String</span> <span class="n">userNameAttributeName</span> <span class="o">=</span> <span class="n">userRequest</span><span class="o">.</span><span class="na">getClientRegistration</span><span class="o">()</span>
+        <span class="o">.</span><span class="na">getProviderDetails</span><span class="o">()</span>
+        <span class="o">.</span><span class="na">getUserInfoEndpoint</span><span class="o">()</span>
+        <span class="o">.</span><span class="na">getUserNameAttributeName</span><span class="o">();</span>
+    <span class="nc">OAuthAttributes</span> <span class="n">attributes</span> <span class="o">=</span> <span class="nc">OAuthAttributes</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">registrationId</span><span class="o">,</span> <span class="n">userNameAttributeName</span><span class="o">,</span> <span class="n">oAuth2User</span><span class="o">.</span><span class="na">getAttributes</span><span class="o">());</span>
+
+    <span class="nc">User</span> <span class="n">user</span> <span class="o">=</span> <span class="n">saveOrUpdate</span><span class="o">(</span><span class="n">attributes</span><span class="o">);</span>
+    <span class="n">httpSession</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"user"</span><span class="o">,</span> <span class="k">new</span> <span class="nc">SessionUser</span><span class="o">(</span><span class="n">user</span><span class="o">));</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nf">DefaultOAuth2User</span><span class="o">(</span>
+        <span class="nc">Collections</span><span class="o">.</span><span class="na">singleton</span><span class="o">(</span>
+            <span class="k">new</span> <span class="nf">SimpleGrantedAuthority</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="na">getRoleKey</span><span class="o">())),</span>
+            <span class="n">attributes</span><span class="o">.</span><span class="na">getAttributes</span><span class="o">(),</span>
+            <span class="n">attributes</span><span class="o">.</span><span class="na">getNameAttributeKey</span><span class="o">());</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+<ol>
+  <li>위에서 언급한 인터페이스 OAuth2UserService는 loadUser를 정의하고 있습니다. 그래서 @Override를 합니다.</li>
+  <li>OAuth2UserRequest는 쉽게 말해서 endpoint에서 유저 정보를 접근하기 위한 객체입니다. 유저 정보를 활용해야 하기 때문에 이 객체를 인자로 받습니다.</li>
+  <li>OAuth2UserService의 구현 클래스인 DefaultOAuth2UserService의 객체 delegate(서비스 위임자)를 정의합니다.</li>
+  <li>delegate를 통해 유저의 정보를 OAuth2User 객체로 생성합니다.
+    <ul>
+      <li>이 또한 delegate의 메소드인 loadUser를 활용합니다.</li>
+    </ul>
+  </li>
+  <li>registrationId는 Client(여기서는 Google)의 등록 ID입니다.
+    <ul>
+      <li>userNameAttributeName은 위에서 받은 userRequest의 endpoint에서 받은 유저의 이름입니다.</li>
+      <li>모두 유저의 세션, DB 저장을 위해 필요합니다.</li>
+    </ul>
+  </li>
+  <li>OAuthAttributes는 위와 같은 attribute들을 DTO로 만든 클래스 입니다.
+    <ul>
+      <li>등록id, 유저name, Oauth2User객체의 getAttributes(Map을 리턴)로 선언하는 점만 알고 갑시다.</li>
+    </ul>
+  </li>
+  <li>아직 작성하지 않았지만 saveOrUpdate는 JPA의 기능을 활용해 유저의 정보를 저장하는 것으로 미리 정의합니다.</li>
+  <li>session에서 유저의 정보를 접근할 일이 있기 때문에 세션에 유저 정보(로그인 중인)를 설정합니다.</li>
+  <li>위와 같은 값을 바탕으로 DefaultOAuth2User라는 OAuth2User 인터페이스를 구현한 클래스의 객체를 싱글톤으로 생성하여 반환합니다.</li>
+</ol>
+
+<p>정말 복잡한 코드이고 이해하기 난해하지만 지금은 <code class="language-plaintext highlighter-rouge">로그인한 나의 정보를 저장소에 등록하고 세션에 등록한다</code> 정도로 이해하면 됩니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="nc">User</span> <span class="nf">saveOrUpdate</span><span class="o">(</span><span class="nc">OAuthAttributes</span> <span class="n">attributes</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">User</span> <span class="n">user</span> <span class="o">=</span> <span class="n">userRepository</span><span class="o">.</span><span class="na">findByEmail</span><span class="o">(</span><span class="n">attributes</span><span class="o">.</span><span class="na">getEmail</span><span class="o">())</span>
+            <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">entity</span> <span class="o">-&gt;</span> <span class="n">entity</span><span class="o">.</span><span class="na">update</span><span class="o">(</span><span class="n">attributes</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span> <span class="n">attributes</span><span class="o">.</span><span class="na">getPicture</span><span class="o">()))</span>
+            <span class="o">.</span><span class="na">orElse</span><span class="o">(</span><span class="n">attributes</span><span class="o">.</span><span class="na">toEntity</span><span class="o">());</span>
+    <span class="k">return</span> <span class="n">userRepository</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>JPA의 영속성을 통해 값이 수정되면 update를, 존재하지 않으면 create을 합니다.</p>
+
+<p>그런데 유심히 보니 이해가 되지 않는 부분이 있습니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">httpSession</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"user"</span><span class="o">,</span> <span class="k">new</span> <span class="nc">SessionUser</span><span class="o">(</span><span class="n">user</span><span class="o">));</span>
+</code></pre></div></div>
+<p>왜 굳이 User 클래스를 사용하지 않고 SessionUser라는 새로운 클래스를 정의해서 httpSession에 설정했을 까요?</p>
+
+<p>바로 User 클래스가 Entity이기 때문입니다. 또한 Session에는 인증에 관련한 정보만 필요하기 때문에 User의 모든 필드가 필요하지 않습니다.</p>
+
+<p>이 의문점은 다음 시간에 확인하도록 하겠습니다.</p>
+
+<hr />
+
+<p>위에서 attribute들을 데이터 교환에 사용하기 위한 DTO가 OAuthAttributes 라고 했습니다.</p>
+
+<p>attribute들이 있으면 유저를 생성할 수 있으므로 이 클래스를 통해 유저를 생성하고 Entity로 만들려고 합니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Getter</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">OAuthAttributes</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Object</span><span class="o">&gt;</span> <span class="n">attributes</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">nameAttributeKey</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">email</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">picture</span><span class="o">;</span>
+    <span class="nd">@Builder</span>
+    <span class="kd">public</span> <span class="nf">OAuthAttributes</span><span class="o">(</span><span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Object</span><span class="o">&gt;</span><span class="n">attributes</span><span class="o">,</span>
+                           <span class="nc">String</span> <span class="n">nameAttributeKey</span><span class="o">,</span> <span class="nc">String</span> <span class="n">name</span><span class="o">,</span>
+                           <span class="nc">String</span> <span class="n">email</span><span class="o">,</span> <span class="nc">String</span> <span class="n">picture</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">attributes</span> <span class="o">=</span> <span class="n">attributes</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">nameAttributeKey</span> <span class="o">=</span> <span class="n">nameAttributeKey</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">email</span> <span class="o">=</span> <span class="n">email</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">picture</span> <span class="o">=</span> <span class="n">picture</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="nc">OAuthAttributes</span> <span class="nf">of</span><span class="o">(</span><span class="nc">String</span> <span class="n">registrationId</span><span class="o">,</span>
+                                     <span class="nc">String</span> <span class="n">userNameAttributeName</span><span class="o">,</span>
+                                     <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Object</span><span class="o">&gt;</span> <span class="n">attributes</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="s">"naver"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">registrationId</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="nf">ofNaver</span><span class="o">(</span><span class="s">"id"</span><span class="o">,</span> <span class="n">attributes</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="nf">ofGoogle</span><span class="o">(</span><span class="n">userNameAttributeName</span><span class="o">,</span> <span class="n">attributes</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="nc">OAuthAttributes</span> <span class="nf">ofGoogle</span><span class="o">(</span><span class="nc">String</span> <span class="n">userNameAttributeName</span><span class="o">,</span>
+                                           <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Object</span><span class="o">&gt;</span><span class="n">attributes</span><span class="o">){</span>
+        <span class="k">return</span> <span class="nc">OAuthAttributes</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">name</span><span class="o">((</span><span class="nc">String</span><span class="o">)</span> <span class="n">attributes</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"name"</span><span class="o">))</span>
+                <span class="o">.</span><span class="na">email</span><span class="o">((</span><span class="nc">String</span><span class="o">)</span> <span class="n">attributes</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"email"</span><span class="o">))</span>
+                <span class="o">.</span><span class="na">picture</span><span class="o">((</span><span class="nc">String</span><span class="o">)</span> <span class="n">attributes</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"picture"</span><span class="o">))</span>
+                <span class="o">.</span><span class="na">attributes</span><span class="o">(</span><span class="n">attributes</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">nameAttributeKey</span><span class="o">(</span><span class="n">userNameAttributeName</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="nc">OAuthAttributes</span> <span class="nf">ofNaver</span><span class="o">(</span><span class="nc">String</span> <span class="n">userNameAttributeName</span><span class="o">,</span>
+                                          <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Object</span><span class="o">&gt;</span><span class="n">attributes</span><span class="o">){</span>
+        <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Object</span><span class="o">&gt;</span> <span class="n">response</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Object</span><span class="o">&gt;)</span> <span class="n">attributes</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"response"</span><span class="o">);</span>
+        <span class="k">return</span> <span class="nc">OAuthAttributes</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">name</span><span class="o">((</span><span class="nc">String</span><span class="o">)</span> <span class="n">response</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"name"</span><span class="o">))</span>
+                <span class="o">.</span><span class="na">email</span><span class="o">((</span><span class="nc">String</span><span class="o">)</span> <span class="n">response</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"email"</span><span class="o">))</span>
+                <span class="o">.</span><span class="na">picture</span><span class="o">((</span><span class="nc">String</span><span class="o">)</span> <span class="n">response</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"picture"</span><span class="o">))</span>
+                <span class="o">.</span><span class="na">attributes</span><span class="o">(</span><span class="n">response</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">nameAttributeKey</span><span class="o">(</span><span class="n">userNameAttributeName</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="nc">User</span> <span class="nf">toEntity</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="nc">User</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">name</span><span class="o">(</span><span class="n">name</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">email</span><span class="o">(</span><span class="n">email</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">picture</span><span class="o">(</span><span class="n">picture</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">role</span><span class="o">(</span><span class="nc">Role</span><span class="o">.</span><span class="na">GUEST</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<iframe src="https://giphy.com/embed/BcMJvmwkmbyWpKkBj3" width="480" height="400" frameborder="0" class="giphy-embed" allowfullscreen=""></iframe>
+<p><a href="https://giphy.com/gifs/theoffice-nbc-the-office-tv-BcMJvmwkmbyWpKkBj3">via GIPHY</a></p>
+
+<p>만만치 않은 코드 길이네요 메소드 별로 살펴보겠습니다.</p>
+
+<ol>
+  <li>이 DTO 객체를 정의하기 위한 생성자가 필요하기 때문에 기본 생성자를 작성했습니다.</li>
+  <li>of : 사용자가 OAuth Client를 누구로 했는지에 따라서 가지고 있는 Attribute가 달라질 수 있기 때문에 <code class="language-plaintext highlighter-rouge">of</code>메소드에서 조건문을 통해 다른 객체를 리턴합니다.</li>
+  <li>ofGoogle : 만약 제공자가 Google일 경우 위와 같은 build 패턴으로 객체를 생성해 리턴합니다.</li>
+  <li>ofNaver : 만약 제공자가 Naver일 경우 위와 같은 build 패턴으로 객체를 생성, 리턴합니다. Google과 다른 점은 response를 받는다는 점입니다.</li>
+  <li>toEntity : User 생성자에 attribute가 들어갈 수 있도록 Entity화하는 메소드도 작성합니다.</li>
+</ol>]]></content><author><name>박정우</name></author><category term="spring" /><category term="spring" /><summary type="html"><![CDATA[⚠️ 본 게시물은 스프링 부트와 AWS로 혼자 구현하는 웹서비스를 참고도서로 활용합니다. 저작권은 본 책의 저서에게 있음을 알립니다.]]></summary></entry><entry><title type="html">Spring security 3편</title><link href="https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/27/cotatoStudy9.html" rel="alternate" type="text/html" title="Spring security 3편" /><published>2023-01-27T00:00:00+00:00</published><updated>2023-01-27T00:00:00+00:00</updated><id>https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/27/cotatoStudy9</id><content type="html" xml:base="https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/27/cotatoStudy9.html"><![CDATA[<p>⚠️ 본 게시물은 <code class="language-plaintext highlighter-rouge">스프링 부트와 AWS로 혼자 구현하는 웹서비스</code>를 참고도서로 활용합니다. 저작권은 본 책의 저서에게 있음을 알립니다.</p>
+
+<h2 id="5장-스프링-시큐리티">5장 스프링 시큐리티</h2>
+
+<h3 id="지난-시간엔">지난 시간엔…</h3>
+
+<ol>
+  <li>이 서비스는 유저가 게시물을 등록하는 기능이 있다.</li>
+  <li>유저는 아이디, 이름, 이메일, 사진으로 구별된다.</li>
+  <li>OAuth를 통해 로그인 과정을 Google, Naver에 위임한다.</li>
+  <li>사용자의 status(Role)에 따라 기능이 제한된다.</li>
+  <li>OAuth2로 로그인한 정보를 받아오는 기능</li>
+</ol>
+
+<p>위와 같은 기능을 가진 서비스를 구축하려고 합니다.</p>
+
+<h3 id="serializable">Serializable</h3>
+<p>이전 시간에 User 클래스 대신 SessionUser 클래를 사용하는 이유를 설명드렸는데요.</p>
+
+<ol>
+  <li>User 클래스는 Entity 클래스이다</li>
+  <li>User 클래스의 모든 필드값이 필요하지 않다.</li>
+</ol>
+
+<p>위와 같은 이유가 있습니다.</p>
+
+<p>또한 <code class="language-plaintext highlighter-rouge">Serializable</code>을 진행해야만 Session에 사용자의 정보를 저장할 수 있기 때문입니다.</p>
+
+<p>Serializable의 장점은 무엇이 있을까요?</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>easily restored to a byte stream, allows the state of an object to be saved to a file, sent over a network, or stored in DB
+</code></pre></div></div>
+<p>직렬화는 클래스가 바이트 스트림으로 변환할 수 있음을 의미합니다.<br />
+java에서는 implement Serializable로 기능을 사용할 수 있고 이를 통해 같은 java 시스템 간 데이터 교환을 용이하게 할 수 있습니다.</p>
+
+<h3 id="그렇다면-user-클래스에-직접-직렬화를-구현하면-안되나요">그렇다면 User 클래스에 직접 직렬화를 구현하면 안되나요?</h3>
+<p>User 클래스는 Entity 클래스 입니다.</p>
+
+<p>Entity 클래스는 어떠한 관계가 형성될 지 모릅니다. 그 상황에서 직접 Entity 클래스를 사용하는 것보다 Dto를 생성하는 것이 안전합니다.</p>
+
+<h3 id="화면-구성">화면 구성</h3>
+<p>이제는 화면을 구성해보겠습니다.</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE HTML&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"ko"</span> <span class="na">xmlns:th=</span><span class="s">"http://www.thymeleaf.org"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=UTF-8"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">th:replace=</span><span class="s">"fragments/header.html :: fragment-header"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;h1&gt;</span>스프링 부트로 시작하는 웹서비스<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-md-12"</span><span class="nt">&gt;</span>
+<span class="c">&lt;!--    로그인 기능 영역--&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"row"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-md-6"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/posts/save"</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span><span class="nt">&gt;</span>글 등록<span class="nt">&lt;/a&gt;</span>
+            <span class="nt">&lt;th:block</span> <span class="na">th:if=</span><span class="s">"${not #strings.isEmpty(userName)}"</span><span class="nt">&gt;</span>
+                Logged in as <span class="nt">&lt;span</span> <span class="na">th:text=</span><span class="s">"${userName}"</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/logout"</span> <span class="na">class = </span><span class="s">"btn btn-info active"</span> <span class="na">role=</span><span class="s">"button"</span><span class="nt">&gt;</span>Logout<span class="nt">&lt;/a&gt;</span>
+            <span class="nt">&lt;/th:block&gt;</span>
+            <span class="nt">&lt;th:block</span> <span class="na">th:unless=</span><span class="s">"${not #strings.isEmpty(userName)}"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/oauth2/authorization/google"</span> <span class="na">class=</span><span class="s">"btn btn-success active"</span> <span class="na">role=</span><span class="s">"button"</span><span class="nt">&gt;</span>Google Login<span class="nt">&lt;/a&gt;</span>
+                <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/oauth2/authorization/naver"</span> <span class="na">class=</span><span class="s">"btn btn-success active"</span> <span class="na">role=</span><span class="s">"button"</span><span class="nt">&gt;</span>Naver Login<span class="nt">&lt;/a&gt;</span>
+            <span class="nt">&lt;/th:block&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">th:replace=</span><span class="s">"fragments/footer.html :: fragment-footer"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+<p>이전 html 코드와 비슷한데 로그인 부분만 살펴보겠습니다.</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;th:block</span> <span class="na">th:if=</span><span class="s">"${not #strings.isEmpty(userName)}"</span><span class="nt">&gt;</span>
+    Logged in as <span class="nt">&lt;span</span> <span class="na">th:text=</span><span class="s">"${userName}"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/logout"</span> <span class="na">class = </span><span class="s">"btn btn-info active"</span> <span class="na">role=</span><span class="s">"button"</span><span class="nt">&gt;</span>Logout<span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;/th:block&gt;</span>
+<span class="nt">&lt;th:block</span> <span class="na">th:unless=</span><span class="s">"${not #strings.isEmpty(userName)}"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/oauth2/authorization/google"</span> <span class="na">class=</span><span class="s">"btn btn-success active"</span> <span class="na">role=</span><span class="s">"button"</span><span class="nt">&gt;</span>Google Login<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/oauth2/authorization/naver"</span> <span class="na">class=</span><span class="s">"btn btn-success active"</span> <span class="na">role=</span><span class="s">"button"</span><span class="nt">&gt;</span>Naver Login<span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;/th:block&gt;</span>
+</code></pre></div></div>
+<ol>
+  <li>타임리프 문법을 사용하여 유저의 이름이 존재한다면 로그인 유저의 이름을 출력하고 로그아웃 버튼이 보이도록 하였습니다.
+    <ul>
+      <li>로그아웃을 할 경우는 “/logout”의 url로 이동합니다.</li>
+    </ul>
+  </li>
+  <li>유저의 이름이 없다면 로그인하지 않은 것으로 판단하여 로그인 버튼이 드러나게 하였습니다.
+    <ul>
+      <li>Naver 로그인은 차후에 추가할 것이므로 현재는 버튼만 구현하였습니다.</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="로그인관련-컨트롤러-수정하기">로그인관련 컨트롤러 수정하기</h3>
+<p>화면을 구성하였으니 컨트롤러를 통해 로그인 기능을 추가하도록 하겠습니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RequiredArgsConstructor</span>
+<span class="nd">@Controller</span>
+<span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">"/"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">IndexController</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">PostsService</span> <span class="n">postsService</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">HttpSession</span> <span class="n">httpSession</span><span class="o">;</span>
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">index</span><span class="o">(</span><span class="nc">Model</span> <span class="n">model</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">model</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="s">"posts"</span><span class="o">,</span> <span class="n">postsService</span><span class="o">.</span><span class="na">findAllDesc</span><span class="o">());</span>
+        <span class="nc">SessionUser</span> <span class="n">user</span> <span class="o">=</span> <span class="o">(</span><span class="nc">SessionUser</span><span class="o">)</span><span class="n">httpSession</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"user"</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">user</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">model</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="s">"userName"</span><span class="o">,</span> <span class="n">user</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="s">"index"</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/posts/save"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">postsSave</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">"posts-save"</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<ol>
+  <li>위에서 httpSession에 유저의 정보를 저장했기 때문에 httpSession을 정의합니다.
+    <ul>
+      <li>게시물을 등록하기 위해 PostsService를 등록합니다.</li>
+    </ul>
+  </li>
+  <li>user의 정보를 httpSession에서 받아옵니다.</li>
+  <li>등록한 게시물을 보여주기 위해 postsService의 모든 게시물을 “post”로 model에 속성을 추가합니다.</li>
+  <li>user가 존재한다면 model에 “userName”속성으로 user.getName()을 추가합니다.
+    <ul>
+      <li>이를 통해 HTML에 유저의 이름이 나타납니다.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>🥳Naver 로그인 기능을 제외하고 모두 정상적으로 작동함을 알 수 있습니다!</p>
+
+<iframe src="https://giphy.com/embed/kyLYXonQYYfwYDIeZl" width="480" height="360" frameborder="0" class="giphy-embed" allowfullscreen=""></iframe>
+<p><a href="https://giphy.com/gifs/sesamestreet-sesame-street-50th-anniversary-kyLYXonQYYfwYDIeZl">via GIPHY</a></p>
+
+<p>하지만 개발자라면 모름지기 코드 개선을 생각해야 합니다.</p>
+
+<h3 id="어노테이션-기반으로-개선">어노테이션 기반으로 개선</h3>
+<p>IndexController에서 가장 어색한 부분을 꼽자면 바로 아래와 같은 부분입니다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">SessionUser</span> <span class="n">user</span> <span class="o">=</span> <span class="o">(</span><span class="nc">SessionUser</span><span class="o">)</span><span class="n">httpSession</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"user"</span><span class="o">);</span>
+</code></pre></div></div>
+<p>만약 다른 라우터에서도 SessoinUser 가 필요하면 위의 코드를 다시 작성해야 합니다.</p>
+
+<p>🤔그렇다면 위에서 SeesionUser를 정의하면 안되나요?</p>
+
+<p>httpSession에 user attribute가 존재하는지 존재하지 않는지 알 수 없기 때문에 위 방식은 적절하지 않습니다.</p>
+
+<p>그래서 사용자 지정 <code class="language-plaintext highlighter-rouge">어노테이션</code>을 정의하고 이를 적용하는 방향으로 진행하겠습니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Target</span><span class="o">(</span><span class="nc">ElementType</span><span class="o">.</span><span class="na">PARAMETER</span><span class="o">)</span>
+<span class="nd">@Retention</span><span class="o">(</span><span class="nc">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nd">@interface</span> <span class="nc">LoginUser</span> <span class="o">{</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>그리고 이 어노테이션을 위한 Resolver(파라미터 가공을 위한)를 작성해보겠습니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RequiredArgsConstructor</span>
+<span class="nd">@Component</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">LoginUserArgumentResolver</span> <span class="kd">implements</span> <span class="nc">HandlerMethodArgumentResolver</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">HttpSession</span> <span class="n">httpSession</span><span class="o">;</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">supportsParameter</span><span class="o">(</span><span class="nc">MethodParameter</span> <span class="n">parameter</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">boolean</span> <span class="n">isLoginUserAnnotation</span> <span class="o">=</span> <span class="n">parameter</span><span class="o">.</span><span class="na">getParameterAnnotation</span><span class="o">(</span><span class="nc">LoginUser</span><span class="o">.</span><span class="na">class</span><span class="o">)</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="kt">boolean</span> <span class="n">isUserClass</span> <span class="o">=</span> <span class="nc">SessionUser</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">parameter</span><span class="o">.</span><span class="na">getParameterType</span><span class="o">());</span>
+        <span class="k">return</span> <span class="n">isLoginUserAnnotation</span> <span class="o">&amp;&amp;</span> <span class="n">isUserClass</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nc">Object</span> <span class="nf">resolveArgument</span><span class="o">(</span><span class="nc">MethodParameter</span> <span class="n">parameter</span><span class="o">,</span> <span class="nc">ModelAndViewContainer</span> <span class="n">mavContainer</span><span class="o">,</span> <span class="nc">NativeWebRequest</span> <span class="n">webRequest</span><span class="o">,</span> <span class="nc">WebDataBinderFactory</span> <span class="n">binderFactory</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">httpSession</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"user"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>Resolver의 이름은 구현하려는 어노테이션명 + ArgumentResolver 또는 ArgumentResolverSupport로 작성합니다.</p>
+
+<p>또한 <code class="language-plaintext highlighter-rouge">HandlerMethodArgumentResolver</code>를 implemnets하여 <code class="language-plaintext highlighter-rouge">supportsParameter</code>, <code class="language-plaintext highlighter-rouge">resolveArgument</code>를 구현합니다.</p>
+
+<p>supportsParameter를 통해 어노테이션이 존재하는지 검증을 진행하고 resovleArgument를 통해 로직을 진행합니다.</p>
+
+<p>여기에서는 parameter.getParameterAnnotation(LoginUser.class)!=null의 로직을 사용하였고 resolveArgument에서 객체를 전달했습니다.</p>
+
+<p>이렇게 생성한 어노테이션을 프로젝트에서 사용하기 위해 <code class="language-plaintext highlighter-rouge">WebMvcConfigurer</code>에 추가를 합니다.</p>
+
+<h3 id="webmvcconfigurer">WebMvcConfigurer</h3>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RequiredArgsConstructor</span>
+<span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebConfig</span> <span class="kd">implements</span> <span class="nc">WebMvcConfigurer</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">LoginUserArgumentResolver</span> <span class="n">loginUserArgumentResolver</span><span class="o">;</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addArgumentResolvers</span><span class="o">(</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">HandlerMethodArgumentResolver</span><span class="o">&gt;</span> <span class="n">argumentResolvers</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">argumentResolvers</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">loginUserArgumentResolver</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>위와 같이 webconfig를 작성하여 방금 생성한 resovler를 등록합니다.</p>
+
+<p>자 이제 @LoginUser 어노테이션을 사용할 준비가 되었습니다!</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="nc">String</span> <span class="nf">index</span><span class="o">(</span><span class="nc">Model</span> <span class="n">model</span><span class="o">,</span> <span class="nd">@LoginUser</span> <span class="nc">SessionUser</span> <span class="n">user</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">model</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="s">"posts"</span><span class="o">,</span> <span class="n">postsService</span><span class="o">.</span><span class="na">findAllDesc</span><span class="o">());</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">user</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">model</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="s">"userName"</span><span class="o">,</span> <span class="n">user</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="s">"index"</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>위와 같이 어노테이션을 통해 세션정보를 직접 전달하여 차후 세션정보가 필요한 경우에도 쉽게 코드를 작성할 수 있게 유지보수가 완료되었습니다.</p>]]></content><author><name>박정우</name></author><category term="spring" /><category term="spring" /><summary type="html"><![CDATA[⚠️ 본 게시물은 스프링 부트와 AWS로 혼자 구현하는 웹서비스를 참고도서로 활용합니다. 저작권은 본 책의 저서에게 있음을 알립니다.]]></summary></entry><entry><title type="html">Spring security 1편</title><link href="https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/25/cotatoStudy7.html" rel="alternate" type="text/html" title="Spring security 1편" /><published>2023-01-25T00:00:00+00:00</published><updated>2023-01-25T00:00:00+00:00</updated><id>https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/25/cotatoStudy7</id><content type="html" xml:base="https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/25/cotatoStudy7.html"><![CDATA[<p>⚠️ 본 게시물은 <code class="language-plaintext highlighter-rouge">스프링 부트와 AWS로 혼자 구현하는 웹서비스</code>를 참고도서로 활용합니다. 저작권은 본 책의 저서에게 있음을 알립니다.</p>
+
+<h2 id="5장-스프링-시큐리티">5장 스프링 시큐리티</h2>
+
+<h3 id="간단히-로그인을-구현해야-한다면-어떻게-하실건가요">🤔간단히 로그인을 구현해야 한다면 어떻게 하실건가요?</h3>
+
+<p>저라면 가장 기본적으로 <code class="language-plaintext highlighter-rouge">DB</code>에 <code class="language-plaintext highlighter-rouge">id</code>와 <code class="language-plaintext highlighter-rouge">password</code>를 저장하고 요청받은 <code class="language-plaintext highlighter-rouge">id</code>, <code class="language-plaintext highlighter-rouge">password</code>를 비교해 참/거짓 값을 리턴할 것 같습니다.</p>
+
+<p>하지만 위 방식은 여러 문제를 가지고 있습니다.</p>
+
+<ol>
+  <li>예상 가능한 문제는 <code class="language-plaintext highlighter-rouge">DB</code>에 저장된 비밀번호가 <code class="language-plaintext highlighter-rouge">암호화</code>되어 있지 않기 때문에 로그인 요청, 회원가입 요청 중간에 탈취가 가능합니다.</li>
+  <li>로그인 성공 여부를 단순히 참/거짓 값으로 설정한다면 다른 페이지에 접근할 때도 아무런 문제 없이 접근이 가능하게 됩니다. 즉 <code class="language-plaintext highlighter-rouge">인가</code>에 대한 문제가 발생합니다.</li>
+</ol>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>인증 : 로그인과 같이 자격을 증명
+
+인가 : 인증이 된 사용자가 자원 접근이 가능하게함(ex : 마이페이지)
+</code></pre></div></div>
+
+<p>이러한 문제점을 생각하고 더 나아가 토큰을 적용해보겠습니다.</p>
+<h3 id="토큰인증방식">토큰인증방식</h3>
+
+<blockquote>
+  <p>📌인증 책임을 서버에 두는 세션인증도 있지만 본 내용에서는 토큰인증만 다루겠습니다.</p>
+</blockquote>
+
+<p>바로 refresh token과 access token을 사용합니다.</p>
+
+<ol>
+  <li>사용자는 서버로부터 인증을 하고 refresh token을 발급받습니다.</li>
+  <li>사용자는 발급받은 refresh token을 통해 access token을 발급받습니다.</li>
+  <li>사용자는 access token을 통해 인가를 요청합니다.</li>
+</ol>
+
+<p>여기서 refresh token은 유효기간이 길고 사용자의 정보가 암호화 되어있고 유효한 동안 access token을 발급 받을 수 있게 합니다.</p>
+
+<p>access token은 refresh token보다 유효기간이 짧고 이 token을 통해서만 사용자의 자원에 접근할 수 있습니다.</p>
+
+<p>이와 같은 방법이면 token이 유효한지 서버에서 검증하고 암호화도 되어있으며 유효기간이 존재해 일정 시간 후에는 다시 발급받아야 하는 신뢰성도 있습니다.</p>
+
+<p>하지만 위와 같은 방식도 문제가 존재합니다.</p>
+
+<div style="width:100%;height:0;padding-bottom:73%;position:relative;"><iframe src="https://giphy.com/embed/nqtYybzXsCy763Q5EQ" width="100%" height="100%" style="position:absolute" frameborder="0" class="giphy-embed" allowfullscreen=""></iframe></div>
+<p><a href="https://giphy.com/gifs/nqtYybzXsCy763Q5EQ">via GIPHY</a></p>
+
+<p><em>바로 token이 외부에서 탈취가 가능한 점입니다. 세션 인증 방식의 문제인 서버 부하를 해결했지만 외부 탈취에서 자유롭지 않은 점이 토큰 인증 방식의 문제입니다.</em></p>
+
+<h3 id="이렇게-로그인이-어렵습니다">😮‍💨이렇게 로그인이 어렵습니다.</h3>
+<p>이렇게 로그인을 구현하고 안정적인 서비스를 구축하는 것은 까다로운 일입니다.<br />
+하지만 Spring에서 제공하는 프레임워크로 매우 안전한 인증을 간단히 구현 가능합니다.</p>
+
+<h3 id="스프링-시큐리티란">스프링 시큐리티란</h3>
+<p>Spring security는 <code class="language-plaintext highlighter-rouge">커스터마이징이 가능한 인증, 인가 프레임워크</code> 입니다.</p>
+
+<p>스프링 시큐리티는 <code class="language-plaintext highlighter-rouge">form-base 인증</code>과 <code class="language-plaintext highlighter-rouge">OAuth</code>, <code class="language-plaintext highlighter-rouge">OpenID</code> 같은 접근 위임 방식 등 여러 방식의 인증을 지원합니다.</p>
+
+<p>또한 스프링 시큐리티는 CSRF 보호를 지원합니다.</p>
+
+<blockquote>
+  <p>CSRF는 링크 또는 스크립트를 사용하여 사용자가 인증된 대상 사이트로 원하지 않는 HTTP 요청을 전송하는 공격 방식입니다.</p>
+</blockquote>
+
+<h3 id="스프링-시큐리티-적용해보기">스프링 시큐리티 적용해보기</h3>
+
+<iframe src="https://giphy.com/embed/3ohhwfwxg4d1h82LxS" width="480" height="478" frameborder="0" class="giphy-embed" allowfullscreen=""></iframe>
+<p><a href="https://giphy.com/gifs/cbc-funny-comedy-3ohhwfwxg4d1h82LxS">via GIPHY</a></p>
+
+<p>얼마나 스프링 시큐리티가 좋은지 알겠습니다. 그렇다면 본 책에서 제시하는 예제를 따라해볼까요?</p>
+
+<p>우선 예제를 따라하기 앞서 현재 구현해야하는 서비스와 스프링 시큐리티로 OAuth2를 해야하는 이유를 알아야합니다.</p>
+
+<p>앞서 설명드린 것과 같이 로그인은 구현하는데 많은 노력이 필요하고 보안 이슈 또한 자주 발생합니다. 그러므로 서비스의 규모가 작다면 상대적으로 규모가 크고 신뢰도가 높은 제 3자에게 인증 및 인가를 위임하는 OAuth를 사용합니다.</p>
+
+<ol>
+  <li>이 서비스는 유저가 게시물을 등록하는 기능이 있다.</li>
+  <li>유저는 아이디, 이름, 이메일, 사진으로 구별된다.</li>
+  <li>OAuth를 통해 로그인 과정을 Google, Naver에 위임한다.</li>
+</ol>
+
+<p>이와 같은 배경으로 기능을 어떻게 구현해야 할지 고민해 보겠습니다.</p>
+
+<p><img src="https://i.stack.imgur.com/QUh9s.png" alt="googlelogin" title="많이 본 화면" /></p>
+
+<p>위와 같이 많이 본 구글 아이디로 로그인 버튼을 누르면 어떤 개인 정보를 제공할지 나타나게 된다.</p>
+
+<p>우리 서비스는 아이디, 이름, 이메일, 사진이 필요하기 때문에 유저의 정보를 저장하기 위한 Entity가 필요하다.</p>
+
+<p>그래서 User Class가 필요하다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Getter</span>
+<span class="nd">@NoArgsConstructor</span>
+<span class="nd">@Entity</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="kd">extends</span> <span class="nc">BaseTimeEntity</span> <span class="o">{</span>
+    <span class="nd">@Id</span>
+    <span class="nd">@GeneratedValue</span><span class="o">(</span><span class="n">strategy</span> <span class="o">=</span> <span class="nc">GenerationType</span><span class="o">.</span><span class="na">IDENTITY</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">;</span>
+
+    <span class="nd">@Column</span><span class="o">(</span><span class="n">nullable</span> <span class="o">=</span> <span class="kc">false</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="nd">@Column</span><span class="o">(</span><span class="n">nullable</span> <span class="o">=</span> <span class="kc">false</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">email</span><span class="o">;</span>
+    <span class="nd">@Column</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">picture</span><span class="o">;</span>
+    <span class="nd">@Enumerated</span><span class="o">(</span><span class="nc">EnumType</span><span class="o">.</span><span class="na">STRING</span><span class="o">)</span>
+    <span class="nd">@Column</span><span class="o">(</span><span class="n">nullable</span> <span class="o">=</span> <span class="kc">false</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">Role</span> <span class="n">role</span><span class="o">;</span>
+
+    <span class="nd">@Builder</span>
+    <span class="kd">public</span> <span class="nf">User</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="nc">String</span> <span class="n">email</span><span class="o">,</span> <span class="nc">String</span> <span class="n">picture</span><span class="o">,</span> <span class="nc">Role</span> <span class="n">role</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">email</span> <span class="o">=</span> <span class="n">email</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">picture</span> <span class="o">=</span> <span class="n">picture</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">role</span> <span class="o">=</span> <span class="n">role</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">User</span> <span class="nf">update</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="nc">String</span> <span class="n">picture</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">picture</span> <span class="o">=</span> <span class="n">picture</span><span class="o">;</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getRoleKey</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">role</span><span class="o">.</span><span class="na">getKey</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<ol>
+  <li>아이디, 이름, 이메일, 사진이 필요해 Column 및 Id 어노테이션을 사용한 점</li>
+  <li>불필요한 코드를 줄이기 위해 Getter, NoArgsConstructor를 사용한 점</li>
+  <li>User Class대로 매핑이 될 것이기 때문에 Entity 어노테이션을 사용한 점</li>
+</ol>
+
+<p>위와 같은 3가지 이유는 앞에서 배운 내용으로 충분히 이해가 됩니다.</p>
+
+<p>하지만 <code class="language-plaintext highlighter-rouge">Role</code>은 생뚱맞게 왜 존재하는 걸까요?<br />
+요구사항에 역할에 관련한 기능은 없었는데 말이죠</p>
+
+<div style="width:480px"><iframe allow="fullscreen" frameborder="0" height="270" src="https://giphy.com/embed/P6trDNTPCVBuH9clMl/video" width="480"></iframe></div>
+
+<p>바로 사용자의 직책(Role)에 따라 권한이 달라지기 때문입니다.</p>
+
+<p><img src="https://support.kmong.com/hc/article_attachments/900002727666/FAQ.PNG" alt="time" title="개인정보보관기간" /></p>
+
+<p>기능 명세서가 친절하지 않았지만 간단히 회원 가입 약관을 통해 예를 들어보겠습니다.</p>
+
+<p><em>회원 탈퇴를 하더라도 내 정보가 바로 사라지는 것이 아닌 삭제처리된 상태로 <code class="language-plaintext highlighter-rouge">개인정보보관기간</code> 동안 DB에 남아있게 됩니다.</em></p>
+
+<p>그렇기 때문에 탈퇴한 회원은 DB에 남아있더라도 게시글을 생성할 수 없어야 합니다.</p>
+
+<p>그래서 역할을 쉽게 관리하기 위해 enum class로 Role을 만들었습니다.</p>
+
+<p>또한 Spring Security의 역할 지정 규칙(ROLE_사용자지정)을 따른 다면 Role을 생성, 관리할 수 있습니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Getter</span>
+<span class="nd">@RequiredArgsConstructor</span>
+<span class="kd">public</span> <span class="kd">enum</span> <span class="nc">Role</span> <span class="o">{</span>
+    <span class="no">GUEST</span><span class="o">(</span><span class="s">"ROLE_GUEST"</span><span class="o">,</span> <span class="s">"손님"</span><span class="o">),</span>
+    <span class="no">USER</span><span class="o">(</span><span class="s">"ROLE_USER"</span><span class="o">,</span> <span class="s">"일반 사용자"</span><span class="o">);</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">String</span> <span class="n">key</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">String</span> <span class="n">title</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>이와 같이 Role enum class또한 만들었습니다.</p>
+
+<blockquote>
+  <p>User 클래스의 Role에서 Enumerated(EnumType.STRING) 어노테이션을 붙인 이유는
+열거형이 어떤 값을 가지는지 단순 숫자로 보는 것 보다 문자열로 확인 하는 것이 
+더 이해가 쉽기 때문입니다.</p>
+</blockquote>
+
+<p>이제 서비스의 기본적인 준비가 되었습니다.</p>]]></content><author><name>박정우</name></author><category term="spring" /><category term="spring" /><summary type="html"><![CDATA[⚠️ 본 게시물은 스프링 부트와 AWS로 혼자 구현하는 웹서비스를 참고도서로 활용합니다. 저작권은 본 책의 저서에게 있음을 알립니다.]]></summary></entry><entry><title type="html">Thymeleaf로 화면 구성하기</title><link href="https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/21/cotatoStudy6.html" rel="alternate" type="text/html" title="Thymeleaf로 화면 구성하기" /><published>2023-01-21T00:00:00+00:00</published><updated>2023-01-21T00:00:00+00:00</updated><id>https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/21/cotatoStudy6</id><content type="html" xml:base="https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/21/cotatoStudy6.html"><![CDATA[<p>⚠️ 본 게시물은 <code class="language-plaintext highlighter-rouge">스프링 부트와 AWS로 혼자 구현하는 웹서비스</code>를 참고도서로 활용합니다. 저작권은 본 책의 저서에게 있음을 알립니다.</p>
+
+<h2 id="4장-화면-구성하기">4장 화면 구성하기</h2>
+
+<p>본 책에서는 머스테치로 화면구성을 하지만 아래와 같은 단점으로 타임리프를 사용해보기로 하였습니다.</p>
+
+<ul>
+  <li>머스테치는 <code class="language-plaintext highlighter-rouge">템플릿 언어</code>이고, 템플릿에서 데이터를 처리하는 기능이 제한적이기 때문에 데이터 처리를 위해서는 코드를 추가로 작성해야 합니다.</li>
+  <li>타임리프는 <code class="language-plaintext highlighter-rouge">템플릿 엔진</code>이고, <code class="language-plaintext highlighter-rouge">템플릿 언어</code>보다는 복잡한 데이터 처리가 가능하지만 문법이 상대적으로 어렵습니다.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>📌타임리프는 문법이 상대적으로 어렵더라도 보편적으로 많이 쓰이고 데이터 처리가 용이하기 때문에 머스테치에서 타임리프로 변경하여 사용하기로 했습니다.
+</code></pre></div></div>
+<h3 id="기존의-화면-구성">기존의 화면 구성</h3>
+<p>본 책에서는 머스테치로 화면 구성을 합니다.</p>
+
+<p>header + 본문 + footer로 화면에서 반복적으로 쓰이는 부분을 header, footer로 따로 정의합니다.</p>
+
+<blockquote>
+  <p>HTML은 위에서부터 코드가 실행되기 때문에 css를 header에 js를 footer에 둡니다.</p>
+  <blockquote>
+    <p>이러한 구성은 페이지 로딩 속도를 높입니다.</p>
+  </blockquote>
+</blockquote>
+
+<p>머스테치는 템플릿 언어이기 때문에 header와 footer를 정의하고 그 내용 그대로 반영이 됩니다.</p>
+
+<p><em>즉 HTML에서 본문을 제외한 윗 부분과 아랫 부분을 그대로 mustache파일로 만듭니다.</em></p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE HTML&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span>스프링 부트 웹서비스<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+</code></pre></div></div>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+<p>이렇게 두 소스코드를 각각 header.mustache, footer.mustache로 정의하고</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+본문내용                
+
+</code></pre></div></div>
+<p>위와 같이 화면을 작성합니다.</p>
+
+<p>는 현재 파일을 기준으로 다른 파일을 가져옵니다, 현재 파일이 resource/templates에 존재한다면<br />
+는 resource/templates/layout/header.mustache입니다.</p>
+<blockquote>
+  <p>파일 타입은 mustache를 사용하기 때문에 자동으로 header.mustache를 인식합니다.</p>
+</blockquote>
+
+<p>하지만 thymeleaf는 fragment를 사용하여 기능을 분리합니다.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;th:block</span> <span class="na">th:fragment=</span><span class="s">"fragment-header"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>스프링 부트 웹 서비스<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">"https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/th:block&gt;</span>
+</code></pre></div></div>
+<p>thymeleaf를 사용한 header입니다.</p>
+<ol>
+  <li>타임리프에서 사용하는 문법인 th:block으로 영역을 지정하고</li>
+  <li>th:fragment를 통해 다른 파일에서 호출 할 수 있게 하였습니다.</li>
+  <li>위에서 언급한 이유로 css만 호출하였습니다.
+```html</li>
+</ol>
+<th:block th:fragment="fragment-footer">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="/js/app/index.js"></script>
+</th:block>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>thymeleaf를 사용한 footer입니다. header와 동일한 목적으로 만들었습니다.
+
+그렇다면 위와 같이 만든 fragment는 어떻게 사용할까요?
+
+바로 불러오고 싶은 영역에 `th:replace`를 사용합니다.
+
+예를 들어 
+```html
+&lt;div th:replace="fragments/footer.html :: fragment-footer"&gt;&lt;/div&gt;
+1. (resource가 루트), fragments 디렉토리 아래의 footer.html파일을 지정합니다.
+2. footer.html 파일에서 fragment-footer라고 지정한 영역을 가져옵니다.
+</code></pre></div></div>
+<p>이제 html과 css파일은 준비가 됐습니다.</p>
+
+<h3 id="요청을-보내기-위한-js파일">요청을 보내기 위한 js파일</h3>
+<p>위와 같이 화면을 구성하는 것은 결국 사용자가 서버에 요청을 하기 위함 입니다.</p>
+
+<p>사용자가 요청을 하기 위한 js파일을 작성해보겠습니다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">main</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">init</span> <span class="p">:</span> <span class="kd">function</span> <span class="p">(){</span>
+        <span class="kd">var</span> <span class="nx">_this</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+        <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#btn-save</span><span class="dl">'</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">click</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="nx">_this</span><span class="p">.</span><span class="nx">save</span><span class="p">();</span>
+        <span class="p">});</span>
+    <span class="p">},</span>
+    <span class="na">save</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(){</span>
+        <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="na">title</span><span class="p">:</span> <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#title</span><span class="dl">'</span><span class="p">).</span><span class="nx">val</span><span class="p">(),</span>
+            <span class="na">author</span><span class="p">:</span> <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#author</span><span class="dl">'</span><span class="p">).</span><span class="nx">val</span><span class="p">(),</span>
+            <span class="na">content</span><span class="p">:</span> <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#content</span><span class="dl">'</span><span class="p">).</span><span class="nx">val</span><span class="p">(),</span>
+        <span class="p">};</span>
+        <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+            <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">POST</span><span class="dl">'</span><span class="p">,</span>
+            <span class="na">url</span><span class="p">:</span> <span class="dl">'</span><span class="s1">/api/v1/posts</span><span class="dl">'</span><span class="p">,</span>
+            <span class="na">dataType</span><span class="p">:</span> <span class="dl">'</span><span class="s1">json</span><span class="dl">'</span><span class="p">,</span>
+            <span class="na">contentType</span><span class="p">:</span><span class="dl">'</span><span class="s1">application/json; charset=utf-8</span><span class="dl">'</span><span class="p">,</span>
+            <span class="na">data</span><span class="p">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+        <span class="p">}).</span><span class="nx">done</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">글이 등록되었습니다.</span><span class="dl">'</span><span class="p">);</span>
+            <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">/view/</span><span class="dl">'</span><span class="p">;</span>
+        <span class="p">}).</span><span class="nx">fail</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">error</span><span class="p">));</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+<span class="nx">main</span><span class="p">.</span><span class="nx">init</span><span class="p">();</span>
+</code></pre></div></div>
+<p>위와 같이 js파일을 작성했습니다.</p>
+
+<p><img src="../assets/img/230122/example.jpg" alt="example1" /></p>
+
+<p>위와 같은 패키지 요구사항이 있다면 <code class="language-plaintext highlighter-rouge">IntelliJ</code>에서 어떻게 패키지 생성을 하시겠나요?</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. static/js/app
+2. static.js.app
+</code></pre></div></div>
+<p>저같은 경우 2번으로 패키지를 작성하여 404에러를 경험하였습니다.</p>
+
+<p>패키지 생성과 표기를 다시 확인하는 작업이 얼마나 중요한지를 다시 한번 깨닫았습니다.</p>
+
+<p><img src="../assets/img/230122/example2.jpg" alt="example2" />
+위와 같이 정상적으로 파일이 전송되는 것을 확인할 수 있습니다.</p>]]></content><author><name>박정우</name></author><category term="spring" /><category term="spring" /><summary type="html"><![CDATA[⚠️ 본 게시물은 스프링 부트와 AWS로 혼자 구현하는 웹서비스를 참고도서로 활용합니다. 저작권은 본 책의 저서에게 있음을 알립니다.]]></summary></entry><entry><title type="html">JPA 개요와 Web layer</title><link href="https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/20/cotatoStudy5.html" rel="alternate" type="text/html" title="JPA 개요와 Web layer" /><published>2023-01-20T00:00:00+00:00</published><updated>2023-01-20T00:00:00+00:00</updated><id>https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/20/cotatoStudy5</id><content type="html" xml:base="https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/20/cotatoStudy5.html"><![CDATA[<p>⚠️ 본 게시물은 <code class="language-plaintext highlighter-rouge">스프링 부트와 AWS로 혼자 구현하는 웹서비스</code>를 참고도서로 활용합니다. 저작권은 본 책의 저서에게 있음을 알립니다.</p>
+<h1 id="jpa">JPA</h1>
+<p>RDBMS를 사용해 프로젝트를 수행한다고 생각해봅시다.</p>
+
+<p>사람과 거주지라는 클래스를 만든다면 어떻게 작성하실건가요?</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Human</span><span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">주소</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">age</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Place</span><span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">주소</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">아파트명</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>저라면 위와 같은 POJO로 작성할 것 같습니다.<br />
+주소라는 String이 Place의 PK이고 Human의 FK라는 것을 알 수 있고 테이블 생성에도 큰 무리가 없어 보입니다.<br />
+하지만 위와 같은 클래스는 제가 놓친 자바의 기본적인 원리가 숨어 있습니다.</p>
+
+<h2 id="객체-지향-프로그래밍">객체 지향 프로그래밍</h2>
+<p>바로 객체 지향적인 프로그래밍입니다. 위와 같은 프로그래밍이 가질 수 있는 문제는 두가지가 있습니다.</p>
+
+<ol>
+  <li>클래스를 단순히 데이터 그릇으로만 사용한다.</li>
+  <li>클래스를 테이블에 맞추는 기형적인 설계가 나타난다.</li>
+</ol>
+
+<p>Java를 사용하고 객체 지향적인 프로그래밍을 한다면 객체의 행동과 의미가 잘 들어나야하는데 위와 같은 작성은 <em>값으로 단순히 프로그래밍</em>을 할수밖에 없습니다.</p>
+
+<blockquote>
+  <p>AWS로 혼자 구현하는 웹 서비스 81p : 객체 지향 프로그래밍은 메세지를 기반으로 기능과 속성을 한 곳에서 관리하는 기술</p>
+</blockquote>
+
+<h2 id="jpa의-등장">JPA의 등장</h2>
+<p>그래서 많은 서버 개발자들에게 객체 지향적인 프로그래밍이 가능하도록 Mapping을 해주는 ORM(Obejct Relation Mapping)이 등장합니다. 바로 <code class="language-plaintext highlighter-rouge">JPA</code>입니다.</p>
+
+<p>위 기술을 통해 객체를 객체답게 다룰 수 있고 DB에 따른 SQL의존도도 낮출 수 있습니다.</p>
+
+<p>인터페이스와 같이 객체가 달라지더라도 같은 인터페이스를 implement한다면 교체가 용이하다는 점을 생각하면 됩니다.</p>
+
+<p>상세한 JPA 문법은 다음에 다루도록 하겠습니다.</p>
+
+<h2 id="web-계층">Web 계층</h2>
+<p>이제 프로젝트를 진행할 때 시작하는 법, DB와 소통하는 법을 알았습니다. 하지만 또 다른 문제가 있습니다.</p>
+<blockquote>
+  <p>클래스, 패키지명을 어떻게 정해야 하는가?</p>
+</blockquote>
+
+<p>API를 만들기 위해서는 데이터 교환을 위한 DTO 클래스, API 요청을 받는 Controller, 트랜잭션 및 도메인 로직의 순서를 보장하는 Service 가 존재합니다.</p>
+
+<ul>
+  <li>기존에 클래스를 기준으로 인자를 작성했다면 DTO 클래스를 통해 필요한 데이터를 모아서 교환을 합니다.</li>
+  <li>Controller일 경우 MVC 패턴과 비슷하게 요청을 받고 그에 필요한 기능을 호출합니다.</li>
+  <li>Service는 트랜잭션 및 도메인의 순서를 결정할 뿐 비즈니스 로직을 처리하지 않습니다.
+    <ul>
+      <li>Service는 순서만 보장합니다. 실제 서비스 기능은 Domain에서 처리합니다.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>프로젝트에서 오류를 줄이기 위해서 기능의 역할을 집중하는 것이 좋습니다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Web : 외부의 요청과 응답에 대한 전반적인 영역
+
+Service : Controller와 Dao의 중간 영역, @Transaction이 사용되는 영역
+
+Repository : Database에 접근하는 영역
+
+DTO : 계층간의 데이터 교환을 위한 객체
+
+Domain Model : 개발 대상을 단순화 시킨것
+</code></pre></div></div>]]></content><author><name>박정우</name></author><category term="spring" /><category term="spring" /><summary type="html"><![CDATA[⚠️ 본 게시물은 스프링 부트와 AWS로 혼자 구현하는 웹서비스를 참고도서로 활용합니다. 저작권은 본 책의 저서에게 있음을 알립니다. JPA RDBMS를 사용해 프로젝트를 수행한다고 생각해봅시다.]]></summary></entry><entry><title type="html">JVM 알아보기</title><link href="https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/19/cotatoStudy4.html" rel="alternate" type="text/html" title="JVM 알아보기" /><published>2023-01-19T00:00:00+00:00</published><updated>2023-01-19T00:00:00+00:00</updated><id>https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/19/cotatoStudy4</id><content type="html" xml:base="https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/19/cotatoStudy4.html"><![CDATA[<h2 id="jvm-개요">JVM 개요</h2>
+<p>Java를 공부하며 많이 들어본 JVM, JVM은 무엇이고 어떻게 컴퓨터에 Java 프로그램을 실행시키는 것일까?</p>
+
+<p>JVM은 가상 머신이며 java 프로그램을 실행시키기 위한 <code class="language-plaintext highlighter-rouge">런타임</code>을 제공한다.</p>
+<blockquote>
+  <p>런타임 : 컴퓨터 프로그램이 실행되고 있는 동안의 동작 - wikipedia</p>
+</blockquote>
+
+<p>Java 소스코드는 CPU가 인식하지 못하므로 기계어가 컴파일을 해야한다.</p>
+
+<ol>
+  <li>Java는 JVM을 거쳐 OS에 도달하기 때문에 <code class="language-plaintext highlighter-rouge">Java bytecode</code>인 .class 파일로 변환된다.
+    <ul>
+      <li>java는 Managed Code이기 때문이다.</li>
+    </ul>
+  </li>
+  <li>bytecode(class)파일은 기계어가 아니기 때문에 OS에서 바로 실행되지 않는다.
+    <ul>
+      <li>JVM이 OS가 bytecode를 이해할 수 있도록 해석해준다.</li>
+      <li>위와 같은 과정이 Java가 OS에 종속적이지 않은 특징을 만든다.</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="jvm의-구성-요소">JVM의 구성 요소</h2>
+<ul>
+  <li>Class Loader : JVM으로 클래스를 로드하는 역할, bytecode 검증과 Java security model에 위반 되는지 확인한다.
+    <ul>
+      <li>bytecode가 있어야 프로그램을 실행하니까 class를 load 한다.</li>
+      <li>Java 보안 모델 : JVM이 무결성을 잃지 않고 클래스를 실행할 수 있도록 보장하는 모델</li>
+    </ul>
+  </li>
+  <li>Execution Engine : bytecode 명령어를 실행하는 책임이 있고 <code class="language-plaintext highlighter-rouge">interpreter</code>를 포함한다.(bytecode 명령어를 한 줄씩 해석), JIT 컴파일러가 존재.
+    <ul>
+      <li>JIT 컴파일러 : 바이트 코드를 컴퓨터 프로세서가 처리할 수 있는 명령어로 바꾸는 컴파일러</li>
+      <li>interpreter가 명령어로 해석하면 JIT가 바로 기계어로 컴파일하여 실행 속도를 높인다.
+        <ul>
+          <li>자주 사용되는 부분만 컴파일하여 속도를 높인다.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Memory Management : 프로그램의 객체와 변수에 대한 할당과 해제를 한다.</li>
+  <li>Thread Support : 다중 스레드가 실행할 수 있다.</li>
+  <li>Native Interface : Java 프로그램이 Native Code를 호출하거나 Native Code가 Java 프로그램을 호출할 수 있게 도와준다.
+    <ul>
+      <li>Native Code : 컴퓨터 기계어로 동작하는 코드, OS에 의해 직접적으로 컴파일 되는 코드. 컴퓨터에서 작성된 그대로 동작한다. ex) C언어</li>
+      <li>Managed Code : Native 코드와 반대, 구동시키기 위해서 인터프리터라는 다른 프로그램이 요구된다. ex) Java
+        <ul>
+          <li>다른 언어로 작성된 라이브러리를 생각하면 된다.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Security Manager : 위에서 언급한 Java 보안 모델을 통해 검사하는 역할.
+    <h2 id="jit와-interpreter의-차이">JIT와 interpreter의 차이</h2>
+    <p>Execution Engine에서 인터프리터와 JIT 컴파일러는 bytecode를 해석하는 면에서 차이가 없어 보인다. 두 비슷해 보이는 기능 사이에 어떤 차이가 존재할까?</p>
+  </li>
+</ul>
+
+<blockquote>
+  <p>interpreter는 bytecode를 바로 실행시키는 반면 JIT 컴파일러는 byte코드를 기계어로 번역한다.</p>
+</blockquote>
+
+<p>위와 같은 차이로 JIT 컴파일러가 기계어로 번역한 것이 상대적으로빠르고 interpreter로 번역하며 실행하는 것이 상대적으로 느리다.</p>
+
+<p><strong><em>그러면 JIT 컴파일러로 bytecode를 번역해서 사용하면 속도도 빠르고 좋은데?</em></strong></p>
+
+<p>그럼에도 불구하고 현재까지도 interpreter가 대부분의 실행을 담당하고 JIT 컴파일러는 실행 코드를 분석하고 기계어로 번역해 성능을 올리고 있다.</p>
+
+<h2 id="jvm이-프로그램을-실행시키는-과정">JVM이 프로그램을 실행시키는 과정</h2>
+<p><img src="../assets/img/230119/compile.png" alt="test" /></p>
+
+<ol>
+  <li>JVM은 메모리에 프로그램을 먼저 로드한다.
+    <ul>
+      <li>이후 bytecode에 에러가 있는지 확인하고 검증한다.</li>
+      <li>또한 JVM은 프로그램의 객체와 변수에 대한 메모리를 할당한다.(Heap)</li>
+    </ul>
+  </li>
+  <li>JVM이 bytecode 명령어를 프로그램의 main 메소드와 함께 실행한다.
+    <ul>
+      <li>프로그램이 실행되면 JVM은 프로그램의 메모리와 리소스를 관리한다.
+        <ul>
+          <li>현재 실행중인 객체, 스레드에 대한 메모리, 리소스 등</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="garbage-collector">Garbage Collector</h2>
+<p>JVM의 구성요소 중 memory management는 <code class="language-plaintext highlighter-rouge">가비지 컬렉터</code>와 매우 유사하다는 것을 알 수 있다.</p>
+
+<p>가비지 컬렉터 : 자동으로 프로그램에서 더 이상 사용하지 않는 메모리를 해제하는 역할, 메모리 누수와 효울적인 작동을 도와준다.</p>]]></content><author><name>박정우</name></author><category term="spring" /><category term="spring" /><summary type="html"><![CDATA[JVM 개요 Java를 공부하며 많이 들어본 JVM, JVM은 무엇이고 어떻게 컴퓨터에 Java 프로그램을 실행시키는 것일까?]]></summary></entry><entry><title type="html">Stream 문법 알아보기</title><link href="https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/16/cotatoStudy3.html" rel="alternate" type="text/html" title="Stream 문법 알아보기" /><published>2023-01-16T00:00:00+00:00</published><updated>2023-01-16T00:00:00+00:00</updated><id>https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/16/cotatoStudy3</id><content type="html" xml:base="https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/16/cotatoStudy3.html"><![CDATA[<h2 id="stream-개요">Stream 개요</h2>
+<p>Stream은 java8에서 부터 시작된 Collection, Array등 저장 요소를 하나씩 참조하며 함수형 인터페이스(Lambda)를 적용하여 반복적으로 처리할 수 있는 기능<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup></p>
+
+<p>I/O Stream이 아닌 저장 요소의 Stream</p>
+
+<h3 id="왜-이걸-사용하는-거죠">왜 이걸 사용하는 거죠?</h3>
+<ol>
+  <li>단순히 for문을 대신하는 게 아닌 for문의 반복 행위만 대신한다.
+    <ul>
+      <li>for문을 대신하는 것만 아닌 다른 기능(대소비교, 매칭 등등)을 같이 수행</li>
+    </ul>
+  </li>
+  <li>함수형 프로그래밍이 가능하다.
+    <ul>
+      <li>파이프라인 구조로 직관적인 프로그래밍이 가능</li>
+    </ul>
+  </li>
+</ol>
+
+<p>위와 같은 장점으로 많은 Java 개발자가 Stream API를 사용한다.</p>
+
+<h3 id="기본적인-구성">기본적인 구성</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>객체집합(Collection).스트림생성().중개연산().최종연산();
+</code></pre></div></div>
+<p>스트림 생성법</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(){</span>
+    <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">users</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="s">"A"</span><span class="o">,</span> <span class="s">"B"</span><span class="o">,</span> <span class="s">"C"</span><span class="o">);</span>
+    <span class="n">users</span><span class="o">.</span><span class="na">stream</span><span class="o">();</span>
+
+    <span class="kt">int</span><span class="o">[]</span> <span class="n">numbers</span> <span class="o">=</span> <span class="o">{</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="o">,</span><span class="mi">4</span><span class="o">};</span>
+    <span class="nc">Arrays</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="n">numbers</span><span class="o">);</span>
+
+    <span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">stream</span> <span class="o">=</span> <span class="nc">Stream</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="o">,</span><span class="mi">4</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>중개 연산방법</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(){</span>
+    <span class="c1">//Filter 사용법</span>
+        <span class="c1">// 조건에 맞는 요소</span>
+    <span class="kt">int</span> <span class="n">check</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="n">users</span><span class="o">.</span><span class="na">stream</span><span class="o">()</span>
+        <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">h</span><span class="o">-&gt;</span><span class="n">h</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">"C"</span><span class="o">))</span>
+        <span class="o">.</span><span class="na">count</span><span class="o">();</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"필터링 : "</span> <span class="o">+</span> <span class="n">check</span><span class="o">);</span>
+    <span class="c1">//Map 사용법</span>
+        <span class="nc">Arrays</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="n">numbers</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">x</span> <span class="o">-&gt;</span> <span class="n">x</span><span class="o">+</span><span class="mi">5000</span><span class="o">)</span><span class="c1">//int형 자료에 대한 연산</span>
+            <span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">x</span> <span class="o">-&gt;</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"5000을 더해 "</span> <span class="o">+</span><span class="n">x</span><span class="o">+</span><span class="s">"를 출력하자"</span><span class="o">));</span><span class="c1">//반복문</span>
+        
+        <span class="c1">// 원하는 컬렉션 형태로 파싱하기</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">newList</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="n">numbers</span><span class="o">)</span>
+                                    <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">x</span><span class="o">+</span><span class="mi">2000</span><span class="o">)</span>
+                                    <span class="o">.</span><span class="na">boxed</span><span class="o">()</span>
+                                    <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span>
+    <span class="c1">//sort</span>
+    <span class="kt">int</span> <span class="n">a</span><span class="o">[]</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="n">numbers</span><span class="o">)</span>
+                        <span class="o">.</span><span class="na">sorted</span><span class="o">()</span>
+                        <span class="o">.</span><span class="na">toArray</span><span class="o">();</span>
+    <span class="nc">Arrays</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="n">a</span><span class="o">).</span><span class="na">forEach</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span>
+    <span class="c1">// 개수 제한</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"5개만 출력-------------"</span><span class="o">);</span>
+        <span class="nc">Arrays</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="n">a</span><span class="o">).</span><span class="na">limit</span><span class="o">(</span><span class="mi">5</span><span class="o">).</span><span class="na">forEach</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span>
+
+    <span class="c1">//distinct</span>
+    <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">list_1</span> <span class="o">=</span> <span class="nc">Stream</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">distinct</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span>
+    <span class="n">list_1</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>위와 같이 map, distinct 등 기능을 stream에 적용한다.</p>
+
+<p>최종 연산방법</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.forEach
+.get()
+.getInt()
+.collect(Collectors.toList())
+</code></pre></div></div>
+<p>stream을 위와 같은 리턴 타입으로 바꿔주는 역할을 한다.</p>
+
+<p>전체 소스코드</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Arrays</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.stream.Stream</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.stream.IntStream</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Comparator</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.stream.Collectors</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">StreamTester</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// 선언부</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">users</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="s">"A"</span><span class="o">,</span> <span class="s">"B"</span><span class="o">,</span> <span class="s">"C"</span><span class="o">);</span>
+        <span class="n">users</span><span class="o">.</span><span class="na">stream</span><span class="o">();</span>
+
+        <span class="kt">int</span><span class="o">[]</span> <span class="n">numbers</span> <span class="o">=</span> <span class="o">{</span><span class="mi">5</span><span class="o">,</span><span class="mi">6</span><span class="o">,</span><span class="mi">7</span><span class="o">,</span><span class="mi">8</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="o">,</span><span class="mi">4</span><span class="o">};</span>
+        <span class="nc">Arrays</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="n">numbers</span><span class="o">);</span>
+
+        <span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">strm</span> <span class="o">=</span> <span class="nc">Stream</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span><span class="mi">200</span><span class="o">,</span><span class="mi">300</span><span class="o">);</span>
+
+        <span class="c1">// 필터링</span>
+            <span class="c1">// 조건에 맞는 요소</span>
+        <span class="kt">int</span> <span class="n">check</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="n">users</span><span class="o">.</span><span class="na">stream</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">h</span><span class="o">-&gt;</span><span class="n">h</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">"C"</span><span class="o">))</span>
+            <span class="o">.</span><span class="na">count</span><span class="o">();</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"필터링 : "</span> <span class="o">+</span> <span class="n">check</span><span class="o">);</span>
+
+            <span class="c1">// distinct한 요소</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">list_1</span> <span class="o">=</span> <span class="nc">Stream</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">distinct</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span>
+        <span class="n">list_1</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span>
+
+        <span class="c1">// 개수 세기</span>
+        <span class="n">check</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="n">users</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">count</span><span class="o">();</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"개수 : "</span> <span class="o">+</span> <span class="n">check</span><span class="o">);</span>
+
+        <span class="c1">// 최댓값 찾기</span>
+        <span class="n">check</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="n">numbers</span><span class="o">).</span><span class="na">max</span><span class="o">().</span><span class="na">getAsInt</span><span class="o">();</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"최댓값 : "</span> <span class="o">+</span> <span class="n">check</span><span class="o">);</span>
+
+        <span class="c1">// 최솟값 찾기</span>
+        <span class="n">check</span> <span class="o">=</span> <span class="n">strm</span><span class="o">.</span><span class="na">min</span><span class="o">(</span><span class="nc">Comparator</span><span class="o">.</span><span class="na">comparing</span><span class="o">(</span><span class="n">x</span><span class="o">-&gt;</span> <span class="n">x</span><span class="o">)).</span><span class="na">get</span><span class="o">();</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"최솟값 : "</span> <span class="o">+</span> <span class="n">check</span><span class="o">);</span>
+
+        <span class="c1">// 평균</span>
+        <span class="kt">double</span> <span class="n">dd</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="n">numbers</span><span class="o">).</span><span class="na">average</span><span class="o">().</span><span class="na">getAsDouble</span><span class="o">();</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"평균값 : "</span> <span class="o">+</span> <span class="n">dd</span><span class="o">);</span>
+
+        <span class="c1">// 첫번째 요소</span>
+        <span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">strm1</span> <span class="o">=</span> <span class="nc">Stream</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="mi">1100</span><span class="o">,</span><span class="mi">1200</span><span class="o">,</span><span class="mi">1300</span><span class="o">);</span>
+        <span class="n">check</span> <span class="o">=</span> <span class="n">strm1</span><span class="o">.</span><span class="na">findFirst</span><span class="o">().</span><span class="na">get</span><span class="o">();</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"첫번째 요소 : "</span> <span class="o">+</span> <span class="n">check</span><span class="o">);</span>
+
+        <span class="c1">// 매핑(mapping)</span>
+        <span class="nc">Arrays</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="n">numbers</span><span class="o">)</span>
+            <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">x</span> <span class="o">-&gt;</span> <span class="n">x</span><span class="o">+</span><span class="mi">5000</span><span class="o">)</span><span class="c1">//int형 자료에 대한 연산</span>
+            <span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">x</span> <span class="o">-&gt;</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"5000을 더해 "</span> <span class="o">+</span><span class="n">x</span><span class="o">+</span><span class="s">"를 출력하자"</span><span class="o">));</span><span class="c1">//반복문</span>
+        
+        <span class="c1">// 원하는 컬렉션 형태로 파싱하기</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">newList</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="n">numbers</span><span class="o">)</span>
+                                    <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">x</span><span class="o">+</span><span class="mi">2000</span><span class="o">)</span>
+                                    <span class="o">.</span><span class="na">boxed</span><span class="o">()</span>
+                                    <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span>
+        <span class="c1">// 삽질 -&gt; Collectors가 Stream의 Collectors인데 util의 Collector를 import 했다..</span>
+        <span class="n">newList</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span>
+
+        <span class="c1">// 누적 합</span>
+        <span class="n">check</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="n">numbers</span><span class="o">)</span>
+                        <span class="o">.</span><span class="na">reduce</span><span class="o">((</span><span class="n">x</span><span class="o">,</span><span class="n">y</span><span class="o">)-&gt;</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="o">)</span>
+                        <span class="o">.</span><span class="na">getAsInt</span><span class="o">();</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"누적 합 :"</span> <span class="o">+</span> <span class="n">check</span><span class="o">);</span>
+
+        <span class="c1">// 정렬</span>
+        <span class="kt">int</span> <span class="n">a</span><span class="o">[]</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="n">numbers</span><span class="o">)</span>
+                        <span class="o">.</span><span class="na">sorted</span><span class="o">()</span>
+                        <span class="o">.</span><span class="na">toArray</span><span class="o">();</span>
+        <span class="nc">Arrays</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="n">a</span><span class="o">).</span><span class="na">forEach</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span>
+        <span class="c1">// 개수 제한</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"5개만 출력-------------"</span><span class="o">);</span>
+        <span class="nc">Arrays</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="n">a</span><span class="o">).</span><span class="na">limit</span><span class="o">(</span><span class="mi">5</span><span class="o">).</span><span class="na">forEach</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html</p>
+
+<p>위와 같이 쓰임새가 매우 다양하고 편리하므로 <code class="language-plaintext highlighter-rouge">공식문서</code>를 찾아 기능을 숙지하는 것이 중요하다.</p>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>(https://jeong-pro.tistory.com/165) <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>]]></content><author><name>박정우</name></author><category term="spring" /><category term="spring" /><summary type="html"><![CDATA[Stream 개요 Stream은 java8에서 부터 시작된 Collection, Array등 저장 요소를 하나씩 참조하며 함수형 인터페이스(Lambda)를 적용하여 반복적으로 처리할 수 있는 기능1 (https://jeong-pro.tistory.com/165) &#8617;]]></summary></entry><entry><title type="html">스프링의 개요 알아보기</title><link href="https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/12/cotatoStudy.html" rel="alternate" type="text/html" title="스프링의 개요 알아보기" /><published>2023-01-12T00:00:00+00:00</published><updated>2023-01-12T00:00:00+00:00</updated><id>https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/12/cotatoStudy</id><content type="html" xml:base="https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/12/cotatoStudy.html"><![CDATA[<h2 id="what-is-spring-boot">What is Spring Boot</h2>
+
+<p>요즘 많은 사람이 파이썬으로 프로그래밍을 합니다.<br />
+그럼에도 서버 사이드에서 많이 쓰이는 언어와 프레임워크는 <code class="language-plaintext highlighter-rouge">JAVA</code>와 <code class="language-plaintext highlighter-rouge">Spring</code>이다.<br />
+Spring은 어떠한 강점이 있기 때문에 많은 서버 개발자들이 스프링을 선택하는 것일까?</p>
+
+<h3 id="1-aop">1. AOP</h3>
+<p>스프링은 관점 지향 프로그래밍이 가능하다.</p>
+
+<p>어떤 로직을 기준으로 핵심적인 관점, 부가적인 관점으로 나누어서 보고 그 관점을 기준으로 각각 모듈화 한다는 의미이다.<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup></p>
+
+<p>흩어진 관심사(Crosscutting Concerns)라는 개념으로 이해할 수 있다.</p>
+
+<p>위 개념은 소스 코드 상에서 <code class="language-plaintext highlighter-rouge">반복적으로 쓰이는 코드를 모듈화</code> 하는 행위인데 이 방법을 통해 효율적으로 <code class="language-plaintext highlighter-rouge">재사용</code>하는 프로그래밍을 말한다.</p>
+
+<ul>
+  <li>프록시 기반 AOP 구현체</li>
+  <li>스프링 Bean에 AOP 적용</li>
+  <li>스프링 IoC(제어 역전)와 연동</li>
+</ul>
+
+<h3 id="2-di-ioc">2. DI, IoC</h3>
+<p>Dependency Injection(의존 관계 주입)</p>
+
+<p>객체를 직접 생성하는 것이 아닌 <code class="language-plaintext highlighter-rouge">외부에서 생성한 후 주입</code>시키는 방식이다.</p>
+
+<p>ex) setter를 통한 주입</p>
+
+<p>IoC는 제어 역전이라고 말하며 말 그대로 <code class="language-plaintext highlighter-rouge">제어의 흐름을 바꾼다.</code></p>
+
+<p>객체의 의존성을 역전시켜 객체 간의 결합도를 줄이고 가독성 및 코드의 중복, 유지보수를 편하게 할 수 있다.<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>기존 객체 생성 순서</th>
+      <th>스프링의 객체 생성 순서</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1. 객체 생성</td>
+      <td>1. 객체 생성</td>
+    </tr>
+    <tr>
+      <td>2. 의존성 객체 생성</td>
+      <td>2. 의존성 객체 <code class="language-plaintext highlighter-rouge">주입</code></td>
+    </tr>
+    <tr>
+      <td>3. 의존성 객체 메소드 호출</td>
+      <td>3. 의존성 객체 메소드 호출</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>위의 표와 같이 스프링이 모든 의존성 객체를 만들어 주고 필요한 곳에 주입한다.</p>
+
+<p>스프링에서는 객체를 Bean으로 부르고 Bean을 관리하는 공간을 Bean 컨테이너라고 한다.</p>
+
+<p>➡️ Bean은 싱글톤 패턴을 가지고 스프링이 제어의 흐름을 가져간다.</p>
+
+<h3 id="3-pojo오래되고-간단한-자바-객체">3. POJO(오래되고 간단한 자바 객체)</h3>
+<p>Java EE -&gt; 사용하기 간편하지만 중량의 프레임 워크이고</p>
+
+<p>java의 핵심이 객체 지향임에도 불구하고 특정 기술, 환경에 종속되어 가독성, 유지보수, 확장성이 모두 떨어지는(객체지향성이 감소하는) 현상을 비판하기 위한 개념<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup></p>
+
+<p>아래와 같은 클래스가 POJO의 예시입니다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Human</span><span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">age</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getName</span><span class="o">(){</span><span class="k">return</span> <span class="n">name</span><span class="o">;}</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getAge</span><span class="o">(){</span><span class="k">return</span> <span class="n">age</span><span class="o">;}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">){</span><span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setAge</span><span class="o">(</span><span class="kt">int</span> <span class="n">age</span><span class="o">){</span><span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">age</span><span class="o">;}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p><code class="language-plaintext highlighter-rouge">Hibernate</code>가 바로 POJO기반의 Persistence 프레임워크이다.</p>
+
+<p>하이버네이트를 생각해보면 어떤 DB에 종속하지 않는다는 특징이 바로 떠오릅니다.</p>
+
+<p>또한 JPA가 매우 객체 지향적인 성질을 가진다는 것을 떠올리면 됩니다.</p>
+
+<h3 id="spring-vs-spring-boot">Spring vs Spring Boot</h3>
+<p>그렇다면 스프링과 스프링 부트는 무슨 차이가 있을까요?</p>
+
+<p>스프링은…</p>
+<ol>
+  <li>sub-frameworks의 총체
+    <ul>
+      <li>AOP, ORM, Web Flow, Web MVC..등 여러 계층으로 이루어짐</li>
+    </ul>
+  </li>
+  <li>POJO, DI 등 enterprise application을 개발하는데 최적화됨</li>
+  <li>기존 classic Java frameworks와 APIs(JDBC, JSP, Java Servlet)보다 쉬운 개발</li>
+</ol>
+
+<p>등등의 특징을 가지고 있습니다.</p>
+
+<p>스프링 부트는…</p>
+<ol>
+  <li>전통적인 스프링 프레임워크의 위에 만들어졌습니다.
+    <ul>
+      <li>즉 스프링의 모든 특징을 가지며 쉽게 사용할 수 있습니다.</li>
+    </ul>
+  </li>
+  <li>스프링 부트는 <code class="language-plaintext highlighter-rouge">마이크로서비스</code> 기반 프레임워크이고 빠른 시간에 개발이 가능합니다.</li>
+  <li>스프링 부트의 모든 것은 <code class="language-plaintext highlighter-rouge">자동으로 설정</code>됩니다.</li>
+</ol>
+
+<p>(micro service architecture) : <code class="language-plaintext highlighter-rouge">각각을 마이크로하게 나눈 독립적인 서비스를 연결한 구조</code></p>
+
+<p>스프링 부트를 사용하는 이유는 <code class="language-plaintext highlighter-rouge">스프링의 장점을 가지며 더욱 간단하고 빠르게 개발을 하기 위해</code> 입니다.</p>
+
+<h2 id="what-is-gradle">What is Gradle?</h2>
+<p>이제 스프링 부트가 얼마나 좋은 강점이 있는지 알겠습니다.<br />
+<code class="language-plaintext highlighter-rouge">IntelliJ</code>라는 개발환경에서 첫 프로젝트를 생성하려고 하는데…</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>프로젝트 옵션 : 
+Maven, Gradle, Ant
+</code></pre></div></div>
+<p>위 옵션들은 무엇이고 어떠한 차이가 있을까요?<sup id="fnref:4" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup></p>
+
+<h3 id="빌드-도구들의-등장">빌드 도구들의 등장</h3>
+<p>python, js를 사용해본 사람이라면 패키지 매니저를 잠시 떠올려 보자.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install </span>numpy
+npm <span class="nb">install </span>axios
+</code></pre></div></div>
+<p>pip, npm등 이 떠오른다. 그렇다면 java는 어떤 것을 사용할까?<br />
+이때 Maven과 Gradle의 필요성이 짐작이 간다.</p>
+
+<p>Maven과 Gradle의 특징표<sup id="fnref:5" role="doc-noteref"><a href="#fn:5" class="footnote" rel="footnote">5</a></sup></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>|</th>
+      <th>Maven</th>
+      <th>Gradle</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td> </td>
+      <td>특징</td>
+      <td>오픈소스 빌드 도구(안정성에 집중)</td>
+      <td>오픈소스 빌드 도구</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>작동</td>
+      <td>XML을 통해 프로젝트 구조를 생성</td>
+      <td>Java와 Groovy기반 DSL로 작동한다.</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>목적</td>
+      <td>한정된 시간에 어플리케이션을 개발하는 것에 초점</td>
+      <td>어플리케이션에 기능을 추가하는 것에 초점</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>성능</td>
+      <td>느리고, 임시파일을 생성하지 않는다</td>
+      <td>maven보다 빠르고 현재 구동중인 작업에 초점</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>복잡도</td>
+      <td>복잡하다</td>
+      <td>단순하다</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>커스터마이즈</td>
+      <td>customizable하지 않고 소수의 IDE에만 기능 제공</td>
+      <td>customizable하고 다양한 IDE지원</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>지원언어</td>
+      <td>Java, Scalar, C#, 루비 개발을 지원</td>
+      <td>Java, C, C++, Groovy에 개발 지원</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Groovy -&gt; Java에 파이썬, 루비, 스몰토크 등의 특징을 더한 동적 객체 지향 프로그래밍언어
+DSL -&gt; 이 본문에서는 Digital Subscriber Line이 아닌 
+    Domain specific language로 어플리케이션 도메인을 명시하는데 특화된 언어.
+    GPL(general purpose language)와 정반대되는 성격을 가진다.
+    ex) Java에서는 ANT, Maven, HQL
+        SQL, CSS, 정규식, Make...
+        HTML도 도메인 특화 언어이다.
+GPL 예시 : java, C(java, C는 하나의 도메인에만 얽혀있지 않는다.)
+
+의존성 : 프로젝트에 필요한 라이브러리.
+</code></pre></div></div>
+<h2 id="plugin은-무엇인가요">Plugin은 무엇인가요?</h2>
+
+<p>Gradle의 특징중 하나가 떠오릅니다.<br />
+또한 책에서 본 gradle 중 어느 요소가 떠오릅니다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Gradle is a tool used for creating plug-ins and is a flexible instrument.
+
+plugins {
+    id 'java'
+}
+</code></pre></div></div>
+<blockquote>
+  <p>플러그인은 특정 작업을 하기 위해 모아놓은 Task의 묶음이다.<sup id="fnref:6" role="doc-noteref"><a href="#fn:6" class="footnote" rel="footnote">6</a></sup></p>
+</blockquote>
+
+<p>그러므로 Gradle에서 Plugin은 Gradle Task의 집합입니다.</p>
+
+<p>스프링 어플리케이션을 개발에는 아래와 같은 과정(Task)이 이루어진다.</p>
+<ol>
+  <li>필요한 라이브러리를 받아온다.</li>
+  <li>라이브러리로 자바 코드를 컴파일</li>
+  <li>컴파일된 바이트코드의 묶음을 패키징</li>
+</ol>
+
+<p>위와 같은 작업들을 일일히 Gradle 파일에 정의하면 매우 비효율적이다. (매번 비슷한 작업을 똑같이 작성해야하기 때문)</p>
+
+<p>그래서 IDE에서 플러그인으로 위와 같은 작업을 정의하고 작업을 Gradle파일에 등록한다.</p>
+
+<blockquote>
+  <p>gradlew는 무엇인가요?</p>
+</blockquote>
+
+<p>gradle-wrapper의 약어이다.</p>
+
+<p>개발자가 새로운 환경에서 개발을 시작하더라도 gradle을 설치할 필요 없이 동일한 환경에서 실행할 수 있도록 해주는 내장 gradle이다.</p>
+
+<p>지금까지 Spring의 특징과 Spring의 구성요소를 간략히 알아보았습니다.</p>
+
+<p>다음에는 Spring의 구성요소를 면밀히 알아보고 Hibernate의 대략적인 이해를 하도록 하겠습니다.</p>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>https://engkimbs.tistory.com/746 <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>https://velog.io/@gillog/Spring-DIDependency-Injection <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p>https://dev-coco.tistory.com/82 <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:4" role="doc-endnote">
+      <p>https://sugerent.tistory.com/571 <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:5" role="doc-endnote">
+      <p>https://www.geeksforgeeks.org/difference-between-gradle-and-maven/ <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:6" role="doc-endnote">
+      <p>https://kotlinworld.com/323 <a href="#fnref:6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>]]></content><author><name>박정우</name></author><category term="spring" /><category term="spring" /><summary type="html"><![CDATA[What is Spring Boot]]></summary></entry><entry><title type="html">스프링 부트 요소와 한글 깨짐 해결</title><link href="https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/12/cotatoStudy2.html" rel="alternate" type="text/html" title="스프링 부트 요소와 한글 깨짐 해결" /><published>2023-01-12T00:00:00+00:00</published><updated>2023-01-12T00:00:00+00:00</updated><id>https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/12/cotatoStudy2</id><content type="html" xml:base="https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/12/cotatoStudy2.html"><![CDATA[<h2 id="스프링-부트-시작하기">스프링 부트 시작하기</h2>
+
+<p>⚠️ 본 게시물은 <code class="language-plaintext highlighter-rouge">스프링 부트와 AWS로 혼자 구현하는 웹서비스</code>를 참고도서로 활용합니다. 저작권은 본 책의 저서에게 있음을 알립니다.</p>
+
+<h3 id="스프링-부트-알아가기">스프링 부트 알아가기</h3>
+
+<p>먼저 IntelliJ, Java 11, Gradle을 설치하고 프로젝트를 Gradle로 생성했을 때를 기준으로 합니다. 이 책에서 나온 몇가지 컨벤션입니다.</p>
+
+<ol>
+  <li>패키지명은 웹사이트의 역순으로 합니다.
+    <ul>
+      <li>ex) jungwoo.java.com -&gt; com.java.jungwoo</li>
+    </ul>
+  </li>
+  <li>테스트 코드도 기존 패키지와 구성을 같게 합니다
+    <ul>
+      <li>ex) 실제 클래스 명이 jungwoo.java.com의 Function이면 test 패키지에서도 jungwoo.java.com의 FunctionTest로 정의합니다.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>build.gradle의 구성요소도 확인해보겠습니다.</p>
+
+<ol>
+  <li>plugins : 스프링 부트 의존성 관리와 어플리케이션 패키징을 도와주는 도구.</li>
+  <li>group : 프로젝트를 정의하는 고유 식별자 정보</li>
+  <li>version : 현재 프로젝트의 버전(snapshot이 붙을 경우 개발이 완료되지 않은 상황)</li>
+  <li>sourceCompatibility<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> : 컴파일에서 사용하는 JDK 버전입니다.
+    <ul>
+      <li>실수로 더 높은 버전의 java 기능을 사용하는 것을 방지합니다.</li>
+      <li><code class="language-plaintext highlighter-rouge">targetCompatibility</code>라는 기능도 있습니다.(직접 추가해야함)
+        <ul>
+          <li>생성된 클래스 파일의 버전을 제어합니다.</li>
+          <li>프로그램에서 실행할 수 있는 <code class="language-plaintext highlighter-rouge">가장 낮은 java 버전</code>을 말합니다.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>rerpositories<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> : 프로젝트의 저장소를 구성합니다.<br />
+ 라이브러리를 어떤 원격 저장소에서 받을지를 결정합니다.
+    <ul>
+      <li>mavenCentral : 기존에 많이 쓰인 저장소, 직접 만든 라이브러리를 업로드 어려움</li>
+      <li>jcenter : mavenCentral의 단점을 개선한 저장소</li>
+    </ul>
+  </li>
+  <li>test : Test task를 추가, 본 프로젝트에서는 JUnit을 사용하기 때문에 <code class="language-plaintext highlighter-rouge">useJUnitPlatform()</code>을 사용한다.</li>
+  <li>dependencies : 프로젝트 개발에 필요한 의존성들을 선언하는 곳.
+    <ul>
+      <li>주의할 점은 어떠한 버전에 종속적인 의존성을 선언하는 것을 지양해야 합니다.</li>
+    </ul>
+  </li>
+  <li>implementation<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup> : 의존 라이브러리 수정시 본 모듈까지만 리빌드한다.
+    <ul>
+      <li>testImplementation : 테스트 코드를 수행할 때만 적용</li>
+      <li>runtimeOnly : runtime 시에만 필요한 라이브러리일 경우</li>
+      <li>compileOnly : 컴파일 시에만 빌드하고 빌드 결과물에는 포함하지 않는다.</li>
+      <li>annotationProcessor : annotation processor 명시한다.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>implementation 추가 설명 :<br />
+A &lt;- B &lt;- C 의 의존관계를 가진다고 가정해보자.</p>
+
+<ul>
+  <li>compile은 A 수정시 B,C 등 의존 오브젝트가 모두 다시 빌드되어야 한다.</li>
+  <li>implementation은 A 수정시 B만 다시 빌드하면 된다.</li>
+</ul>
+
+<p>gradle 3.0 이상부터는 compile 사용을 권하지 않는다.</p>
+
+<p>artifact란?<br />
+spring에서는 보통 <code class="language-plaintext highlighter-rouge">jar</code>파일, 빌드 결과물을 말한다.</p>
+
+<p>jar 파일이란?<br />
+<code class="language-plaintext highlighter-rouge">Java Archive</code>를 뜻한다. 여러개의 자바 클래스 파일과 클래스들이 이용하는 리소스(텍스트, 그림) 및 메타데이터(데이터를 설명하는 데이터)를 하나의 파일로 모아 자바 플랫폼에서 <code class="language-plaintext highlighter-rouge">응용 소프트웨어</code> 또는 <code class="language-plaintext highlighter-rouge">라이브러리</code>를 <code class="language-plaintext highlighter-rouge">배포하기 위한</code> 소프트웨어 <code class="language-plaintext highlighter-rouge">패키지 파일 포맷</code>이다. - wiki 정의</p>
+
+<p>Maven 저장소<sup id="fnref:4" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup>는 일반적으로 maven artifacts가 저장되고 관리되는 공간이다.<br />
+한번 maven artifact가 maven 저장소에 등록되면 다른 maven 프로젝에서 검색, 포함될 수 있다.</p>
+
+<p><img src="/assets/img/230112/maven.jpg" alt="img3" /></p>
+
+<p>org.springframework.boot 란?<br />
+위에서 언급한 스프링부트의 groupId이다.</p>
+<ul>
+  <li>boot-starter란? : 라이브러리간 의존성, 버전 조합을 미리 정의해서 제공
+    <ul>
+      <li>모든 경우에 대한 완벽한 조합은 아니지만 자주 사용하는 라이브러리에 한에서는 안정적인 사용이 가능하다.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="한글-깨짐-현상">한글 깨짐 현상</h3>
+<p>처음으로 인텔리제이를 사용하면 한글이 제대로 출력되지 않는 현상이 나타난다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Help -&gt; Edit Custom VM Options
+vmoption파일에 
+-----------------------
+-Dfile.encoding=UTF-8
+-Dconsole.encoding=UTF-8
+-----------------------
+을 추가하고 다시 실행한다.
+</code></pre></div></div>
+<h3 id="어노테이션-정리">어노테이션 정리</h3>
+<p>@RestController</p>
+<ul>
+  <li>컨트롤러를 JSON으로 변환하는 컨트롤러로 만들어준다.</li>
+  <li>@ResponseBody를 각 메소드마다 선언했던 것을 한번에 사용할 수 있다고 생각하면 된다.</li>
+</ul>
+
+<p>@GetMapping</p>
+<ul>
+  <li>HTTP Method인 Get 요청을 받을 수 있는 API로 만들어 준다.</li>
+  <li>레거시의 @RequestMapping(method = RequestMethod.GET)의 기능을 생각하면 된다.</li>
+</ul>
+
+<p>@ExtendWith(SpringExtension.class)</p>
+<ul>
+  <li>테스트를 진행할 때 JUnit에 내장된 실행자 외에 다른 실행자를 실행</li>
+  <li>여기서는 SpringExtension 스프링 실행자를 사용</li>
+  <li>스프링 부트 테스트와 JUnit사이의 연결자 역할</li>
+</ul>
+
+<p>@WebMvcTest</p>
+<ul>
+  <li>여러 스프링 테스트 어노테이션 중 Web에 집중할 수 있는 어노테이션</li>
+  <li>@Controller, @ControllerAdvice를 사용가능</li>
+  <li>@Service, @Component, @Repository등은 사용할 수 없다</li>
+</ul>
+
+<p>@Autowired</p>
+<ul>
+  <li>스프링이 관리하는 Bean을 주입받는다.</li>
+</ul>
+
+<p>MockMvc</p>
+<ul>
+  <li>Mock(가짜의), 웹 API를 테스트할 때 사용한다.</li>
+  <li>스프링 MVC 테스트의 시작점</li>
+  <li>이 클래스로 HTTP GET, POST등 API 테스트가 가능하다.</li>
+</ul>
+
+<p>mvc.perform(get(“/hello”))</p>
+<ul>
+  <li>MockMvc를 통해 /hello 주소로 GET 요청을 보낸다.</li>
+  <li>
+    <p>체이닝이 지원되어 아래와 같이 여러 검증 기능을 이어서 선언 가능하다.</p>
+  </li>
+  <li>andExpect(status().isOk())
+    <ul>
+      <li>mvc.perform의 결과를 검증한다.</li>
+      <li>HTTP Header의 status를 검증한다.</li>
+      <li>200, 404, 500 등의 상태를 검증</li>
+    </ul>
+  </li>
+  <li>andExpect(content().string(hello))
+    <ul>
+      <li>mvc.perform의 결과를 검증</li>
+      <li>응답 본문의 내용을 검증한다.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>@Getter</p>
+<ul>
+  <li>선언된 모든 필드의 get 메소드를 생성</li>
+</ul>
+
+<p>@RequiredArgsConstructor</p>
+<ul>
+  <li>선언된 모든 final 필드가 포함된 생성자를 생성</li>
+  <li>final이 없는 필드는 생성자에 포함되지 않는다.</li>
+</ul>
+
+<p>assertThat</p>
+<ul>
+  <li>assertJ라는 테스트 검정 라이브러리</li>
+</ul>
+
+<p>isEqualTo</p>
+<ul>
+  <li>assertJ의 동등 비교 메소드</li>
+</ul>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>https://dlee0129.tistory.com/265 <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>https://pgnt.tistory.com/134 <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p>https://cantcoding.tistory.com/59 <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:4" role="doc-endnote">
+      <p>https://www.cloudrepo.io/articles/what-is-a-maven-repository.html#overview <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>]]></content><author><name>박정우</name></author><category term="spring" /><category term="spring" /><summary type="html"><![CDATA[스프링 부트 시작하기]]></summary></entry><entry><title type="html">Spring JPA 4일차</title><link href="https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2022/12/19/springjpa4.html" rel="alternate" type="text/html" title="Spring JPA 4일차" /><published>2022-12-19T00:00:00+00:00</published><updated>2022-12-19T00:00:00+00:00</updated><id>https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2022/12/19/springjpa4</id><content type="html" xml:base="https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2022/12/19/springjpa4.html"><![CDATA[<h1 id="jpa-4일차--엔티티-매핑">JPA 4일차 : 엔티티 매핑</h1>
+
+<h2 id="어노테이션">어노테이션</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>매핑종류</th>
+      <th>어노테이션</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>객체와 테이블</td>
+      <td>@Entity, @Table</td>
+    </tr>
+    <tr>
+      <td>필드와 컬럼</td>
+      <td>@Column</td>
+    </tr>
+    <tr>
+      <td>기본키</td>
+      <td>@Id</td>
+    </tr>
+    <tr>
+      <td>연관 관계</td>
+      <td>@ManyToOne, @JoinColumn</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="entity">@Entity</h2>
+<p>@Entity가 붙은 클래스는 JPA가 관리한다.</p>
+
+<ul>
+  <li>주의
+    <ul>
+      <li>기본 생성자 필수</li>
+      <li>final클래스, enum, interface, inner클래스 X</li>
+      <li>저장할 필드에 final 사용 X</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Table</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"MBR"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Member</span>
+<span class="o">-&gt;</span> <span class="n">query가</span> <span class="nc">MBR로</span> <span class="n">나간다</span><span class="o">.</span>
+</code></pre></div></div>
+
+<h3 id="데이터베이스-스키마-자동-생성">데이터베이스 스키마 자동 생성</h3>
+<p>🤔Hibernate 기준 persistence.xml에 추가</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;property name="hibernate.hdm2ddl.auto" value="create"&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>DDL을 애플리케이션 실행 시점에 자동 생성</li>
+  <li>테이블 중심 -&gt; 객체 중심</li>
+  <li>데이터베이스 dialect를 통해 데이터베이스에 맞는 DDL 생성</li>
+  <li>개발 단계, 개발 장비에서만 사용(운영에는 사용X)</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>옵션</th>
+      <th>설명</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>create</td>
+      <td>기존테이블 삭제 후 다시 생성</td>
+    </tr>
+    <tr>
+      <td>create-drop</td>
+      <td>create와 같으나 종료시점에 drop</td>
+    </tr>
+    <tr>
+      <td>update</td>
+      <td>변경분만 반영</td>
+    </tr>
+    <tr>
+      <td>validate</td>
+      <td>엔티티와 테이블이 정상 매핑되었는지 확인</td>
+    </tr>
+    <tr>
+      <td>none</td>
+      <td>사용하지 않음</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>⭐⭐⭐ 운영 장비에는 create, create-drop, update를 사용하면 안된다.</p>
+
+<ul>
+  <li>초기 단계 : create, update</li>
+  <li>테스트 서버 : update, validate</li>
+  <li>스테이징, 운영 : validate, none</li>
+</ul>
+
+<h2 id="column">@Column</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>속성</th>
+      <th>설명</th>
+      <th>기본값</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>name</td>
+      <td>필드와 매핑할 테이블의 컬럼이름</td>
+      <td>객체의 필드 이름</td>
+    </tr>
+    <tr>
+      <td>insertable, updatable</td>
+      <td>등록,변경 가능 여부</td>
+      <td>TRUE</td>
+    </tr>
+    <tr>
+      <td>nullable(DDL)</td>
+      <td>null 값의 허용 여부를 설정 false - not null 제약|</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>unique(DDL)</td>
+      <td>@Table의 uniqueConstraint와 같지만 한 컬럼에 간단한 제약조건|</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>columnDefinition</td>
+      <td>데이터 베이스 컬럼 정보</td>
+      <td>필드의 자바 타입과 dialect 정보를 사용</td>
+    </tr>
+    <tr>
+      <td>length(DDL)</td>
+      <td>문자 길이 제약(String Only)</td>
+      <td>255</td>
+    </tr>
+    <tr>
+      <td>precision, scale(DDL)</td>
+      <td>BigDecimal 타입에서 사용,</td>
+      <td>precision=19,</td>
+    </tr>
+    <tr>
+      <td>value</td>
+      <td>EnumType.ORDINAL : enum 순서를 데이터 베이스에 저장, EnumType.STRING : enum이름을 데이터 베이스에 저장</td>
+      <td>EnumType.ORDINAL</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Enum에서 ORDINAL은 되도록이면 사용하면 안된다!</p>
+
+<p>이유 : 옛날 데이터는 변경되지 않는데 Enum에 새로운 데이터가 추가되면 기본값이 달라진다.</p>
+
+<p>해결 : 거의 무조건 Enum.Type.STRING을 사용한다.</p>
+
+<h1 id="기본-키-매핑">기본 키 매핑</h1>
+
+<p>기본 키 매핑 방법</p>
+
+<ul>
+  <li>직접 할당 : @Id 사용</li>
+  <li>자동 생성(@GeneratedValue)
+    <ul>
+      <li>IDENTITY : 데이터베이스에 위임, MYSQL</li>
+      <li>SEQUENCE : 데이터베이스 시퀀스 오브젝트 사용, Oracle
+        <ul>
+          <li>@SequenceGenerator 필요</li>
+        </ul>
+      </li>
+      <li>TABLE : 키 생성용 테이블 사용, 모든 DB에서 사용
+        <ul>
+          <li>@TableGenerator 필요</li>
+        </ul>
+      </li>
+      <li>AUTO : dialect에 따라 자동 지정, 기본값</li>
+    </ul>
+  </li>
+</ul>
+
+<p>IDENTITY 전략의 특징 : commit 시점에 query가 전송</p>
+
+<p>SEQUENCE 전략의 특징 : 본문의 id 값을 모르는 상태에서 순차적으로 값을 저장, persist시점에서 db에서 값을 가져오고 commit 시점에서 값을 넣는다.</p>]]></content><author><name>박정우</name></author><category term="spring" /><category term="spring" /><summary type="html"><![CDATA[JPA 4일차 : 엔티티 매핑]]></summary></entry></feed>

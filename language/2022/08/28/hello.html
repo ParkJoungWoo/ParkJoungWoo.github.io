@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>내가 보려고 정리한 파이썬 1 | 정우의 블로그</title>
+<meta name="generator" content="Jekyll v4.3.2">
+<meta property="og:title" content="내가 보려고 정리한 파이썬 1">
+<meta name="author" content="박정우">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="배열 슬라이싱 공부 슬라이싱 초기값:종료값:증분">
+<meta property="og:description" content="배열 슬라이싱 공부 슬라이싱 초기값:종료값:증분">
+<link rel="canonical" href="https://parkjoungwoo.github.io/jekyll-theme-yat/language/2022/08/28/hello.html">
+<meta property="og:url" content="https://parkjoungwoo.github.io/jekyll-theme-yat/language/2022/08/28/hello.html">
+<meta property="og:site_name" content="정우의 블로그">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-08-28T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="내가 보려고 정리한 파이썬 1">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"박정우"},"dateModified":"2022-08-28T00:00:00+00:00","datePublished":"2022-08-28T00:00:00+00:00","description":"배열 슬라이싱 공부 슬라이싱 초기값:종료값:증분","headline":"내가 보려고 정리한 파이썬 1","mainEntityOfPage":{"@type":"WebPage","@id":"https://parkjoungwoo.github.io/jekyll-theme-yat/language/2022/08/28/hello.html"},"url":"https://parkjoungwoo.github.io/jekyll-theme-yat/language/2022/08/28/hello.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://parkjoungwoo.github.io/jekyll-theme-yat/feed.xml" title="정우의 블로그">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="정우의 블로그" src="" onerror="this.style.display='none'">
+  정우의 블로그
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">내가 보려고 정리한 파이썬 1</h1>
+  <h2 class="post-subtitle">문법</h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-08-28T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Aug 28, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 23 mins</span>
+  </p>
+<div class="post-tags"><a class="post-tag" href="/jekyll-theme-yat/tags.html#python">#python</a></div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h2 id="배열">배열</h2>
+<ul>
+  <li>슬라이싱 공부
+슬라이싱 초기값:종료값:증분</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#1. 슬라이싱
+</span><span class="n">myStr</span> <span class="o">=</span> <span class="s">"Python"</span>
+<span class="k">print</span><span class="p">(</span><span class="n">myStr</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">myStr</span><span class="p">[::</span><span class="mi">2</span><span class="p">],</span> <span class="n">myStr</span><span class="p">[])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nohtyP Pto n
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#3. FORMAT
+</span><span class="n">cnt</span> <span class="o">=</span> <span class="s">'five'</span>
+<span class="c1"># I eat five apples.
+</span><span class="k">print</span><span class="p">(</span><span class="s">"I eat %s apples"</span><span class="o">%</span><span class="n">cnt</span><span class="p">)</span>   
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'I eat </span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s"> apples'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'I eat {} apples'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">cnt</span><span class="p">))</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">B</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="c1"># 3 + 7 = 11
+</span><span class="k">print</span><span class="p">(</span><span class="s">"%d + %d = %d"</span><span class="o">%</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">A</span><span class="o">+</span><span class="n">B</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">A</span><span class="si">}</span><span class="s"> + </span><span class="si">{</span><span class="n">B</span><span class="si">}</span><span class="s"> = </span><span class="si">{</span><span class="n">A</span><span class="o">+</span><span class="n">B</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'{A} + {B} = {C}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">A</span><span class="o">=</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="o">=</span><span class="n">B</span><span class="p">,</span><span class="n">C</span><span class="o">=</span><span class="n">A</span><span class="o">+</span><span class="n">B</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>I eat five apples
+I eat five apples
+I eat five apples
+3 + 7 = 10
+3 + 7 = 10
+3 + 7 = 10
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 자릿수 지정하여 정수 출력하기
+</span><span class="n">A</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="c1"># %02d {:02} {A:02} : 두 자리로 정수로 문자열 만들기
+# A를 두자리로 출력하기
+</span><span class="k">print</span><span class="p">(</span><span class="s">'%02d'</span> <span class="o">%</span> <span class="n">A</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">A</span><span class="si">:</span><span class="mi">02</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'{:02}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
+<span class="c1"># place holder : { }
+</span><span class="k">print</span><span class="p">(</span><span class="s">'my name is {}, {} years old'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">'Hong'</span><span class="p">,</span> <span class="mi">27</span><span class="p">))</span>
+<span class="c1"># {idx}
+</span><span class="k">print</span><span class="p">(</span><span class="s">'my name is {1}, {0} years old'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="mi">27</span><span class="p">,</span> <span class="s">'Hong'</span><span class="p">))</span>
+<span class="c1"># {key}
+</span><span class="k">print</span><span class="p">(</span><span class="s">'my name is {name}, {age} years old'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'Hong'</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="mi">27</span><span class="p">))</span>
+<span class="c1"># {:format}
+</span><span class="k">print</span><span class="p">(</span><span class="s">'Count : {:3d}EA, Price : ${:.2f}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">12.3456</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>01
+01
+01
+my name is Hong, 27 years old
+my name is Hong, 27 years old
+my name is Hong, 27 years old
+Count :   1EA, Price : $12.35
+</code></pre></div></div>
+
+<h3 id="3-06-문자열-관련-함수-메서드">3-06 문자열 관련 함수, 메서드</h3>
+<p>len(str), str.isalnum(), str.isalpha(), str.isdecimal(), str.isspace(), str.istitle(),
+str.index(sub,[start,[end]]), str.startswith(prefix), str.endswith(suffix),
+str.join(iterable), str.partition(sep), str.split(sep), str.strip()</p>
+
+<p>SPLIT - 구분자에 따라서 출력이 달라진다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#2. 문자열
+</span><span class="n">data</span> <span class="o">=</span> <span class="s">"881120-1064533"</span>
+<span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">'-'</span><span class="p">)[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># split의 구분자를 지정하지 않으면?
+# 연속된 whitespace 문자를 1개의 구분자로 취급합니다.
+</span><span class="n">A</span> <span class="o">=</span> <span class="s">'    A   B  C   '</span> <span class="c1">#'\t\nA\nB     C   \n\r'
+# 구분자를 지정하지 않은 경우와 공백(' ')을 지정한 경우를 비교해 보세요.
+</span><span class="n">B</span> <span class="o">=</span> <span class="n">A</span><span class="p">.</span><span class="n">split</span><span class="p">()</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">A</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">' '</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['A', 'B', 'C'] ['', '', '', '', 'A', '', '', 'B', '', 'C', '', '', '']
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ['A', 'B', 'C', 'D'] 를 'A:B:C:D'로 작성해 보세요
+</span><span class="k">print</span><span class="p">(</span><span class="s">':'</span><span class="p">.</span><span class="n">join</span><span class="p">([</span><span class="s">'A'</span><span class="p">,</span><span class="s">'B'</span><span class="p">,</span><span class="s">'C'</span><span class="p">,</span><span class="s">'D'</span><span class="p">]))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>A:B:C:D
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#print 활용
+</span><span class="k">print</span><span class="p">(</span><span class="s">'이름'</span><span class="p">,</span> <span class="s">'홍길동'</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">':'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'이름'</span><span class="p">,</span> <span class="s">'홍길동'</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s">' '</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'나이'</span><span class="p">,</span> <span class="mi">27</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>이름:홍길동
+이름 홍길동 나이 27
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#5. 신기한 for 문
+</span><span class="n">N</span><span class="o">=</span><span class="mi">3</span>
+<span class="n">A</span> <span class="o">=</span> <span class="p">[[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">input</span><span class="p">().</span><span class="n">split</span><span class="p">()]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span>
+<span class="c1">#해석 : 입력을 위한 input에서 문자열을 분리한 후 int로 전환한다, _는 값을 사용하지 않는 의미로 반복을 몇번한다를 의미
+</span><span class="k">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2
+1
+2
+[[2], [1], [2]]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mylist</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="s">"Hello"</span><span class="p">)</span>
+<span class="n">mylist</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="n">a</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[4, 1, 2, 3] [4, 3, 5, 6]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">x</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">a</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="k">del</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1, 3, 2, 1]
+[1, 3]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">t</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span>   <span class="c1"># 소괄호를 이용하지 않고 생성
+</span><span class="k">print</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="c1"># 요소가 1개만 있는 tuple 생성  (콤마가 반드시 필요함)
+</span><span class="n">t1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">)</span>   
+<span class="n">t2</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> 
+<span class="k">print</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(1, 3, 5)
+(1, 2, 3)
+(1,) (1,)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># set 함수 사용
+</span><span class="n">b</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="s">'abcfff'</span><span class="p">)</span>
+<span class="n">b</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">'g'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{'f', 'c', 'a', 'b'}
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">}</span>
+<span class="n">b</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="s">'cde'</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">-</span> <span class="n">b</span> <span class="c1"># 차집합
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span><span class="p">.</span><span class="n">difference</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>   <span class="c1"># 차집합
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">|</span> <span class="n">b</span> <span class="c1"># 합집합
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span><span class="p">.</span><span class="n">union</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>   <span class="c1"># 합집합
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">&amp;</span> <span class="n">b</span> <span class="c1"># 교집합
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span><span class="p">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>   <span class="c1"># 교집합
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="n">a</span> <span class="o">|</span> <span class="n">b</span><span class="p">)</span> <span class="o">-</span> <span class="n">a</span>   <span class="c1"># 여집합
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">^</span> <span class="n">b</span> <span class="c1"># 대칭차집합
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span><span class="p">.</span><span class="n">symmetric_difference</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="c1"># 대칭차집합
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">m</span> <span class="o">=</span> <span class="s">'b'</span><span class="p">,</span> <span class="n">지역</span><span class="o">=</span><span class="s">'서울'</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'없나'</span><span class="p">)</span>
+<span class="n">a</span><span class="p">.</span><span class="n">update</span><span class="p">({</span><span class="s">'이름'</span><span class="p">:</span> <span class="s">'흥부'</span><span class="p">,</span> <span class="s">'age'</span><span class="p">:</span><span class="mi">1000</span><span class="p">,</span> <span class="s">'지역'</span><span class="p">:</span><span class="s">'어디게?'</span><span class="p">})</span>
+<span class="k">del</span> <span class="n">a</span><span class="p">[</span><span class="s">'m'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="s">'name'</span><span class="p">:</span><span class="s">'tom'</span><span class="p">,</span> <span class="s">'phone'</span><span class="p">:</span><span class="s">'01012345678'</span><span class="p">,</span> <span class="s">'birth'</span><span class="p">:</span><span class="mi">1212</span><span class="p">}</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">dict</span><span class="p">.</span><span class="n">keys</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="nb">dict</span><span class="p">.</span><span class="n">values</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+<span class="c1">#: key 목록을 반환하는 메서드
+# : value 목록을 반환하는 메서드
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dict_keys(['name', 'phone', 'birth']) dict_values(['tom', '01012345678', 1212])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#dict 메서드
+# dict.clear()  사전을 초기화 함
+# dict.keys() : key 목록을 반환하는 메서드
+# dict.values() : value 목록을 반환하는 메서드
+# dict.items() : item 목록을 반환하는 메서드
+# dict.fromkeys(iterable obj, value=None)
+</span><span class="n">mylist</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="s">'ABC'</span><span class="p">)</span>
+<span class="c1"># {'A': 0, 'B': 0, 'C': 0}와 같은 dict 객체를 fromkeys를 사용하여 생성한다
+</span><span class="n">mydict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">mylist</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">mydict</span><span class="p">)</span>
+
+<span class="c1"># {'A': None, 'B': None, 'C': None}과 같은 dict 객체를 fromkeys를 사용하여 생성한다
+</span><span class="n">mylist</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="s">'ABC'</span><span class="p">)</span>
+<span class="n">mydict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">mylist</span><span class="p">,</span><span class="bp">None</span><span class="p">)</span>
+<span class="n">mydict</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+<span class="c1"># [1,2,3,4,5]를 데이터로 하는 deque를 생성하여 q라는 이름을 붙인다
+</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">deque</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+<span class="c1"># 마지막 데이터를 꺼내 A에 저장한다
+# 첫 데이터를 꺼내 B에 저장한다
+</span><span class="n">A</span><span class="o">=</span><span class="n">q</span><span class="p">.</span><span class="n">pop</span><span class="p">()</span>
+<span class="n">B</span><span class="o">=</span><span class="n">q</span><span class="p">.</span><span class="n">popleft</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
+<span class="c1"># 마지막에 6을 삽입하고, 처음에 7을 삽입한다
+</span><span class="n">q</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">q</span><span class="p">.</span><span class="n">appendleft</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#3항연산자
+</span><span class="n">r</span> <span class="o">=</span> <span class="s">'남성'</span> <span class="k">if</span> <span class="nb">input</span><span class="p">()</span><span class="o">==</span><span class="s">'MALE'</span> <span class="k">else</span> <span class="s">'여성'</span><span class="c1"># code here
+</span><span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">r</span><span class="si">}</span><span class="s">입니다'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># list는 iterator가 아니다 a = [1,2,3]
+</span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">a</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="c1"># iterator로 만들 수 있다.
+</span><span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="nb">next</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">n</span><span class="si">}{</span><span class="n">i</span><span class="si">}</span><span class="s">"</span><span class="k">for</span> <span class="n">n</span><span class="p">,</span><span class="n">i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="s">'ABCD'</span><span class="p">))</span>
+<span class="n">a</span> <span class="o">=</span> <span class="nb">enumerate</span><span class="p">(</span><span class="s">'ABC'</span><span class="p">,</span><span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s">'a'</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span> <span class="s">'b'</span><span class="p">:</span><span class="mi">20</span><span class="p">,</span> <span class="s">'c'</span><span class="p">:</span><span class="mi">30</span><span class="p">}</span>
+<span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="n">value</span><span class="p">:</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">a_dict</span><span class="p">.</span><span class="n">items</span><span class="p">()}</span>
+<span class="n">d</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">s</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+<span class="n">s</span>
+<span class="n">m</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">s</span> <span class="k">if</span> <span class="n">x</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">m</span>
+</code></pre></div></div>
+
+<h3 id="4-04-argument의-종류">4-04 argument의 종류</h3>
+<ul>
+  <li>함수의 호출시 사용되는 argument
+    <ul>
+      <li>positional argument : 위치에 따라 값이 전달되는 방식</li>
+      <li>keyword argument : = 를 사용하여 특정 parameter에 값을 제공함, 순서에 상관 없음</li>
+    </ul>
+  </li>
+  <li>함수 정의시 사용되는 argument
+    <ul>
+      <li>default argument : 새로운 argument가 전달되지 않을 경우 사용되는 기본 값</li>
+    </ul>
+  </li>
+  <li>Python의 argument rule
+    <ol>
+      <li>함수 정의 시 : non-default argument가 앞, default argument가 뒤에 위치해야 한다.</li>
+      <li>함수 호출 시 : positional argument가 앞, keyword argument가 뒤에 위치해야 한다.</li>
+    </ol>
+  </li>
+</ul>
+
+<h3 id="4-05-parameter의-종류">4-05 parameter의 종류</h3>
+<ul>
+  <li>positional or keyword parameter : 앞쪽에 * , 없고, 뒤쪽에 , / 없음</li>
+  <li>positional only parameter : 뒤쪽에 , / 있음</li>
+  <li>keyword only parameter : 앞쪽에 * , 있음</li>
+  <li>var positional parameter : 이름 앞에 * (별이 한 개) 있음</li>
+  <li>var keyword parameter : 이름 앞에 ** (별이 두 개) 있음</li>
+  <li>var keyword parameter는 단독으로 사용하거나 마지막에만 사용함
+var positioning</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># var-positional parameter
+# 함수 정의시 *arg : pack, 함수 호출시 *arg는 unpack이다
+# pack은 ,로 나열된 객체들을 tuple로 묶기
+</span><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="n">tot</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="n">tot</span> <span class="o">+=</span> <span class="n">i</span>
+    <span class="k">return</span> <span class="n">tot</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># var-keyword parameter
+# numeric 끼리는 연산 가능
+</span><span class="k">print</span><span class="p">(</span><span class="mf">3.5</span> <span class="o">+</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span> <span class="o">*</span> <span class="bp">False</span><span class="p">)</span>
+<span class="c1">#numeric과 container는 연산불가
+#container는 같은 type끼리만 연산 가능
+#sequence type : str, tuple, list =&gt; *, + 가능
+#서로 다른 type의 container는 연산 불가
+# print(10+[1,2,3])
+</span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">a</span><span class="p">.</span><span class="n">extend</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="c1">#리스트에 튜플을 연장 가능
+# b.extend(a) #튜플에 리스트를 연장할 수는 없다
+</span><span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">printinfo</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="s">"USA"</span><span class="p">,</span> <span class="s">"Mexico"</span><span class="p">,</span> <span class="s">"Korea"</span><span class="p">,</span> <span class="s">"France"</span><span class="p">]</span>
+<span class="n">a</span><span class="p">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">%</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">a</span>
+
+<span class="c1"># add = lambda x1,y1,z1 : x1+y1+z1
+# print(add(1,2,3))
+</span><span class="n">odd</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">x</span> <span class="p">:</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="mi">2</span><span class="o">==</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">odd</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+
+<span class="n">compare</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="p">:</span> <span class="n">x</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span> <span class="k">else</span> <span class="n">y</span>
+<span class="k">print</span><span class="p">(</span><span class="n">compare</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="s">'ABCDE'</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">65</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># map(func, *iterable) : 입력 받은 자료형의 각 요소가 함수 func에 의해 수행된 결과를 묶어서 반환
+</span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">new_a</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">a</span><span class="p">))</span>
+<span class="n">new_a</span>
+<span class="k">print</span><span class="p">(</span>
+    <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">max</span><span class="p">,</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">9</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">9</span><span class="p">]))</span>
+<span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">sum</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span>
+    <span class="n">a</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]]</span>
+<span class="n">B1</span> <span class="o">=</span> <span class="p">[</span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">copy</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+<span class="n">B2</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">A</span><span class="p">]</span>
+<span class="n">B1</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">B2</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mi">100</span>
+<span class="k">print</span><span class="p">(</span><span class="n">B1</span><span class="p">,</span> <span class="n">B2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[[100, 2, 3], [1, 2, 3], [1, 2, 3]] [[100, 2, 3], [100, 2, 3], [100, 2, 3]]
+</code></pre></div></div>
+
+<p>###CLASS 강의</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Dog</span><span class="p">:</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'Merry'</span><span class="p">):</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">name</span><span class="o">=</span><span class="n">name</span>
+  <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">'My Name is '</span><span class="o">+</span><span class="bp">self</span><span class="p">.</span><span class="n">name</span>
+<span class="n">merry</span> <span class="o">=</span> <span class="n">Dog</span><span class="p">(</span><span class="s">'MAAAAARRRIIIIAA'</span><span class="p">)</span>
+<span class="n">rr</span> <span class="o">=</span> <span class="n">Dog</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">merry</span><span class="p">,</span> <span class="n">rr</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>My Name is MAAAAARRRIIIIAA My Name is Merry
+</code></pre></div></div>
+
+<p>class Product:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Product</span><span class="p">:</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">""</span><span class="p">,</span> <span class="n">price</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">price</span> <span class="o">=</span> <span class="n">price</span>
+  <span class="k">def</span> <span class="nf">printinfo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">name</span><span class="o">+</span><span class="s">" = "</span> <span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">price</span><span class="p">))</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">Product</span><span class="p">(</span><span class="s">"P80"</span><span class="p">,</span> <span class="mi">15000</span><span class="p">)</span>
+<span class="n">p</span><span class="p">.</span><span class="n">printinfo</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>P80 = 15000
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyInt</span><span class="p">:</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">):</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">number</span><span class="o">=</span><span class="n">number</span>
+  <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">number</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">number</span><span class="o">+</span><span class="n">other</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">MyInt</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>11
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">""</span><span class="p">):</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">name</span><span class="o">=</span><span class="n">name</span>
+  <span class="k">def</span> <span class="nf">printInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"name : </span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">name</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s">"KB"</span><span class="p">)</span>
+
+<span class="n">a</span><span class="p">.</span><span class="n">printInfo</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>name : KB
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Product</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">price</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">price</span> <span class="o">=</span> <span class="n">price</span>
+
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">'h22hh3333ssdfasdf'</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">printInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">name</span><span class="si">}</span><span class="s"> = </span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">price</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">getPayment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+      <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">price</span> <span class="o">*</span> <span class="n">unit</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span> <span class="o">=</span> <span class="n">Product</span><span class="p">(</span><span class="s">'P80'</span><span class="p">,</span> <span class="mi">15000</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">A</span><span class="p">.</span><span class="n">getPayment</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>45000
+h22hh3333ssdfasdf
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A2</span> <span class="o">=</span> <span class="n">Product</span><span class="p">(</span><span class="s">'P80'</span><span class="p">,</span> <span class="mi">15000</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">A2</span><span class="p">.</span><span class="n">getPayment</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>45000
+h22hh3333ssdfasdf
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+  <span class="n">소멸자</span>
+</code></pre></div></div>
+
+<p>###상속
+-다른 클래스의 모든 기능을 사용할 수 있게 되는 것
+-다른 클래스를 super class / base class 라고 부른다</p>
+
+<p>모든 클래스는 object를 상속받는다</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Children</span><span class="p">:</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"YPO"</span><span class="p">)</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+  <span class="k">def</span> <span class="nf">printInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Parent</span><span class="p">(</span><span class="n">Children</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="n">age</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"PAPA"</span><span class="p">)</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">name</span><span class="o">=</span><span class="n">name</span>
+    <span class="nb">super</span><span class="p">().</span><span class="n">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">age</span><span class="o">=</span><span class="n">age</span>
+  <span class="k">def</span> <span class="nf">printInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="bp">self</span><span class="p">.</span><span class="n">age</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">Children</span><span class="p">(</span><span class="s">"a"</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">Parent</span><span class="p">(</span><span class="s">"a"</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">cp</span> <span class="o">=</span> <span class="n">Parent</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">c</span><span class="p">.</span><span class="n">printInfo</span><span class="p">()</span>
+<span class="n">p</span><span class="p">.</span><span class="n">printInfo</span><span class="p">()</span>
+<span class="n">cp</span><span class="p">.</span><span class="n">printInfo</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>YPO
+PAPA
+YPO
+PAPA
+YPO
+a
+a 3
+&lt;__main__.Children object at 0x7f712238a910&gt; 3
+</code></pre></div></div>
+
+<h4 id="namespace">Namespace</h4>
+<ul>
+  <li>dict 객체</li>
+  <li>이름을 기억하는 공간 (key : value, key=이름, value=객체)</li>
+  <li>계층 구조를 갖는다.
+    <ul>
+      <li>builtin namepace &gt; global namespace &gt; local namespace</li>
+      <li>읽기 작업을 할 때, 현 위치부터 상위의 namespace를 살펴본다</li>
+      <li>생성/갱신 작업은 현 위치에서만 발생된다</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+  <span class="k">print</span><span class="p">(</span><span class="nb">locals</span><span class="p">())</span> <span class="c1"># local namespace
+</span><span class="n">func</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">globals</span><span class="p">())</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1 2
+{'a': 1, 'b': 2}
+{'__name__': '__main__', '__doc__': 'Automatically created module for IPython interactive environment', '__package__': None, '__loader__': None, '__spec__': None, '__builtin__': &lt;module 'builtins' (built-in)&gt;, '__builtins__': &lt;module 'builtins' (built-in)&gt;, '_ih': ['', 'def func(a,b):\n  print(a,b)\n  print(locals())\nfunc(1,2)', 'def func(a,b):\n  print(a,b)\n  print(locals()) # local namespace\nfunc(1,2)\nprint(globals())', 'def func(a,b):\n  print(a,b)\n  print(locals()) # local namespace\nfunc(1,2)\nprint(globals())', 'def func(a,b):\n  print(a,b)\n  print(locals()) # local namespace\nfunc(1,2)\nprint(globals())'], '_oh': {}, '_dh': ['/content'], '_sh': &lt;module 'IPython.core.shadowns' from '/usr/local/lib/python3.7/dist-packages/IPython/core/shadowns.py'&gt;, 'In': ['', 'def func(a,b):\n  print(a,b)\n  print(locals())\nfunc(1,2)', 'def func(a,b):\n  print(a,b)\n  print(locals()) # local namespace\nfunc(1,2)\nprint(globals())', 'def func(a,b):\n  print(a,b)\n  print(locals()) # local namespace\nfunc(1,2)\nprint(globals())', 'def func(a,b):\n  print(a,b)\n  print(locals()) # local namespace\nfunc(1,2)\nprint(globals())'], 'Out': {}, 'get_ipython': &lt;bound method InteractiveShell.get_ipython of &lt;google.colab._shell.Shell object at 0x7facc1de6950&gt;&gt;, 'exit': &lt;IPython.core.autocall.ZMQExitAutocall object at 0x7facc1dfeb10&gt;, 'quit': &lt;IPython.core.autocall.ZMQExitAutocall object at 0x7facc1dfeb10&gt;, '_': '', '__': '', '___': '', '_i': 'def func(a,b):\n  print(a,b)\n  print(locals()) # local namespace\nfunc(1,2)\nprint(globals())', '_ii': 'def func(a,b):\n  print(a,b)\n  print(locals()) # local namespace\nfunc(1,2)\nprint(globals())', '_iii': 'def func(a,b):\n  print(a,b)\n  print(locals())\nfunc(1,2)', '_i1': 'def func(a,b):\n  print(a,b)\n  print(locals())\nfunc(1,2)', 'func': &lt;function func at 0x7facb06d1950&gt;, '_i2': 'def func(a,b):\n  print(a,b)\n  print(locals()) # local namespace\nfunc(1,2)\nprint(globals())', '_i3': 'def func(a,b):\n  print(a,b)\n  print(locals()) # local namespace\nfunc(1,2)\nprint(globals())', '_i4': 'def func(a,b):\n  print(a,b)\n  print(locals()) # local namespace\nfunc(1,2)\nprint(globals())'}
+</code></pre></div></div>
+
+<h3 id="sum은-builtin-namespace에-존재한다">sum은 builtin namespace에 존재한다</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">101</span><span class="p">)))</span>
+<span class="nb">sum</span><span class="o">=</span><span class="mi">10</span>
+<span class="c1">#sum이 global에 저장이 되므로 참조 builtin namespace에 있는 sum을 가져오지 못한다
+# print(sum(range(1,101)))
+</span>
+<span class="c1">#del을 사용하자
+</span><span class="k">del</span> <span class="nb">sum</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">101</span><span class="p">)))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>5050
+5050
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">]</span>
+<span class="n">c</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[6, 8, 10, 12]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#모든 참 거짓
+</span><span class="k">print</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">)))</span>
+<span class="c1">#(),{},[],0,False,None,''
+#비어있는 컨테이너
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>False
+</code></pre></div></div>
+
+<h3 id="객체마다-참조횟수ref_cnt를-저장하며-이것이-0일-때-메모리에서-제거됨">객체마다 참조횟수(ref_cnt)를 저장하며, 이것이 0일 때 메모리에서 제거됨</h3>
+<p>A = [1,2,3,4,5]</p>
+
+<p>A = 10</p>
+
+<p>Local namespace는 함수를 호출할 때 만들어지고, 함수가 종료되면 제거된다.</p>
+
+<p>Local namespace에 있던 객체는 함수 종료시 메모리에서 제거된다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Car</span><span class="p">:</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">name</span><span class="o">=</span><span class="n">name</span>
+  <span class="o">@</span><span class="nb">staticmethod</span>
+  <span class="k">def</span> <span class="nf">show</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Hello"</span><span class="p">)</span>
+<span class="n">Car</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Hello
+</code></pre></div></div>
+
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/cs/2022/04/26/hello.html" title="BOJ : 1926 풀이">BOJ : 1926 풀이</a><a class="next" href="/jekyll-theme-yat/cs/2022/08/29/hello.html" title="GIT 공부 1">GIT 공부 1</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/jekyll-theme-yat/machine/learning/2022/09/15/ml.html" title="GIT 공부 1">머신러닝 1</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/language/2022/08/31/html.html" title="GIT 공부 1">내가 보려고 정리한 HTML, CSS</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/language/2022/09/07/cozzb.html" title="GIT 공부 1">iterable의 수정이 가능할까요</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/machine/learning/2022/09/19/linear.html" title="GIT 공부 1">Linear Model 1</a></li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2022-2023 박정우</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

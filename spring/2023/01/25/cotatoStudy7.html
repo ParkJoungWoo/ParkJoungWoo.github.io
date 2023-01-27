@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Spring security 1편 | 정우의 블로그</title>
+<meta name="generator" content="Jekyll v4.3.2">
+<meta property="og:title" content="Spring security 1편">
+<meta name="author" content="박정우">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="⚠️ 본 게시물은 스프링 부트와 AWS로 혼자 구현하는 웹서비스를 참고도서로 활용합니다. 저작권은 본 책의 저서에게 있음을 알립니다.">
+<meta property="og:description" content="⚠️ 본 게시물은 스프링 부트와 AWS로 혼자 구현하는 웹서비스를 참고도서로 활용합니다. 저작권은 본 책의 저서에게 있음을 알립니다.">
+<link rel="canonical" href="https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/25/cotatoStudy7.html">
+<meta property="og:url" content="https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/25/cotatoStudy7.html">
+<meta property="og:site_name" content="정우의 블로그">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2023-01-25T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Spring security 1편">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"박정우"},"dateModified":"2023-01-25T00:00:00+00:00","datePublished":"2023-01-25T00:00:00+00:00","description":"⚠️ 본 게시물은 스프링 부트와 AWS로 혼자 구현하는 웹서비스를 참고도서로 활용합니다. 저작권은 본 책의 저서에게 있음을 알립니다.","headline":"Spring security 1편","mainEntityOfPage":{"@type":"WebPage","@id":"https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/25/cotatoStudy7.html"},"url":"https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/25/cotatoStudy7.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://parkjoungwoo.github.io/jekyll-theme-yat/feed.xml" title="정우의 블로그">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="정우의 블로그" src="" onerror="this.style.display='none'">
+  정우의 블로그
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">Spring security 1편</h1>
+  <h2 class="post-subtitle">스프링 3주차</h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2023-01-25T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Jan 25, 2023
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 6 mins</span>
+  </p>
+<div class="post-tags"><a class="post-tag" href="/jekyll-theme-yat/tags.html#spring">#spring</a></div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <p>⚠️ 본 게시물은 <code class="language-plaintext highlighter-rouge">스프링 부트와 AWS로 혼자 구현하는 웹서비스</code>를 참고도서로 활용합니다. 저작권은 본 책의 저서에게 있음을 알립니다.</p>
+
+<h2 id="5장-스프링-시큐리티">5장 스프링 시큐리티</h2>
+
+<h3 id="간단히-로그인을-구현해야-한다면-어떻게-하실건가요">🤔간단히 로그인을 구현해야 한다면 어떻게 하실건가요?</h3>
+
+<p>저라면 가장 기본적으로 <code class="language-plaintext highlighter-rouge">DB</code>에 <code class="language-plaintext highlighter-rouge">id</code>와 <code class="language-plaintext highlighter-rouge">password</code>를 저장하고 요청받은 <code class="language-plaintext highlighter-rouge">id</code>, <code class="language-plaintext highlighter-rouge">password</code>를 비교해 참/거짓 값을 리턴할 것 같습니다.</p>
+
+<p>하지만 위 방식은 여러 문제를 가지고 있습니다.</p>
+
+<ol>
+  <li>예상 가능한 문제는 <code class="language-plaintext highlighter-rouge">DB</code>에 저장된 비밀번호가 <code class="language-plaintext highlighter-rouge">암호화</code>되어 있지 않기 때문에 로그인 요청, 회원가입 요청 중간에 탈취가 가능합니다.</li>
+  <li>로그인 성공 여부를 단순히 참/거짓 값으로 설정한다면 다른 페이지에 접근할 때도 아무런 문제 없이 접근이 가능하게 됩니다. 즉 <code class="language-plaintext highlighter-rouge">인가</code>에 대한 문제가 발생합니다.</li>
+</ol>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>인증 : 로그인과 같이 자격을 증명
+
+인가 : 인증이 된 사용자가 자원 접근이 가능하게함(ex : 마이페이지)
+</code></pre></div></div>
+
+<p>이러한 문제점을 생각하고 더 나아가 토큰을 적용해보겠습니다.</p>
+<h3 id="토큰인증방식">토큰인증방식</h3>
+
+<blockquote>
+  <p>📌인증 책임을 서버에 두는 세션인증도 있지만 본 내용에서는 토큰인증만 다루겠습니다.</p>
+</blockquote>
+
+<p>바로 refresh token과 access token을 사용합니다.</p>
+
+<ol>
+  <li>사용자는 서버로부터 인증을 하고 refresh token을 발급받습니다.</li>
+  <li>사용자는 발급받은 refresh token을 통해 access token을 발급받습니다.</li>
+  <li>사용자는 access token을 통해 인가를 요청합니다.</li>
+</ol>
+
+<p>여기서 refresh token은 유효기간이 길고 사용자의 정보가 암호화 되어있고 유효한 동안 access token을 발급 받을 수 있게 합니다.</p>
+
+<p>access token은 refresh token보다 유효기간이 짧고 이 token을 통해서만 사용자의 자원에 접근할 수 있습니다.</p>
+
+<p>이와 같은 방법이면 token이 유효한지 서버에서 검증하고 암호화도 되어있으며 유효기간이 존재해 일정 시간 후에는 다시 발급받아야 하는 신뢰성도 있습니다.</p>
+
+<p>하지만 위와 같은 방식도 문제가 존재합니다.</p>
+
+<div style="width:100%;height:0;padding-bottom:73%;position:relative;"><iframe src="https://giphy.com/embed/nqtYybzXsCy763Q5EQ" width="100%" height="100%" style="position:absolute" frameborder="0" class="giphy-embed" allowfullscreen=""></iframe></div>
+<p><a href="https://giphy.com/gifs/nqtYybzXsCy763Q5EQ">via GIPHY</a></p>
+
+<p><em>바로 token이 외부에서 탈취가 가능한 점입니다. 세션 인증 방식의 문제인 서버 부하를 해결했지만 외부 탈취에서 자유롭지 않은 점이 토큰 인증 방식의 문제입니다.</em></p>
+
+<h3 id="이렇게-로그인이-어렵습니다">😮‍💨이렇게 로그인이 어렵습니다.</h3>
+<p>이렇게 로그인을 구현하고 안정적인 서비스를 구축하는 것은 까다로운 일입니다.<br>
+하지만 Spring에서 제공하는 프레임워크로 매우 안전한 인증을 간단히 구현 가능합니다.</p>
+
+<h3 id="스프링-시큐리티란">스프링 시큐리티란</h3>
+<p>Spring security는 <code class="language-plaintext highlighter-rouge">커스터마이징이 가능한 인증, 인가 프레임워크</code> 입니다.</p>
+
+<p>스프링 시큐리티는 <code class="language-plaintext highlighter-rouge">form-base 인증</code>과 <code class="language-plaintext highlighter-rouge">OAuth</code>, <code class="language-plaintext highlighter-rouge">OpenID</code> 같은 접근 위임 방식 등 여러 방식의 인증을 지원합니다.</p>
+
+<p>또한 스프링 시큐리티는 CSRF 보호를 지원합니다.</p>
+
+<blockquote>
+  <p>CSRF는 링크 또는 스크립트를 사용하여 사용자가 인증된 대상 사이트로 원하지 않는 HTTP 요청을 전송하는 공격 방식입니다.</p>
+</blockquote>
+
+<h3 id="스프링-시큐리티-적용해보기">스프링 시큐리티 적용해보기</h3>
+
+<iframe src="https://giphy.com/embed/3ohhwfwxg4d1h82LxS" width="480" height="478" frameborder="0" class="giphy-embed" allowfullscreen=""></iframe>
+<p><a href="https://giphy.com/gifs/cbc-funny-comedy-3ohhwfwxg4d1h82LxS">via GIPHY</a></p>
+
+<p>얼마나 스프링 시큐리티가 좋은지 알겠습니다. 그렇다면 본 책에서 제시하는 예제를 따라해볼까요?</p>
+
+<p>우선 예제를 따라하기 앞서 현재 구현해야하는 서비스와 스프링 시큐리티로 OAuth2를 해야하는 이유를 알아야합니다.</p>
+
+<p>앞서 설명드린 것과 같이 로그인은 구현하는데 많은 노력이 필요하고 보안 이슈 또한 자주 발생합니다. 그러므로 서비스의 규모가 작다면 상대적으로 규모가 크고 신뢰도가 높은 제 3자에게 인증 및 인가를 위임하는 OAuth를 사용합니다.</p>
+
+<ol>
+  <li>이 서비스는 유저가 게시물을 등록하는 기능이 있다.</li>
+  <li>유저는 아이디, 이름, 이메일, 사진으로 구별된다.</li>
+  <li>OAuth를 통해 로그인 과정을 Google, Naver에 위임한다.</li>
+</ol>
+
+<p>이와 같은 배경으로 기능을 어떻게 구현해야 할지 고민해 보겠습니다.</p>
+
+<p><img src="https://i.stack.imgur.com/QUh9s.png" alt="googlelogin" title="많이 본 화면"></p>
+
+<p>위와 같이 많이 본 구글 아이디로 로그인 버튼을 누르면 어떤 개인 정보를 제공할지 나타나게 된다.</p>
+
+<p>우리 서비스는 아이디, 이름, 이메일, 사진이 필요하기 때문에 유저의 정보를 저장하기 위한 Entity가 필요하다.</p>
+
+<p>그래서 User Class가 필요하다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Getter</span>
+<span class="nd">@NoArgsConstructor</span>
+<span class="nd">@Entity</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="kd">extends</span> <span class="nc">BaseTimeEntity</span> <span class="o">{</span>
+    <span class="nd">@Id</span>
+    <span class="nd">@GeneratedValue</span><span class="o">(</span><span class="n">strategy</span> <span class="o">=</span> <span class="nc">GenerationType</span><span class="o">.</span><span class="na">IDENTITY</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">;</span>
+
+    <span class="nd">@Column</span><span class="o">(</span><span class="n">nullable</span> <span class="o">=</span> <span class="kc">false</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="nd">@Column</span><span class="o">(</span><span class="n">nullable</span> <span class="o">=</span> <span class="kc">false</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">email</span><span class="o">;</span>
+    <span class="nd">@Column</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">picture</span><span class="o">;</span>
+    <span class="nd">@Enumerated</span><span class="o">(</span><span class="nc">EnumType</span><span class="o">.</span><span class="na">STRING</span><span class="o">)</span>
+    <span class="nd">@Column</span><span class="o">(</span><span class="n">nullable</span> <span class="o">=</span> <span class="kc">false</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">Role</span> <span class="n">role</span><span class="o">;</span>
+
+    <span class="nd">@Builder</span>
+    <span class="kd">public</span> <span class="nf">User</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="nc">String</span> <span class="n">email</span><span class="o">,</span> <span class="nc">String</span> <span class="n">picture</span><span class="o">,</span> <span class="nc">Role</span> <span class="n">role</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">email</span> <span class="o">=</span> <span class="n">email</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">picture</span> <span class="o">=</span> <span class="n">picture</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">role</span> <span class="o">=</span> <span class="n">role</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">User</span> <span class="nf">update</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="nc">String</span> <span class="n">picture</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">picture</span> <span class="o">=</span> <span class="n">picture</span><span class="o">;</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getRoleKey</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">role</span><span class="o">.</span><span class="na">getKey</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<ol>
+  <li>아이디, 이름, 이메일, 사진이 필요해 Column 및 Id 어노테이션을 사용한 점</li>
+  <li>불필요한 코드를 줄이기 위해 Getter, NoArgsConstructor를 사용한 점</li>
+  <li>User Class대로 매핑이 될 것이기 때문에 Entity 어노테이션을 사용한 점</li>
+</ol>
+
+<p>위와 같은 3가지 이유는 앞에서 배운 내용으로 충분히 이해가 됩니다.</p>
+
+<p>하지만 <code class="language-plaintext highlighter-rouge">Role</code>은 생뚱맞게 왜 존재하는 걸까요?<br>
+요구사항에 역할에 관련한 기능은 없었는데 말이죠</p>
+
+<div style="width:480px"><iframe allow="fullscreen" frameborder="0" height="270" src="https://giphy.com/embed/P6trDNTPCVBuH9clMl/video" width="480"></iframe></div>
+
+<p>바로 사용자의 직책(Role)에 따라 권한이 달라지기 때문입니다.</p>
+
+<p><img src="https://support.kmong.com/hc/article_attachments/900002727666/FAQ.PNG" alt="time" title="개인정보보관기간"></p>
+
+<p>기능 명세서가 친절하지 않았지만 간단히 회원 가입 약관을 통해 예를 들어보겠습니다.</p>
+
+<p><em>회원 탈퇴를 하더라도 내 정보가 바로 사라지는 것이 아닌 삭제처리된 상태로 <code class="language-plaintext highlighter-rouge">개인정보보관기간</code> 동안 DB에 남아있게 됩니다.</em></p>
+
+<p>그렇기 때문에 탈퇴한 회원은 DB에 남아있더라도 게시글을 생성할 수 없어야 합니다.</p>
+
+<p>그래서 역할을 쉽게 관리하기 위해 enum class로 Role을 만들었습니다.</p>
+
+<p>또한 Spring Security의 역할 지정 규칙(ROLE_사용자지정)을 따른 다면 Role을 생성, 관리할 수 있습니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Getter</span>
+<span class="nd">@RequiredArgsConstructor</span>
+<span class="kd">public</span> <span class="kd">enum</span> <span class="nc">Role</span> <span class="o">{</span>
+    <span class="no">GUEST</span><span class="o">(</span><span class="s">"ROLE_GUEST"</span><span class="o">,</span> <span class="s">"손님"</span><span class="o">),</span>
+    <span class="no">USER</span><span class="o">(</span><span class="s">"ROLE_USER"</span><span class="o">,</span> <span class="s">"일반 사용자"</span><span class="o">);</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">String</span> <span class="n">key</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">String</span> <span class="n">title</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>이와 같이 Role enum class또한 만들었습니다.</p>
+
+<blockquote>
+  <p>User 클래스의 Role에서 Enumerated(EnumType.STRING) 어노테이션을 붙인 이유는
+열거형이 어떤 값을 가지는지 단순 숫자로 보는 것 보다 문자열로 확인 하는 것이 
+더 이해가 쉽기 때문입니다.</p>
+</blockquote>
+
+<p>이제 서비스의 기본적인 준비가 되었습니다.</p>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/spring/2023/01/21/cotatoStudy6.html" title="Thymeleaf로 화면 구성하기">Thymeleaf로 화면 구성하기</a><a class="next" href="/jekyll-theme-yat/spring/2023/01/27/cotatoStudy8.html" title="Spring security 2편">Spring security 2편</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/jekyll-theme-yat/machine/learning/2022/09/20/score.html" title="Spring security 2편">머신러닝 평가지표</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/cs/2022/04/26/hello.html" title="Spring security 2편">BOJ : 1926 풀이</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/project/2022/09/05/basic.html" title="Spring security 2편">내가 보려고 정리한 데이터분석 기본 2</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/spring/2023/01/20/cotatoStudy5.html" title="Spring security 2편">JPA 개요와 Web layer</a></li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2022-2023 박정우</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

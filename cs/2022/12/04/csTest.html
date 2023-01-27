@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>CS 공부 정리 | 정우의 블로그</title>
+<meta name="generator" content="Jekyll v4.3.2">
+<meta property="og:title" content="CS 공부 정리">
+<meta name="author" content="박정우">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="현대 CS 테스트 준비를 위한 문서입니다.">
+<meta property="og:description" content="현대 CS 테스트 준비를 위한 문서입니다.">
+<link rel="canonical" href="https://parkjoungwoo.github.io/jekyll-theme-yat/cs/2022/12/04/csTest.html">
+<meta property="og:url" content="https://parkjoungwoo.github.io/jekyll-theme-yat/cs/2022/12/04/csTest.html">
+<meta property="og:site_name" content="정우의 블로그">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-12-04T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="CS 공부 정리">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"박정우"},"dateModified":"2022-12-04T00:00:00+00:00","datePublished":"2022-12-04T00:00:00+00:00","description":"현대 CS 테스트 준비를 위한 문서입니다.","headline":"CS 공부 정리","mainEntityOfPage":{"@type":"WebPage","@id":"https://parkjoungwoo.github.io/jekyll-theme-yat/cs/2022/12/04/csTest.html"},"url":"https://parkjoungwoo.github.io/jekyll-theme-yat/cs/2022/12/04/csTest.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://parkjoungwoo.github.io/jekyll-theme-yat/feed.xml" title="정우의 블로그">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="정우의 블로그" src="" onerror="this.style.display='none'">
+  정우의 블로그
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">CS 공부 정리</h1>
+  <h2 class="post-subtitle">정리</h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-12-04T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Dec 04, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 12 mins</span>
+  </p>
+<div class="post-tags"><a class="post-tag" href="/jekyll-theme-yat/tags.html#cs">#cs</a></div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h1 id="현대-cs-테스트-준비를-위한-문서입니다">현대 CS 테스트 준비를 위한 문서입니다.</h1>
+
+<h2 id="운영체제">운영체제</h2>
+<h3 id="스레드">스레드</h3>
+<p>프로세스 : 프로그램 + 프로세스 제어 블록(PCB)</p>
+
+<p>운영체제는 프로그램을 메모리에 가져오고 PCB를 작성.</p>
+
+<p>프로세스의 진행 과정</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>new -&gt; ready -&gt; running -&gt; waiting -&gt; exit
+</code></pre></div></div>
+<p>프로세스의 구조</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Code 프로그램 명령이 위치하는 곳
+Data 전역 변수나 static 변수 할당을 위해 존재
+Stack 지역 변수, 인자 값 저장 위한 공간
+Heap Java new를 통한 동적 할당을 위한 공간
+</code></pre></div></div>
+<p>스레드 : 프로세스가 생성되면 CPU 스케줄러는 프로세스가 해야 할 일을 CPU에 전달하고 CPU가 실제 작업을 수행한다.(CPU 스케줄러가 CPU에 전달하는 일 하나가 스레드이다.)</p>
+
+<p>OS입장에서 작업 단위는 프로세스, CPU입장에서 작업 단위는 스레드이다.</p>
+
+<p>스레드는 프로세스 내에서 각각 Stack만 따로 할당받고 Code, Data, Heap영역은 공유한다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Java Thread</code> : JVM이 운영체제 역할을 한다.<br>
+자바 스레드는 JVM에 의해 스케줄되는 실행 단위 코드 블럭이다.</p>
+<blockquote>
+  <p>main() 메소드가 수행되면서 하나의 스레드가 실행된다.</p>
+</blockquote>
+
+<p>스레드 : 하나의 작업을 동시에 수행하려면 여러 개의 프로세스를 실행해야하고 각각 메모리를 할당해야한다. 그에 반해 스레드는 낮은 메모리를 할당.</p>
+
+<p>자바 메모리 관리 : <code class="language-plaintext highlighter-rouge">STACK, HEAP</code></p>
+
+<p>자바의 메모리는 Stack, Heap영역으로 구분.
+Stack 영역</p>
+<ul>
+  <li>Heap에서 생성된 객체의 주소를 저장</li>
+  <li>기본 타입의 실제 값을 저장</li>
+  <li>각 지역 변수들은 scope에 맞는 Stack 영역을 가진다.</li>
+  <li>Thread는 각자 Stack을 가진다.
+    <h3 id="페이지-테이블-할당-방법">페이지 테이블 할당 방법</h3>
+    <h3 id="lru">LRU</h3>
+    <p>가장 오랫동안 참조되지 않은 페이지를 교체하는 기법.<br>
+페이지 교체 알고리즘 예시 : FIFO, LFU, LRU 기법이 있다.</p>
+    <div class="language-plaintext highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code>FIFO -&gt; 적재된 시간을 기준으로 교체 페이지 선정
+  최근에 들어온 페이지를 우선 교체
+  먼저 들어온 페이지가 오래 상주하는 문제 발생
+LFU -&gt; 가장 적은 횟수를 참조하는 페이지 교체
+  교체대상이 여러개면 가장 오래 사용하지 않은 페이지를 교체
+LRU -&gt; 가장 오랫동안 참조되지 않은 페이지 교체
+  참조되면 top으로 이동
+OPT -&gt; 앞으로 가장 오랫동안 사용하지 않을 페이지를 교체
+  (구현이 불가능)
+MFU -&gt; 참조 횟수가 가장 많은 페이지를 교체
+</code></pre></div>    </div>
+    <h3 id="rr">RR</h3>
+    <p>RR -&gt; 시분할 시스템을 위해 설계된 선점형 스케줄링<br>
+프로세스들의 우선순위를 두지 않고 시간단위로 CPU를 할당하는 방식의 CPU 스케줄링 알고리즘.</p>
+  </li>
+</ul>
+
+<p>프로세스 스케줄링 : CPU를 사용하려고 하는 프로세스들 사이의 우선순위를 관리하는 일.</p>
+
+<p>디스크 스케줄링 : 디스크를 사용하려고 하는 프로세스들 사이의 우선순위를 관리하는 일.</p>
+
+<p>스케줄링 -(처리율, CPU 이용율을 증가/오버헤드/응답시간/반환시간/대기시간을 최소화하기 위한 기법)</p>
+
+<ul>
+  <li>비선점/ 선점 스케줄링
+    <ul>
+      <li>비선점 스케줄링 : 프로세스가 (실행-대기),(실행-종료)의 상태전이가 있을 때 적용</li>
+      <li>선점 스케줄링 : (실행-대기),(실행-준비),(대기-준비),(수행-종료) 모든 상태 변화에서 적용</li>
+    </ul>
+  </li>
+</ul>
+
+<p>비선점 - 이미 할당된 CPU를 다른 프로세스가 강제로 뺏을 수 없다.</p>
+
+<ul>
+  <li>FIFO : 선입선출</li>
+  <li>SJF : 점유율이 짧은 프로세스에 CPU 먼저 할당</li>
+  <li>HRN : 대기시간, 서비스시간 이용
+    <ul>
+      <li>HRN 공식 : 우선순위 = (대기시간 + 서비스 시간)/서비스 시간 = 높은 것 부터</li>
+    </ul>
+  </li>
+</ul>
+
+<p>선점 - 하나의 프로세스가 CPU를 할당 받아 우선순위가 높은 다른 프로세스가 CPU를 강제로 빼앗아 사용할 수 있다.(시분할에 적합)</p>
+<ul>
+  <li>SRT : SJF을 선점 형태로 변경한 기법 CPU 시간이 짧은 프로세스에 CPU를 먼저 할당.</li>
+  <li>RR : 프로세스 사이에 우선순위를 두지 않고 순서대로 시간단위로 CPU를 할당</li>
+  <li>MQ : 다단계 큐, 프로세스를 특정 그룹으로 분류할 수 있을 때 그룹에 따라 다른 준비 상태 큐를 사용하는 기법.
+    <h3 id="데드락">데드락</h3>
+    <blockquote>
+      <p>두개 이상의 프로세스나 스레드가 서로 자원을 얻지 못해 다음 처리를 하지 못하는 상태</p>
+    </blockquote>
+  </li>
+</ul>
+
+<p>무한히 다음 자원을 기다리는 상황.</p>
+<blockquote>
+  <p>데드락 발생 조건</p>
+  <ol>
+    <li>상호 배제
+      <ul>
+        <li>자원은 한번에 한 프로세스만 사용할 수 있다.</li>
+      </ul>
+    </li>
+    <li>점유 대기
+      <ul>
+        <li>최소한 하나의 자원을 점유하고 있으면서 다른 프로세스에 할당되어 사용하고 있는 자원을 추가로 점유하기 위해 대기하는 프로세스가 존재해야함.</li>
+      </ul>
+    </li>
+    <li>비선점
+      <ul>
+        <li>다른 프로세스에 할당된 자원은 사용이 끝날 때까지 강제로 빼앗을 수 없다.</li>
+      </ul>
+    </li>
+    <li>순환 대기
+      <ul>
+        <li>프로세스의 집합에서 순환 형태로 자원을 대기하고 있어야 한다.</li>
+      </ul>
+    </li>
+  </ol>
+</blockquote>
+
+<p>교착상태(데드락) 예방 &amp; 회피 방법</p>
+<ol>
+  <li>예방
+    <ul>
+      <li>교착 상태 발생 조건중 하나를 제거하면서 해결</li>
+    </ul>
+  </li>
+  <li>회피
+    <ul>
+      <li>은행원 알고리즘
+        <ul>
+          <li>프로세스가 자원을 요구할 때, 시스템은 자원을 할당한 후에도 안정 상태로 남아있게 되는지 사전에 검사=교착 상태 회피</li>
+          <li>안정 상태면 자원 할당, 아니면 다른 프로세스들이 자원 해지까지 기다리기.
+            <h2 id="네트워크">네트워크</h2>
+            <h3 id="tcpip-개념">TCP/IP 개념</h3>
+            <p>컴퓨터와 네트워크기기 간 통신을 하기 위해서는 서로 같은 방법으로 통신해야한다.<br>
+-&gt; 이를 프로토콜이라고 한다.<br>
+TCP/IP는 인터넷과 관련된 프로콜을 의미.</p>
+            <blockquote>
+              <p>TCP/IP : 애플리케이션 - 트랜스포트 - 네트워크 - 링크 4계층으로 구성되어 있다.</p>
+            </blockquote>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<p>애플리케이션 계층 : 유저에게 제공되는 통신의 움직임(HTTP)<br>
+트랜스포트 계층 : 컴퓨터 사이의 데이터 흐름을 제공(TCP/UDP)<br>
+네트워크 계층 : 네트워크 상에서 패킷의 이동을 다루는 계층, 패킷은 전송하는 데이터의 최소 단위.<br>
+링크 계층 : 네트워크에 접속하는 하드웨어적인 면을 다룬다.</p>
+
+<p>애플리케이션 계층에서 하위 계층으로 가면서 해당 계층의 정보를 헤더에 추가하는 과정 = 캡슐화<br>
+하위 계층에서 애플리케이션 계층으로 가면서 헤더의 정보를 제거하는 과정 = 역캡슐화</p>
+
+<h3 id="ip-프로토콜-개념">IP 프로토콜 개념</h3>
+<p>IP는 Internet Protocol의 약자이다 + 네트워크 층에 해당한다.<br>
+IP의 역할은 개개의 패킷을 상대방에게 전달…<br>
+전달하기 위해서 (IP주소와 MAC주소가 중요)<br>
+IP 주소는 각 노드에 부여된 주소를 가리키고 MAC 주소는 각 네트워크 카드에 할당되 고유의 주소이다. IP는 변경가능하지만 MAC 주소는 변경할 수 없다.</p>
+
+<p>통신은 ARP(Address Resolution Protocol)이라는 프로토콜이 사용된다.<br>
+IP 통신은 MAC 주소에 의존해서 통신한다. 인터넷에서 통신 상대가 같은 랜선 내에 있을 확률은 매우 낮고 여러 컴퓨터, 네트워크 기기를 중계해 상대방에게 도착한다.<br>
+이때 ARP 프로토콜이 사용된다. ARP는 주소를 해결하기 위한 프로토콜, 수신지의 IP 주소를 바탕으로 MAC 주소를 조사할 수 있다.</p>
+<h3 id="브로드-캐스트">브로드 캐스트</h3>
+<p>유니 캐스팅 : 하나의 송신자가 다른 하나의 송신자에게 데이터를 전송하는 방식.(MAC 주소를 기반으로 상대측 IP 주소를 목적지로 하는 1대1 통신방식)<br>
+-&gt; 유니 캐스팅은 네트워크 효율이 저하된다.</p>
+
+<p>브로드 캐스팅 : 송신 호스트가 전송한 데이터가 네트워크에 연결된 모든 호스트에 전송되는 방식.<br>
+로컬에 붙어있는 모든 네트워크 장비에 의사와 상관 없이 모두 보내는 방식.<br>
+브로드 캐스팅 주소는 미리 정해져 있다 : FF:FF:FF:FF:FF:FF<br>
+데이터를 수신할 필요가 없는 호스트들에게도 데이터가 전송.. 불필요한 인터럽트가 발생</p>
+
+<p>멀티 캐스팅 : UDP를 기반으로 특정한 하나 이상의 수신자들에게 데이터를 전송하는 방식.(멀티 캐스팅 전송을 위한 특별한 그룹 주소를 사용하기 때문 D 클래스 주소 IP)</p>
+
+<h3 id="서브넷-마스크">서브넷 마스크</h3>
+<p>서브넷 : 네트워크를 분할함</p>
+
+<p>A 클래스의 대규모 네트워크를 작은 네트워크로 분할하면 브로드캐스트로 전송되는 패킷의 범위를 좁힐 수 있다.<br>
+네트워크를 분할하기 -&gt; subneting(서브네팅)<br>
+분할 한 네트워크 -&gt; subnet(서브넷)</p>
+
+<p>서브네팅을 할 경우 어디까지가 네트워크 ID이고 어디가 호스트 ID인지 판단하기 어려움.. -&gt; 서브넷 마스크 값을 활용</p>
+
+<p>서브넷 마스크는 네트워크 ID와 호스트 ID를 식별하기 위한 값.<br>
+서브네팅이 되면 네트워크 ID + 호스트 ID 에서</p>
+<blockquote>
+  <p>네트워크 ID + 서브넷 ID + 호스트 ID로 변경된다.</p>
+</blockquote>
+
+<ol>
+  <li>IP 주소에는 반드시 서브넷 마스크가 있다.</li>
+  <li>서브넷 마스크는 기본적으로 255와 0으로 이루어져 있다.</li>
+  <li>255는 네트워크 부분, 0은 호스트 부분이다.</li>
+  <li>255로 된 부분은 무시하고 0으로 된 부분에서 IP를 나눠쓰는 혹은 IP를 쪼갠다.</li>
+</ol>
+
+<p>IP를 쪼개는 이유 -&gt; IP주소가 모자라기 때문</p>
+<blockquote>
+  <p>서브넷 마스크의 형태는 IP 주소와 똑같이 32비트 2진수(IP 주소와 AND 연산하기 위해서이다.)</p>
+</blockquote>
+
+<p>서브넷 마스크를 사용하는 이유 : 브로드캐스트 영역(네트워크)를 나누기 위함이다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>192.168.0.3/24
+IP주소 : 192.168.0.3
+서브넷 마스크 : 255.255.255.0
+
+192.168.0.3/25
+IP주소 : 192.168.0.3
+서브넷 마스크 : 255.255.255.128
+
+C클래스 네트워크를 26개의 서브넷으로 나누기
+255.255.255.
+00000000
+VVVVV000 -&gt; 248 (2*2*2*2*2 &gt;= 26이므로)
+
+A클래스 표준 네트워크 서브넷 클래스 
+255.0.0.0
+B클래스 표준 네트워크 서브넷 클래스 
+255.255.0.0
+.
+.
+.
+</code></pre></div></div>
+<h2 id="자료구조">자료구조</h2>
+<h3 id="이진-트리">이진 트리</h3>
+<p>트리 -&gt; 모양이 뒤집어 놓은 나무와 같다고 해서 작명됨.</p>
+
+<p>순환되면 트리가 아니다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>시작점 -&gt; root
+끝 점 -&gt; leaves
+root의 레벨 0
+root 자식의 레벨 1
+root 자식의 자식 레벨 2
+.
+.
+.
+</code></pre></div></div>
+<p>이진트리(최대 두 개인 노드들로 구성된 트리) -&gt; 정이진트리, 완전이진트리, 균형이진트리 가 있다.</p>
+
+<ul>
+  <li>정이진트리 : 모든 레벨에서 노드들이 꽉 채워진 이진트리</li>
+  <li>완전이진트리 : 마지막 레벨을 제외한 모든 레벨에서 노드들이 채워짐</li>
+  <li>균형이진트리 : 모든 잎새노드의 깊이 차이가 1인 트리.</li>
+</ul>
+
+<p>트리 순회 순서 : preorder, inorder, postorder(루트의 위치에 따라)</p>
+
+<h3 id="힙-구조">힙 구조</h3>
+<p>힙 자료구조 == 완전 이진 트리를 기초로 하는 자료구조</p>
+
+<p>마지막을 제외한 모든 노드에서 자식들이 꽉 채워진 이진트리를 의미한다.</p>
+
+<p>힙은 최대힙과 최소힙으로 나눠진다.<br>
+최대 힙 = 부모 노드의 값이 자식노드들의 값보다 항상 크고,</p>
+
+<p>최소힙은 부모노드의 값이 자식노드의 값보다 항상 작다.</p>
+<h3 id="맵">맵</h3>
+<p>key와 value로 이루어진 자료구조</p>
+
+<p>key의 중복을 허용하지 않는다. (값은 중복되어도 상관 X)</p>
+
+<p>HashMap : key와 value의 쌍으로만 구성, 순서는 보장하지 않는다.</p>
+
+<p>TreeMap : key의 값을 이용해 순서대로 정렬하여 데이터를 저장하는 자료구조</p>
+
+<p>LinkedHashMap : 데이터를 입력한 순서대로 쌓아지며 데이터를 저장하는 자료구조</p>
+<h2 id="알고리즘">알고리즘</h2>
+<h3 id="다익스트라">다익스트라</h3>
+<p>다익스트라 알고리즘 : 최단경로 탐색 알고리즘</p>
+
+<p>최단 경로는 여러 개의 최단 경로로 이루어져있다 + 다이나믹 프로그래밍</p>
+
+<h2 id="프로그래밍-일반">프로그래밍 일반</h2>
+<h3 id="구조체-선언-크기">구조체 선언, 크기</h3>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">typedef</span> <span class="k">struct</span> <span class="n">student</span>
+<span class="p">{</span>
+    <span class="kt">char</span> <span class="n">a</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">c</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="err">크기</span> <span class="o">=</span> <span class="mi">12</span><span class="err">바이트</span>
+<span class="err">ㅁㅁㅁㅁ</span><span class="o">/</span><span class="err">ㅁㅁㅁㅁ</span><span class="o">/</span><span class="err">ㅁㅁㅁㅁ</span>
+<span class="kt">char</span><span class="o">/</span><span class="kt">int</span><span class="o">/</span><span class="kt">char</span>
+<span class="kt">int</span> <span class="mi">4</span><span class="err">바이트</span>
+<span class="kt">char</span> <span class="mi">1</span><span class="err">바이트</span><span class="p">(</span><span class="err">구조체</span> <span class="err">포함은</span> <span class="mi">4</span><span class="err">바이트</span><span class="p">)</span>
+<span class="kt">double</span> <span class="mi">8</span><span class="err">바이트</span>
+
+<span class="k">typedef</span> <span class="k">struct</span> <span class="n">student</span>
+<span class="p">{</span>
+    <span class="kt">char</span> <span class="n">a</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">c</span><span class="p">;</span>
+    <span class="kt">double</span> <span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="err">ㅁㅁㅁㅁ</span><span class="o">/</span><span class="err">ㅁㅁㅁㅁ</span><span class="o">/</span><span class="err">ㅁㅁㅁㅁㅁㅁㅁㅁ</span>
+<span class="kt">char</span><span class="o">/</span><span class="kt">int</span><span class="o">/</span><span class="kt">double</span>
+<span class="err">크기</span> <span class="o">=</span> <span class="mi">16</span><span class="err">바이트</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="n">student</span>
+<span class="p">{</span>
+    <span class="kt">char</span> <span class="n">a</span><span class="p">;</span>
+    <span class="kt">double</span> <span class="n">b</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">c</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="err">ㅁㅁㅁㅁㅁㅁㅁㅁ</span><span class="o">/</span><span class="err">ㅁㅁㅁㅁㅁㅁㅁㅁ</span><span class="o">/</span><span class="err">ㅁㅁㅁㅁㅁㅁㅁㅁ</span>
+<span class="kt">char</span><span class="o">/</span><span class="kt">double</span><span class="o">/</span><span class="kt">int</span>
+
+<span class="err">구조체는</span> <span class="err">가장</span> <span class="err">큰</span> <span class="err">자료형</span> <span class="o">*</span> <span class="n">n</span><span class="err">의</span> <span class="err">배수로</span> <span class="err">이루어져</span> <span class="err">있다</span><span class="p">.</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="n">student</span>
+<span class="p">{</span>
+  <span class="kt">char</span> <span class="n">a</span><span class="p">;</span>
+  <span class="kt">char</span> <span class="n">c</span><span class="p">;</span>
+  <span class="kt">char</span> <span class="n">b</span><span class="p">;</span>
+  <span class="kt">char</span> <span class="n">ee</span><span class="p">;</span>
+  <span class="kt">char</span> <span class="n">eee</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">e</span><span class="p">;</span>
+  <span class="kt">char</span> <span class="n">g</span><span class="p">;</span>
+<span class="p">}</span><span class="n">ss</span><span class="p">;</span>
+<span class="err">크기</span> <span class="o">=</span> <span class="mi">16</span><span class="err">바이트</span>
+</code></pre></div></div>
+<h2 id="데이터베이스">데이터베이스</h2>
+<h3 id="데이터-베이스-설계">데이터 베이스 설계</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>요구분석
+개념적 설계 : 개념 스키마, 트랜잭션 모델링, E-R 모델
+정보 모델링, 개념화
+논리적 설계 : 목표 DBMS에 맞는 스키마 설계(관계형 데이터 베이스에서 테이블을 설계하는 단계)
+물리적 설계 : 물리적 저장장치에 저장할 수 있는 물리적 구조의 데이터 베이스로 변환(반응시간, 공간활용도, 트랜잭션 처리량 고려)
+구현
+</code></pre></div></div>
+<ul>
+  <li>도메인 : 원자값들의 집합</li>
+  <li>속성 : 릴레이션을 구성하는 각각의 열, 속성 수 = 차수</li>
+  <li>튜플 : 릴레이션을 구성하는 각가의 행</li>
+  <li>후보키 : 식별하기 위해 사용되는 속성들의 부분 집합</li>
+  <li>기본키 : 후보키 중 선택한 주키</li>
+  <li>대체키 : 후보키가 둘 이상일 때 기본키를 제외한 나머지 후보키(보조키)</li>
+  <li>슈퍼키 : 유일성은 만족하지만 최소성을 만족하지 않는 키</li>
+  <li>외래키 : 다른 테이블의 기본키를 가져온 것.
+    <h3 id="isolation-level">Isolation Level</h3>
+    <p>동시에 여러 트랜잭션이 처리될 때</p>
+  </li>
+  <li>특정 트랜잭션이 다른 트랜잭션에서 변경하거나 조회하는 데이터를 볼 수 있을지 결정하는 것.
+    <ol>
+      <li>READ UNCOMMITTED</li>
+    </ol>
+    <ul>
+      <li>각 트랜잭션에서의 변경 내용이 commit이나 rollback 여부에 상관 없이 다른 트랜잭션에서 값을 읽을 수 있다.</li>
+      <li>정합성에 문제가 많은 격리 수준이기 때문에 사용하는 것을 권장하지 않는다.</li>
+      <li>
+<code class="language-plaintext highlighter-rouge">dirty read</code>현상이 발생한다.
+        <ol>
+          <li>READ COMMITTED</li>
+        </ol>
+      </li>
+      <li>대부분의 격리 수준.</li>
+      <li>
+<code class="language-plaintext highlighter-rouge">dirty read</code>현상은 나타나지 않는다.</li>
+      <li>실제 테이블 값을 가져오는 것이 아닌 <code class="language-plaintext highlighter-rouge">undo 영역</code>에 <code class="language-plaintext highlighter-rouge">백업된 레코드</code>에서 값을 가져온다.</li>
+      <li>하지만 똑같은 SELECT를 실행했을 때 항상 같은 결과가 나타남을 보장하지 않는다.
+        <ol>
+          <li>REPEATABLE READ</li>
+        </ol>
+      </li>
+      <li>읽을 때마다 같은 값을 받아와야 한다.</li>
+      <li>Undo 공간에 백업해두고 실제 레코드 값을 변경한다.</li>
+      <li>백업된 데이터는 불필요하다고 판단되면 주기적으로 삭제한다.</li>
+      <li>
+<code class="language-plaintext highlighter-rouge">PHANTOM READ</code> 다른 트랜잭션에 의해 레코드가 보였다 안보였다하는 현상(쓰기 잠금을 걸어야 한다.)
+        <ol>
+          <li>SERIALIZABLE</li>
+        </ol>
+      </li>
+      <li>가장 단순한 격리 수준이지만 가장 엄격한 격리 수준</li>
+      <li>성능 측면에서 동시 처리 성능이 가장 낮다.</li>
+      <li>
+<code class="language-plaintext highlighter-rouge">PHANTOM READ</code>가 발생하지 않지만 거의 사용되지 않는다.
+        <h3 id="sql">SQL</h3>
+        <h3 id="commit-rollback">commit, rollback</h3>
+        <p>트랜잭션 : 데이터베이스의 논리적 연산단위.</p>
+      </li>
+    </ul>
+  </li>
+  <li>원자성 : All Or Nothing</li>
+  <li>일관성 : 트랜잭션이 수행하기 전과 후 모두 내용에 문제가 있으면 안된다.</li>
+  <li>고립성 : 트랜잭션이 수행되는 도중에 다른 트랜잭션의 영향을 받아 잘못된 결과 X</li>
+  <li>지속성 : 한번 성공적으로 수행되면 데이터베이스 내용은 영구적으로 저장.</li>
+</ul>
+
+<p>commit -&gt;</p>
+<ul>
+  <li>데이터에 대한 변경 사항이 데이터 베이스에 반영</li>
+  <li>모든 사용자는 결과를 볼 수 있다.</li>
+  <li>행에 대한 잠금이 풀리고 다른 사용자들이 행을 조작할 수 있다.</li>
+</ul>
+
+<p>roll back -&gt;</p>
+<ul>
+  <li>데이터에 대한 변경 사항이 취소된다.</li>
+  <li>이전 데이터는 다시 재저장된다.</li>
+  <li>행에 대한 잠금이 풀리고 다른 사용자들이 행을 조작할 수 있다.
+    <h2 id="컴퓨터-구조">컴퓨터 구조</h2>
+  </li>
+</ul>
+
+<h2 id="전산기초">전산기초</h2>
+<h3 id="부동-소수점">부동 소수점</h3>
+<p>-314.625를 예시로..</p>
+
+<p>부호비트 1
+지수비트 8
+가수 비트 23비트</p>
+
+<p>-1이니까 부호비트 1</p>
+
+<p>314.625를 이진수로 ..</p>
+<blockquote>
+  <p>100111010.101</p>
+</blockquote>
+
+<p>1.00111010101 x 2^8로 (왼쪽에 1만 남도록)</p>
+
+<p>00111010101을 가수비트에 앞에서 부터 채워주기</p>
+
+<p>8은 지수 비트에서 127(bias)를 더해서 넣기</p>
+<h3 id="음수-표현법">음수 표현법</h3>
+<p>1의 보수 변환 후 1 더해주기</p>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/project/2022/10/07/preproject.html" title="Preparing Project 2">Preparing Project 2</a><a class="next" href="/jekyll-theme-yat/spring/2022/12/11/springjpa1.html" title="Spring JPA 1일차">Spring JPA 1일차</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/jekyll-theme-yat/language/2022/08/28/hello.html" title="Spring JPA 1일차">내가 보려고 정리한 파이썬 1</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/spring/2022/12/12/springjpa2.html" title="Spring JPA 1일차">Spring JPA 2일차</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/cs/2022/08/30/hello.html" title="Spring JPA 1일차">input과 readline을 알고 쓰자</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/machine/learning/2022/09/20/score.html" title="Spring JPA 1일차">머신러닝 평가지표</a></li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2022-2023 박정우</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

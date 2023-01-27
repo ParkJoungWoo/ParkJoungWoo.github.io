@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>내가 보려고 정리한 HTML, CSS | 정우의 블로그</title>
+<meta name="generator" content="Jekyll v4.3.2">
+<meta property="og:title" content="내가 보려고 정리한 HTML, CSS">
+<meta name="author" content="박정우">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="HTML">
+<meta property="og:description" content="HTML">
+<link rel="canonical" href="https://parkjoungwoo.github.io/jekyll-theme-yat/language/2022/08/31/html.html">
+<meta property="og:url" content="https://parkjoungwoo.github.io/jekyll-theme-yat/language/2022/08/31/html.html">
+<meta property="og:site_name" content="정우의 블로그">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-08-31T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="내가 보려고 정리한 HTML, CSS">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"박정우"},"dateModified":"2022-08-31T00:00:00+00:00","datePublished":"2022-08-31T00:00:00+00:00","description":"HTML","headline":"내가 보려고 정리한 HTML, CSS","mainEntityOfPage":{"@type":"WebPage","@id":"https://parkjoungwoo.github.io/jekyll-theme-yat/language/2022/08/31/html.html"},"url":"https://parkjoungwoo.github.io/jekyll-theme-yat/language/2022/08/31/html.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://parkjoungwoo.github.io/jekyll-theme-yat/feed.xml" title="정우의 블로그">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="정우의 블로그" src="" onerror="this.style.display='none'">
+  정우의 블로그
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">내가 보려고 정리한 HTML, CSS</h1>
+  <h2 class="post-subtitle">문법</h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-08-31T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Aug 31, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 6 mins</span>
+  </p>
+<div class="post-tags">
+<a class="post-tag" href="/jekyll-theme-yat/tags.html#html">#html</a><a class="post-tag" href="/jekyll-theme-yat/tags.html#css">#css</a>
+</div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h1 id="html">HTML</h1>
+
+<p>Hyper Text Markup Language의 약자이다.</p>
+
+<p>기초적인 html 만들어보기</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"'ko"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;title&gt;</span> 웹 문서 만들기<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+        <span class="nt">&lt;body&gt;</span>
+            <span class="nt">&lt;h1&gt;</span>웹 개발 기초<span class="nt">&lt;/h1&gt;</span>
+            <span class="nt">&lt;p&gt;</span>HTML<span class="nt">&lt;/p&gt;</span>
+            <span class="nt">&lt;p&gt;</span>CSS<span class="nt">&lt;/p&gt;</span>
+            <span class="nt">&lt;p&gt;</span>자바 스크립트<span class="nt">&lt;/p&gt;</span>
+        <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+<p><img src="/assets/img/0831/liveserver.png" alt="live">
+라이브 서버라는 추가 기능을 이용해서 실시간으로 HTML파일의 변화를 확인할 수 있다.</p>
+
+<h2 id="head">Head</h2>
+
+<p>브라우저에게 정보를 주는 태그이다.</p>
+
+<ul>
+  <li>문서 관련 정보 입력, 웹 브라우저 화면에는 안보인다.</li>
+  <li>문서에서 사용할 외부 파일 링크</li>
+  <li>사용자가 활용할 태그
+    <ul>
+      <li>meta 태그 : 문자 세트.. 문서 정보가 들어있는 태그</li>
+      <li>title 태그 : 문서 제목을 나타내는 태그</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"ko"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;title&gt;</span>Dream Jeju<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">"css/structure.css"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"container"</span><span class="nt">&gt;</span>    
+</code></pre></div></div>
+<p>위와 같이 head에는 사용자가 외부에 보이고 싶지 않은 태그를 입력한다.</p>
+
+<ul>
+  <li>meta 태그로 UTF-8을 사용한다고 명시</li>
+  <li>title 태그로 브라우저에 표시되는 제목을 표시</li>
+  <li>link 태그로 참조할 파일을 명시</li>
+</ul>
+
+<hr>
+<h2 id="웹-문서-구조를-만드는-시맨틱-태그">웹 문서 구조를 만드는 시맨틱 태그</h2>
+
+<blockquote>
+  <p>semantic : 의미가 통하는</p>
+</blockquote>
+
+<h3 id="왜-사용하는가">왜 사용하는가?</h3>
+<ul>
+  <li>사이트의 구조를 이해하기 위해</li>
+  <li>문서 구조가 정확히 나눠지므로 다양한 화면에서 웹 문서 표헌 쉽다.</li>
+  <li>필요한 내용을 쉽게 찾을 수 있다.
+```
+    <ul>
+      <li>header 영역
+        <ul>
+          <li>사이트 전체의 헤더 oR 특정 영역의 헤더</li>
+          <li>검색창, 사이트 메뉴 삽입</li>
+        </ul>
+      </li>
+      <li>nav 영역
+        <ul>
+          <li>웹 문서 위치 영향 X</li>
+          <li>id로 구분하여 여러개를 만들 수 있다.(필수 요소는 아님)</li>
+        </ul>
+      </li>
+      <li>main 영역
+        <ul>
+          <li>웹 문서의 핵심내용</li>
+          <li>한번만 사용된다</li>
+        </ul>
+      </li>
+      <li>article 영역
+        <ul>
+          <li>독립적인 컨텐츠, section태그를 포함 가능</li>
+        </ul>
+      </li>
+      <li>section 영역
+        <ul>
+          <li>콘텐츠 영역</li>
+          <li>css 적용을 위해서는 사용하면 X</li>
+        </ul>
+      </li>
+      <li>aside 영역
+        <ul>
+          <li>본문 내용 외 좌우에 존재</li>
+          <li>필수 요소 아니다.</li>
+        </ul>
+      </li>
+      <li>footer 영역
+        <ul>
+          <li>저작권, 제작 정보, 연락처 등등</li>
+        </ul>
+      </li>
+      <li>div 영역
+        <ul>
+          <li>소스를 묶는 용도</li>
+          <li>스타일 적용, 영역구분을 위해서
+```</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>참고</li>
+</ul>
+
+<p><img src="/assets/img/0831/ids.png" alt="ids"></p>
+
+<p>#은 id 1번</p>
+
+<p><img src="/assets/img/0831/divs.png" alt="ids"></p>
+
+<p>. 은 class 여러번 나옴</p>
+
+<hr>
+<h2 id="html-파일에서-원하는-정보를-찾고-싶다면">HTML 파일에서 원하는 정보를 찾고 싶다면?</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nt">&lt;main</span> <span class="na">class=</span><span class="s">"contents"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;section</span> <span class="na">id=</span><span class="s">"home"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;h2&gt;</span>우리집여행<span class="nt">&lt;/h2&gt;</span>                  
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"detail"</span><span class="nt">&gt;</span> 
+          <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"images/home.jpg"</span><span class="nt">&gt;</span>                            
+          <span class="nt">&lt;b&gt;&lt;p&gt;</span>안녕하세요<span class="nt">&lt;/p&gt;&lt;/b&gt;</span>          
+          <span class="nt">&lt;p&gt;</span>바람이 불어오는 곳 그곳은 우리집입니다 <span class="nt">&lt;/p&gt;</span>        
+        <span class="nt">&lt;/div&gt;</span>        
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"schedule"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;h3&gt;</span>상세 일정<span class="nt">&lt;/h3&gt;</span>
+          <span class="nt">&lt;ul&gt;</span>
+            <span class="nt">&lt;li&gt;</span>여행 기간 : 2박 3일<span class="nt">&lt;/li&gt;</span>
+            <span class="nt">&lt;li&gt;</span>여행 일정 : (여행 일정은 상담을 통해 결정 및 조정 가능합니다)<span class="nt">&lt;/li&gt;</span>
+          <span class="nt">&lt;/ul&gt;</span> 
+</code></pre></div></div>
+<ol>
+  <li>찾아가는 순서는 main -&gt; id -&gt; ul -&gt; ul:nth-child(1) 로 찾는다.
+    <ul>
+      <li>nth-child(1)은 1번째 ul의 컴포넌트라는 의미</li>
+    </ul>
+  </li>
+  <li>#home -&gt; div.detail -&gt; ul:nth-child(1)
+    <ul>
+      <li>상세 일정이 나온다.</li>
+    </ul>
+  </li>
+</ol>
+
+<hr>
+<h2 id="html-태그">HTML 태그</h2>
+
+<ol>
+  <li>hn 태그
+    <ul>
+      <li>h1,h2…h6으로 크기가 작아진다.</li>
+      <li>제목을 표시한다</li>
+    </ul>
+  </li>
+  <li>p 태그
+    <ul>
+      <li>문장을 표시할때 사용된다.</li>
+      <li>텍스트 단락 세번째 수를 의미</li>
+      <li>띄어 쓰기는 &amp;nbsp를 사용한다</li>
+    </ul>
+  </li>
+  <li>br 태그
+    <ul>
+      <li>개행을 위해 사용</li>
+    </ul>
+  </li>
+  <li>blockquote 태그
+    <ul>
+      <li>인용문 넣기</li>
+    </ul>
+  </li>
+  <li>strong, b 태그
+    <ul>
+      <li>굵게 표시하기 위한 태그</li>
+      <li>strong - 의미상 강조</li>
+      <li>b - 명목상 강조</li>
+    </ul>
+  </li>
+  <li>em, i 태그
+    <ul>
+      <li>이텔릭체를 위한 태그</li>
+      <li>em - 의미상 강조</li>
+      <li>i - 명목상 강조</li>
+    </ul>
+  </li>
+  <li>ol, ul, li 태그
+ ```html
+    <ol>
+     <li> 항목 1 </li>
+     <li> 항목 2 </li>
+ </ol>
+    <ul>
+      <li>순서가 표시된다.</li>
+    </ul>
+    <ul>
+     <li> 항목 1 </li>
+     <li> 항목 2 </li>
+ </ul>
+    <p>-순서는 표시되지 않는다
+ ```</p>
+    <ul>
+      <li>7-1. dl, dt, dd 태그
+        <div class="language-html highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code>  <span class="nt">&lt;dl&gt;</span>
+      <span class="nt">&lt;dt&gt;</span>이름(제목) 1<span class="nt">&lt;/dt&gt;</span>
+      <span class="nt">&lt;dd&gt;</span>값(설명) 1<span class="nt">&lt;/dd&gt;</span>
+      <span class="nt">&lt;dt&gt;</span>이름(제목) 2<span class="nt">&lt;/dt&gt;</span>
+      <span class="nt">&lt;dd&gt;</span>값(설명) 2<span class="nt">&lt;/dd&gt;</span>
+  <span class="nt">&lt;/dl&gt;</span>
+</code></pre></div>        </div>
+        <ul>
+          <li>dt 로 title을 지정</li>
+          <li>dd 로 description을 작성</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>table 태그
+    <ul>
+      <li>table과 관련된 태그들
+ ```html
+ caption : 제목
+ table : 표 전체
+ tr : 행
+ td : 셀
+ th : 제목 셀</li>
+    </ul>
+    <table>
+     <caption>애완동물</caption>
+     <thead>
+         <tr>
+             <th>이름</th>
+             <th>중량</th>
+             <th>종</th>
+             <th>뛴 거리</th>
+         </tr>
+     </thead>
+     <tbody>
+         <tr>
+             <td>고냥이</td>
+             <td>3kg</td>
+             <td>블루러시안</td>
+             <td>35000km</td>
+         </tr>
+         <tr>
+             <td>궁아지</td>
+             <td>45kg</td>
+             <td>강아지</td>
+             <td>30000km</td>
+         </tr>
+     </tbody>
+ </table>
+    <p>```
+ 결과 표</p>
+
+    <p><img src="/assets/img/0831/pyo.png" alt="idis"></p>
+  </li>
+  <li>이미지 태그
+    <div class="language-html highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code> <span class="nt">&lt;p&gt;</span>원래 크기의 이미지<span class="nt">&lt;/p&gt;</span>
+ <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"images/a.jpg"</span> <span class="na">alt=</span><span class="s">"a"</span><span class="nt">&gt;</span>
+ <span class="nt">&lt;p&gt;</span>width="75%", height="75%"로 지정한 이미지<span class="nt">&lt;/p&gt;</span>
+ <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"images/a.jpg"</span> <span class="na">alt=</span><span class="s">"a"</span> <span class="na">width=</span><span class="s">"75%"</span><span class="nt">&gt;</span>
+ <span class="nt">&lt;p&gt;</span>width="300"으로 지정한 이미지<span class="nt">&lt;/p&gt;</span>
+ <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"images/a.jpg"</span> <span class="na">alt=</span><span class="s">"a"</span> <span class="na">width=</span><span class="s">"300"</span><span class="nt">&gt;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>파일, 오디오, 비디오 태그
+    <div class="language-html highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code>파일 넣기
+<span class="nt">&lt;object</span> <span class="na">width=</span><span class="s">"500"</span> <span class="na">height=</span><span class="s">"500"</span> <span class="na">data=</span><span class="s">"a.pdf"</span><span class="nt">&gt;&lt;/object&gt;</span>
+플레이어
+<span class="nt">&lt;embed</span> <span class="na">src=</span><span class="s">"video/a.mp4"</span> <span class="na">width=</span><span class="s">"500"</span> <span class="na">height=</span><span class="s">"500"</span><span class="nt">&gt;</span>
+오디오, 비디오
+<span class="nt">&lt;audio</span> <span class="na">src=</span><span class="s">"audio/a.mp3"</span><span class="nt">&gt;&lt;/audio&gt;</span>
+<span class="nt">&lt;video</span> <span class="na">src=</span><span class="s">"video/a.mp4"</span><span class="nt">&gt;&lt;/video&gt;</span>
+
+</code></pre></div>    </div>
+  </li>
+  <li>하이퍼 링크
+    <div class="language-html highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code>문장으로
+<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"www.naver.com"</span><span class="nt">&gt;</span>네이버 하이퍼링크<span class="nt">&lt;/a&gt;</span>
+이미지 파일로
+<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"www.naver.com"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"images/naverlogo.png"</span> <span class="na">alt=</span><span class="s">"네이버 하이퍼 링크"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/a&gt;</span>
+</code></pre></div>    </div>
+    <hr>
+  </li>
+</ol>
+
+<h2 id="input-form">input form</h2>
+
+<p>form 이란?</p>
+
+<ul>
+  <li>사용자가 웹사이트로 정보를 보내기 위한 요소들을 form이라고 한다.</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"login.php"</span><span class="nt">&gt;</span>
+    /* form 요소 */
+<span class="nt">&lt;/form&gt;</span>
+</code></pre></div></div>
+<p><img src="/assets/img/0831/input.png" alt="forms"></p>
+
+<ul>
+  <li>아래는 입력폼의 태그들이다.</li>
+</ul>
+
+<p><img src="/assets/img/0831/tags.png" alt="tags"></p>
+
+<hr>
+
+<h2 id="크롤링">크롤링</h2>
+
+<p>이처럼 html의 태그를 통해서 크롤링을 위한 데이터를 지정할 수 있다.</p>
+
+<p>그래서 태그의 경로를 알아야 하는데</p>
+
+<p><img src="/assets/img/0831/sector.png" alt="sector"></p>
+
+<p>개발자 모드에서 위와 같이 sector를 검색하면 경로가 나타난다</p>
+
+<p>결과:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>body &gt; table &gt; tbody &gt; tr:nth-child(1) &gt; td:nth-child(1)
+</code></pre></div></div>
+<blockquote>
+  <p>body 아래의 table 아래의 tbody 아래의 tr의 첫번째 자식의 td 의 첫번째 자식이라는 의미이다.</p>
+</blockquote>
+
+<hr>
+
+<h1 id="css">CSS</h1>
+<p>cascading style sheet의 약자이다.</p>
+
+<p>CSS의 기본적인 형식은 아래와 같다.</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">p</span> <span class="p">{</span>
+    <span class="nl">text-align</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+    <span class="nl">color</span> <span class="p">:</span> <span class="no">blue</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>id ,class 스타일을 지정하는 방법은 아래와 같다</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nt">&lt;style&gt;</span>
+    <span class="nf">#tester</span> <span class="p">{</span>
+      <span class="nl">width</span><span class="p">:</span><span class="m">500px</span><span class="p">;</span>  <span class="c">/* 너비 */</span>
+      <span class="nl">margin</span><span class="p">:</span><span class="m">10px</span> <span class="nb">auto</span><span class="p">;</span>  <span class="c">/* 바깥 여백 */</span>
+      <span class="nl">padding</span><span class="p">:</span><span class="m">10px</span><span class="p">;</span>  <span class="c">/* 테두리와 내용 사이 여백 */</span> 
+      <span class="nl">border</span><span class="p">:</span><span class="m">1px</span> <span class="nb">solid</span> <span class="m">#000</span><span class="p">;</span>  <span class="c">/* 테두리 */</span>
+    <span class="p">}</span>    
+  <span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"tester"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;h1&gt;</span>Out of time<span class="nt">&lt;/h1&gt;</span>
+    <span class="nt">&lt;p&gt;</span>Last few month ago<span class="nt">&lt;/p&gt;</span>
+    <span class="nt">&lt;p&gt;</span>Say I love you<span class="nt">&lt;/p&gt;</span>
+    <span class="nt">&lt;p&gt;</span>out of time<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+</code></pre></div></div>
+<blockquote>
+  <p>똑같은 방법으로 id는 #, class는 .을 통해서 스타일을 지정한다.</p>
+</blockquote>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/language/2022/08/31/func.html" title="내가 보려고 정리한 파이썬 3">내가 보려고 정리한 파이썬 3</a><a class="next" href="/jekyll-theme-yat/project/2022/09/01/html.html" title="내가 보려고 정리한 크롤링">내가 보려고 정리한 크롤링</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/jekyll-theme-yat/spring/2023/01/19/cotatoStudy4.html" title="내가 보려고 정리한 크롤링">JVM 알아보기</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/project/2022/09/13/deathnote.html" title="내가 보려고 정리한 크롤링">데이터 분석 데스 노트</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/machine/learning/2022/09/21/decision.html" title="내가 보려고 정리한 크롤링">의사 결정 트리</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/spring/2023/01/12/cotatoStudy2.html" title="내가 보려고 정리한 크롤링">스프링 부트 요소와 한글 깨짐 해결</a></li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2022-2023 박정우</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,1812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>데이터 분석 데스 노트 | 정우의 블로그</title>
+<meta name="generator" content="Jekyll v4.3.2">
+<meta property="og:title" content="데이터 분석 데스 노트">
+<meta name="author" content="박정우">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="1주차 복습">
+<meta property="og:description" content="1주차 복습">
+<link rel="canonical" href="https://parkjoungwoo.github.io/jekyll-theme-yat/project/2022/09/13/deathnote.html">
+<meta property="og:url" content="https://parkjoungwoo.github.io/jekyll-theme-yat/project/2022/09/13/deathnote.html">
+<meta property="og:site_name" content="정우의 블로그">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-09-13T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="데이터 분석 데스 노트">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"박정우"},"dateModified":"2022-09-13T00:00:00+00:00","datePublished":"2022-09-13T00:00:00+00:00","description":"1주차 복습","headline":"데이터 분석 데스 노트","mainEntityOfPage":{"@type":"WebPage","@id":"https://parkjoungwoo.github.io/jekyll-theme-yat/project/2022/09/13/deathnote.html"},"url":"https://parkjoungwoo.github.io/jekyll-theme-yat/project/2022/09/13/deathnote.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://parkjoungwoo.github.io/jekyll-theme-yat/feed.xml" title="정우의 블로그">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="정우의 블로그" src="" onerror="this.style.display='none'">
+  정우의 블로그
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">데이터 분석 데스 노트</h1>
+  <h2 class="post-subtitle">데이터 분석</h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-09-13T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Sep 13, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 54 mins</span>
+  </p>
+<div class="post-tags"><a class="post-tag" href="/jekyll-theme-yat/tags.html#data%20analysis">#data analysis</a></div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h2 id="1주차-복습">1주차 복습</h2>
+
+<h3 id="파일-읽기txt">파일 읽기(txt)</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fd</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"파일명.확장자"</span><span class="p">)</span>
+<span class="n">fd</span><span class="p">.</span><span class="n">readline</span><span class="p">()</span><span class="c1">#여기서는 맨 윗 줄이 카테고리이기 때문에 읽고 버린다.
+</span><span class="n">lines</span> <span class="o">=</span> <span class="n">fd</span><span class="p">.</span><span class="n">readlines</span><span class="p">()</span> <span class="n">읽은</span> <span class="n">내용을</span> <span class="n">lines에</span> <span class="n">저장</span>
+<span class="c1">#lines는 list이며 
+#문자열로 , 를 기준으로 나누어지고 마지막에 개행문자가 있다(txt 였기 때문)
+</span><span class="p">[</span><span class="s">'김길동,남자,23,3,유,O,165.3,68.2,02</span><span class="se">\n</span><span class="s">'</span><span class="p">,</span> 
+ <span class="s">'이미린,여자,22,2,무,AB,170.1,53,03</span><span class="se">\n</span><span class="s">'</span><span class="p">,</span>
+ <span class="s">'홍길동,남자,24,4,무,B,175,80.1,01</span><span class="se">\n</span><span class="s">'</span><span class="p">,</span> 
+ <span class="s">'김철수,남자,23,3,무,AB,182.1,85.7,02</span><span class="se">\n</span><span class="s">'</span><span class="p">]</span>
+
+<span class="n">fields</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">split</span><span class="p">(</span><span class="s">","</span><span class="p">)</span> 
+<span class="n">fields라는</span> <span class="n">리스트가</span> <span class="n">아닌</span> <span class="n">단일</span> <span class="n">변수들로만</span> <span class="n">사용할</span> <span class="n">수</span> <span class="n">도</span> <span class="n">있다</span><span class="p">.</span>
+<span class="n">name</span><span class="p">,</span> <span class="n">gender</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">money</span><span class="p">,</span> <span class="n">fl</span> <span class="p">...</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">split</span><span class="p">(</span><span class="s">","</span><span class="p">)</span>
+<span class="n">자동으로</span> <span class="n">변수들에게</span> <span class="n">나뉘어</span> <span class="n">저장</span>
+
+<span class="n">split</span> <span class="n">함수를</span> <span class="n">통해</span> <span class="n">문자열을</span> <span class="n">구분자로</span> <span class="n">나눌</span> <span class="n">수</span> <span class="n">있다</span>
+
+<span class="n">마지막</span> <span class="n">항목은</span> <span class="mf">2.02</span>\<span class="n">n으로</span> <span class="n">끝나게</span> <span class="n">된다</span><span class="p">...</span> <span class="n">개행문자를</span> <span class="n">지우기</span> <span class="n">위해서는</span>
+<span class="n">strip</span><span class="p">()</span><span class="n">함수를</span> <span class="n">통해</span> <span class="n">개행</span> <span class="n">문자를</span> <span class="n">지울</span> <span class="n">수</span> <span class="n">있다</span><span class="p">.</span>
+<span class="n">ex</span><span class="p">)</span> <span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">strip</span><span class="p">()</span>
+
+<span class="n">딕셔너리</span> <span class="n">에서</span> <span class="n">key와</span> <span class="n">item을</span> <span class="n">얻는</span> <span class="n">방법</span>
+<span class="n">my_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s">'a'</span><span class="p">:</span><span class="s">'b'</span><span class="p">,</span> <span class="s">"c"</span><span class="p">,</span> <span class="s">"d"</span><span class="p">}</span>
+<span class="n">my_dict</span><span class="p">.</span><span class="n">items</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">원소</span> <span class="n">조회</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">my_dict</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">key</span><span class="p">,</span> <span class="n">value에</span> <span class="n">접근</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sort</span><span class="p">()</span> <span class="n">함수</span>
+<span class="s">"원본을 변형시켜 정렬한다."</span>
+<span class="n">알파벳은</span> <span class="n">사전순</span><span class="p">,</span> <span class="n">숫자는</span> <span class="n">오름차순</span>
+<span class="nb">list</span><span class="p">.</span><span class="n">sort</span><span class="p">()</span>
+
+<span class="nb">sorted</span><span class="p">()</span> <span class="n">함수</span>
+<span class="s">"원본을 변형시키지 않고 정렬한다"</span>
+<span class="nb">list</span><span class="p">.</span><span class="nb">sorted</span><span class="p">()</span> <span class="o">&lt;-</span> <span class="n">이것으로</span> <span class="n">정렬한</span> <span class="n">값을</span> <span class="n">조회</span> <span class="n">가능</span>
+<span class="nb">list</span> <span class="o">&lt;-</span><span class="n">정렬</span> <span class="n">안됨</span>
+
+<span class="nb">list</span><span class="p">.</span><span class="n">sort</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="s">"원본을 역순으로 정렬한다"</span>
+
+<span class="n">sort</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">리스트</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">)</span>
+<span class="s">"key를 길이로 보아 정렬한다. "</span>
+
+<span class="n">sort</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">리스트</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="s">"key를 x의 두번째 원소로 보고 정렬한다."</span>
+<span class="n">이게</span> <span class="n">무슨</span> <span class="n">말이냐면</span> <span class="n">본디</span> <span class="n">정렬은</span> <span class="n">단일</span> <span class="n">개체</span> <span class="n">list일</span> <span class="n">경우</span> <span class="n">정렬하는</span> <span class="n">기준이</span> <span class="n">명확해</span>
+<span class="n">sort를</span> <span class="n">쓰면</span> <span class="n">되지만</span> <span class="n">만약</span> <span class="n">항목이</span> <span class="n">여러개이고</span> <span class="n">원하는</span> <span class="n">정렬</span> <span class="n">기준이</span> <span class="n">달라지면</span>
+<span class="n">정렬하는</span> <span class="n">기준을</span> <span class="n">명시해야</span> <span class="n">하는데</span> <span class="n">이를</span> <span class="n">lambda함수를</span> <span class="n">통해</span> <span class="n">어떤</span> <span class="n">원소를</span> <span class="n">기준으로</span>
+<span class="n">할지</span> <span class="n">알려</span> <span class="n">준다</span><span class="p">.</span>
+<span class="n">sort</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">딕셔너리</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="s">"key를 x의 value를 기준으로 정렬한다"</span>
+<span class="n">만약</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="n">이</span> <span class="n">아닌</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[:]</span><span class="n">라면</span> <span class="n">key를</span> <span class="n">기준으로</span> <span class="n">정렬한다</span><span class="p">.</span>
+
+
+</code></pre></div></div>
+
+<h2 id="2주차-복습">2주차 복습</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numpy활용법</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="n">num</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">30</span><span class="p">).</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="o">-&gt;</span> <span class="n">넘파이</span> <span class="mi">0</span><span class="o">~</span><span class="mi">29</span><span class="n">의</span> <span class="n">숫자</span> <span class="n">리스트를</span> <span class="mi">5</span><span class="n">개씩</span> <span class="n">하나의</span> <span class="n">리스트로</span> 
+<span class="n">그</span> <span class="n">리스트를</span> <span class="mi">3</span><span class="n">개씩</span> <span class="n">하나의</span> <span class="n">리스트로</span>
+<span class="n">그</span> <span class="n">리스트를</span> <span class="mi">2</span><span class="n">개씩</span> <span class="n">하나의</span> <span class="n">리스트로</span> <span class="n">만든다</span><span class="p">.</span>
+
+<span class="n">num</span><span class="p">.</span><span class="n">shape</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">num</span><span class="p">.</span><span class="n">ndim</span>
+<span class="mi">3</span><span class="p">(</span><span class="mi">3</span><span class="n">차원이니까</span><span class="p">)</span>
+<span class="n">num</span><span class="p">.</span><span class="n">size</span>
+<span class="mi">30</span><span class="p">(</span><span class="mi">30</span><span class="n">개의</span> <span class="n">숫자가</span> <span class="n">있으니까</span><span class="p">)</span>
+
+<span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">리스트</span><span class="p">)</span>
+<span class="n">리스트를</span> <span class="n">넘파이</span> <span class="n">배열로</span> 
+<span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">행</span><span class="p">,</span> <span class="n">열</span><span class="p">))</span>
+<span class="n">ex</span><span class="p">)</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span> <span class="o">=</span>
+<span class="n">array</span><span class="p">([[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]])</span>
+<span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="n">사이즈</span><span class="p">)</span>
+<span class="n">array</span><span class="p">([</span><span class="mi">0</span> <span class="p">...</span> <span class="n">사이즈</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="n">시작</span><span class="p">,</span> <span class="n">끝</span><span class="p">)</span>
+<span class="n">array</span><span class="p">([</span><span class="n">시작</span><span class="p">,</span> <span class="n">끝</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="n">시작</span><span class="p">,</span> <span class="n">끝</span><span class="p">,</span> <span class="n">증분</span><span class="p">)</span>
+<span class="n">array</span><span class="p">([</span><span class="n">시작</span><span class="p">,</span> <span class="n">시작</span><span class="o">+</span><span class="n">증분</span><span class="p">,</span> <span class="n">시작</span><span class="o">+</span><span class="n">증분</span><span class="o">+</span><span class="n">증분</span> <span class="p">,,,</span> <span class="n">끝보다</span> <span class="n">작고</span> <span class="n">증분의</span> <span class="n">최대</span><span class="p">])</span>
+
+<span class="n">numpy</span> <span class="n">연산</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]])</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span> <span class="p">(</span> <span class="p">[[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]])</span>
+
+<span class="n">A</span><span class="o">*</span><span class="mi">4</span>
+<span class="n">array</span><span class="p">([[</span> <span class="mi">4</span><span class="p">,</span>  <span class="mi">8</span><span class="p">],</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">16</span><span class="p">]])</span>
+<span class="n">A</span><span class="o">+=</span><span class="mi">3</span>
+<span class="n">array</span><span class="p">([[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]])</span>
+<span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">array</span><span class="p">([[</span><span class="mf">2.</span>        <span class="p">,</span> <span class="mf">2.23606798</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.44948974</span><span class="p">,</span> <span class="mf">2.64575131</span><span class="p">]])</span>
+<span class="n">A</span><span class="o">*</span><span class="n">B</span>
+<span class="n">array</span><span class="p">([[</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span> <span class="p">[</span><span class="mi">24</span><span class="p">,</span> <span class="mi">35</span><span class="p">]])</span> <span class="o">-&gt;</span>
+<span class="p">[[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>  <span class="p">[[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span>
+ <span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">]]</span> <span class="o">*</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]]</span> <span class="p">(</span><span class="n">행렬의곱</span><span class="p">)</span>
+<span class="n">A</span><span class="o">@</span><span class="n">B</span>
+<span class="n">array</span><span class="p">([[</span><span class="mi">28</span><span class="p">,</span> <span class="mi">37</span><span class="p">],</span>
+       <span class="p">[</span><span class="mi">40</span><span class="p">,</span> <span class="mi">53</span><span class="p">]])</span> <span class="p">(</span><span class="n">내적</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">random</span>
+<span class="n">randn</span><span class="p">(</span><span class="n">모양</span><span class="p">)</span> <span class="p">:</span> <span class="n">정규분포</span>
+    <span class="o">-</span><span class="mf">1.</span><span class="p">.</span><span class="mi">1</span><span class="n">사이의</span> <span class="n">값을</span> <span class="n">모양</span> <span class="n">대로</span> <span class="n">array로</span> <span class="n">반환</span>
+<span class="n">randint</span><span class="p">(</span><span class="n">시작</span><span class="p">,</span> <span class="n">끝</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">랜덤</span> <span class="n">정수</span>
+<span class="n">시작</span> <span class="o">~</span> <span class="n">끝</span><span class="o">-</span><span class="mi">1</span> <span class="n">값을</span>  <span class="mi">3</span><span class="n">개</span> <span class="n">array로</span> <span class="n">반환</span>
+<span class="n">randint</span><span class="p">(</span><span class="n">시작</span><span class="p">,</span> <span class="n">끝</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">30</span><span class="p">).</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span><span class="n">로</span> <span class="n">변경할</span> <span class="n">수</span> <span class="n">있다</span><span class="p">.</span>
+
+<span class="n">넘파이</span> <span class="n">배열을</span> <span class="n">A라고</span> <span class="n">둘때</span>
+<span class="n">A의</span> <span class="n">총합</span> <span class="n">A</span><span class="p">.</span><span class="nb">sum</span><span class="p">()</span>
+<span class="n">A의</span> <span class="n">최소값</span> <span class="n">A</span><span class="p">.</span><span class="nb">min</span><span class="p">()</span>
+<span class="n">A의</span> <span class="n">최대값</span> <span class="n">A</span><span class="p">.</span><span class="nb">max</span><span class="p">()</span>
+
+<span class="n">A</span> <span class="o">=</span> 
+<span class="p">[[</span> <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">2</span>  <span class="mi">3</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">4</span>  <span class="mi">5</span>  <span class="mi">6</span>  <span class="mi">7</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">8</span>  <span class="mi">9</span> <span class="mi">10</span> <span class="mi">11</span><span class="p">]]</span>
+<span class="n">라고</span> <span class="n">할</span> <span class="n">때</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">A</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span><span class="n">첫번째</span> <span class="n">차원으로</span> <span class="n">합</span>
+<span class="n">A</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span><span class="n">두번째</span> <span class="n">차원으로</span> <span class="n">합</span>
+<span class="n">axis는</span> <span class="n">차원을</span> <span class="n">없애준다는</span> <span class="n">느낌으로</span> <span class="n">접근해보자</span>
+<span class="n">A같은</span> <span class="n">경우에는</span> <span class="mi">3</span> <span class="o">*</span> <span class="mi">4</span><span class="n">인데</span>
+<span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="n">이면</span> <span class="n">null</span> <span class="o">*</span> <span class="mi">4</span>
+<span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="n">이면</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">null</span>
+
+<span class="mi">3</span><span class="n">차원일경우</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="mi">5</span><span class="o">*</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">axis</span><span class="o">=</span><span class="mi">0</span> <span class="n">null</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">*</span> <span class="mi">10</span>
+<span class="n">axis</span><span class="o">=</span><span class="mi">1</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">null</span> <span class="o">*</span> <span class="mi">10</span>
+<span class="n">axis</span><span class="o">=</span><span class="mi">2</span> <span class="mi">3</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">null</span>
+
+<span class="n">이러한</span> <span class="n">느낌으로</span> <span class="n">접근하자</span><span class="p">.</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">indexing</span><span class="p">,</span> <span class="n">slicing</span>
+<span class="n">A</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="mi">5</span> <span class="n">부터</span> <span class="mi">14</span><span class="n">까지</span>
+<span class="n">A</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="mi">7</span>
+<span class="n">A</span><span class="p">[(</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">),]</span> <span class="o">=&gt;</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span> <span class="c1">#소괄호에 인덱스들을 넣는다
+</span><span class="n">A</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="n">에</span> <span class="n">위치한</span> <span class="n">원소</span>
+
+<span class="n">A</span><span class="p">[:,</span> <span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="n">A의</span> <span class="n">모든</span> <span class="n">원소</span> <span class="n">중에서</span> <span class="n">열이</span> <span class="p">::(</span><span class="mi">0</span><span class="p">)</span><span class="n">에서</span> <span class="n">부터</span> <span class="mi">2</span><span class="n">씩</span> <span class="n">증가해</span> 
+<span class="n">마지막</span> <span class="n">까지</span> <span class="n">달성하는</span> <span class="n">원소들</span>
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">DataFrame</span> <span class="p">:</span> <span class="mi">2</span><span class="n">차원</span> <span class="n">구조</span><span class="p">,</span> <span class="n">column마다</span> <span class="n">다른</span> <span class="n">데이터</span> <span class="n">타입을</span> <span class="n">가짐</span>
+<span class="n">row에는</span> <span class="n">레코드</span><span class="p">,</span> <span class="n">col에는</span> <span class="n">필드를</span> <span class="n">가진다</span><span class="p">.</span>
+<span class="n">데이터</span> <span class="n">처리</span><span class="p">,</span> <span class="n">통계</span> <span class="n">등은</span> <span class="n">column</span> <span class="n">단위로</span> <span class="n">이루어</span> <span class="n">진다</span><span class="p">.</span>
+<span class="n">csv</span> <span class="n">데이터</span> <span class="n">구조</span> <span class="n">처리에</span> <span class="n">특화</span>
+
+<span class="n">numpy는</span> <span class="n">array</span><span class="p">,</span> <span class="n">list를</span> <span class="n">통해</span> <span class="n">생성된다면</span>
+<span class="n">dataframe은</span> <span class="n">dictionary를</span> <span class="n">통해</span> <span class="n">생성</span>
+<span class="n">dic</span><span class="o">=</span> <span class="p">{</span> <span class="s">'gender'</span> <span class="p">:</span> <span class="p">[</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="s">'bloodtype'</span><span class="p">:</span> <span class="p">[</span><span class="s">"A"</span><span class="p">,</span> <span class="s">"B"</span><span class="p">,</span> <span class="s">"O"</span><span class="p">,</span> <span class="s">"AB"</span><span class="p">]}</span>
+<span class="n">dataF</span> <span class="o">=</span> <span class="n">pandas</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dic</span><span class="p">)</span>
+
+<span class="n">문자열을</span> <span class="n">list로</span> <span class="n">저장하면</span> <span class="n">각</span> <span class="n">문자가</span> <span class="n">하나씩</span> <span class="n">저장된다</span><span class="p">.</span>
+<span class="n">ex</span><span class="p">)</span> <span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="s">"ABCD"</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="s">'A'</span><span class="p">,</span> <span class="s">'B'</span><span class="p">,</span> <span class="s">'C'</span><span class="p">,</span> <span class="s">'D'</span><span class="p">]</span>
+
+<span class="n">DataFrame은</span> <span class="n">numpy</span> <span class="n">array를</span> <span class="n">통해서도</span> <span class="n">생성이</span> <span class="n">가능하다</span><span class="p">.</span>
+<span class="n">pandas</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="s">"ABCD"</span><span class="p">))</span>
+<span class="n">DataFrame</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">array</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">array</span><span class="p">)</span><span class="n">로</span> <span class="n">초기화</span> <span class="n">가능</span>
+<span class="n">index</span><span class="p">(</span><span class="n">row</span><span class="p">)</span><span class="n">는</span> <span class="n">왼쪽에</span> <span class="n">columns는</span> <span class="n">위쪽에</span>
+<span class="o">-&gt;</span> <span class="n">입력받는</span> <span class="n">array랑</span> <span class="n">index</span><span class="p">,</span> <span class="n">columns의</span> <span class="n">크기가</span> <span class="n">같아야</span> <span class="n">성립</span><span class="p">.</span>
+
+<span class="n">날짜</span> <span class="n">관련</span>
+<span class="n">dates</span> <span class="o">=</span> <span class="n">pandas</span><span class="p">.</span><span class="n">date_range</span><span class="p">(</span><span class="s">"20220103"</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="mi">2022</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">03</span> <span class="n">을</span> <span class="n">시작점으로</span> <span class="n">총</span> <span class="mi">6</span><span class="n">일의</span> <span class="n">날짜를</span> <span class="n">출력</span>
+<span class="mi">2022</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">03</span> <span class="p">...</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">08</span>
+
+<span class="n">df</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">df</span><span class="p">.</span><span class="n">tail</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">최초</span><span class="p">,</span> <span class="n">마지막</span> <span class="mi">5</span><span class="n">개씩</span> <span class="n">출력</span>
+<span class="n">df</span><span class="p">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">df</span><span class="p">.</span><span class="n">tail</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">최초</span><span class="p">,</span> <span class="n">마지막</span> <span class="n">n개씩</span> <span class="n">출력</span>
+<span class="n">df</span><span class="p">.</span><span class="n">index</span> <span class="p">:</span> <span class="n">df의</span> <span class="n">index</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="n">확인</span> <span class="n">가능</span>
+<span class="n">df</span><span class="p">.</span><span class="n">columns</span> <span class="p">:</span> <span class="n">df의</span> <span class="n">column확인</span> <span class="n">가능</span>
+    
+<span class="n">df</span><span class="p">.</span><span class="n">describe</span><span class="p">()</span> <span class="n">df의</span> <span class="n">여러정보확인가능</span>
+<span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">std</span><span class="p">,</span> <span class="nb">min</span><span class="p">,</span> <span class="mi">25</span><span class="o">%</span><span class="p">,</span> <span class="mi">50</span><span class="o">%</span><span class="p">,</span> <span class="mi">75</span><span class="o">%</span><span class="p">,</span> <span class="nb">max</span><span class="p">)</span>
+
+<span class="n">df</span><span class="p">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s">"B"</span><span class="p">)</span>
+<span class="n">df</span><span class="p">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s">"B"</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">내림차순</span>
+<span class="n">by</span><span class="o">=</span><span class="s">"Key"</span><span class="n">이기</span> <span class="n">때문에</span> <span class="n">오직</span> <span class="n">하나만</span> <span class="n">가능하다</span><span class="p">.</span>
+<span class="s">"B"</span><span class="n">는</span> <span class="n">columns을</span> <span class="n">의미</span><span class="p">,</span> 
+	<span class="n">A</span>	<span class="n">B</span>	<span class="n">C</span>	<span class="n">D</span>
+<span class="mi">2021</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">13</span>	<span class="mf">0.564162</span>	<span class="o">-</span><span class="mf">1.345139</span>	<span class="mf">1.205831</span>	<span class="mf">1.282519</span>
+<span class="mi">2021</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">12</span>	<span class="o">-</span><span class="mf">1.592712</span>	<span class="o">-</span><span class="mf">0.707864</span>	<span class="o">-</span><span class="mf">0.009921</span>	<span class="o">-</span><span class="mf">0.615554</span>
+<span class="mi">2021</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">11</span>	<span class="mf">0.443845</span>	<span class="o">-</span><span class="mf">0.091939</span>	<span class="o">-</span><span class="mf">1.476495</span>	<span class="mf">1.160637</span>
+<span class="mi">2021</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">14</span>	<span class="mf">0.297359</span>	<span class="mf">0.265152</span>	<span class="o">-</span><span class="mf">0.130253</span>	<span class="mf">0.374368</span>
+<span class="mi">2021</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">10</span>	<span class="mf">0.013351</span>	<span class="mf">0.476958</span>	<span class="mf">0.057244</span>	<span class="o">-</span><span class="mf">0.874045</span>
+<span class="mi">2021</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">09</span>	<span class="mf">0.541684</span>	<span class="mf">1.347803</span>	<span class="mf">0.647960</span>	<span class="o">-</span><span class="mf">0.049265</span>
+<span class="o">==</span><span class="n">다른</span> <span class="n">값들은</span> <span class="n">상관</span> <span class="n">없고</span> <span class="n">B에</span> <span class="n">대해서</span> <span class="n">정렬을</span> <span class="n">한다</span><span class="p">(</span><span class="n">오름차순</span><span class="p">)</span>
+<span class="n">당연한</span> <span class="n">말이지만</span> <span class="n">이에</span> <span class="n">따라서</span> <span class="n">다른</span> <span class="n">원소들은</span> <span class="n">B에</span> <span class="n">맞춰서</span> <span class="n">자리가</span> <span class="n">정해진다</span><span class="p">.</span>
+<span class="mi">03</span><span class="o">-</span><span class="mi">13</span><span class="n">의</span> <span class="n">B가</span> <span class="n">가장</span> <span class="n">작은</span> <span class="n">B이니</span> <span class="n">제일</span> <span class="n">위에</span> <span class="n">위치</span><span class="p">(</span><span class="n">나머지</span> <span class="n">A</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">D도</span> <span class="n">불가항적이게</span> <span class="n">위치</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Dataframe의</span> <span class="n">인덱싱</span><span class="p">,</span> <span class="n">슬라이싱</span>
+<span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="n">DataFrame의</span> <span class="n">첫번째</span> <span class="n">원소</span> <span class="n">부터</span> <span class="mi">2</span><span class="n">번째</span> <span class="n">원소까지</span> <span class="n">모두</span> <span class="n">리턴</span>
+<span class="n">df</span><span class="p">[[</span><span class="s">"age"</span><span class="p">,</span> <span class="s">"grade"</span><span class="p">]]</span> <span class="o">-&gt;</span> <span class="n">DataFrame의</span> <span class="s">"age"</span><span class="p">,</span> <span class="s">"grade"</span> <span class="n">column의</span> <span class="n">모든</span> <span class="n">원소를</span> <span class="n">리턴</span>
+<span class="n">df</span><span class="p">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="n">DataFrame을</span> <span class="n">숫자로</span> <span class="n">접근</span><span class="p">(</span><span class="n">row는</span> <span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="n">column은</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="n">으로</span><span class="p">)</span>
+<span class="n">df</span><span class="p">.</span><span class="n">iloc</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span><span class="n">F</span> <span class="o">-&gt;</span> <span class="n">슬라이싱</span> <span class="n">되니까</span> <span class="n">배열로도</span> <span class="n">가능하다</span><span class="p">.</span>
+<span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="s">"age"</span><span class="p">,</span> <span class="s">"grade"</span><span class="p">]]</span>  <span class="o">-&gt;</span> <span class="n">row는</span> <span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span> <span class="n">column은</span> <span class="n">age</span><span class="p">,</span> <span class="n">grade를</span> 
+<span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="n">row가</span> <span class="mi">1</span><span class="n">인</span> <span class="n">원소의</span> <span class="n">데이터</span>
+<span class="n">만족하는</span> <span class="n">원소들만</span> <span class="n">리턴</span>
+
+<span class="n">평균을</span> <span class="n">만드는</span> <span class="n">방법</span>
+<span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="s">"age"</span><span class="p">]])</span>
+<span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s">"age"</span><span class="p">].</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="n">DataFrame을</span> <span class="n">pandas로</span> <span class="n">연결하기</span>
+<span class="n">df2</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="mi">1</span><span class="o">~</span><span class="mi">2</span><span class="n">의</span> <span class="n">데이터</span>
+<span class="n">df3</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span><span class="mi">8</span><span class="p">]</span> <span class="mi">5</span><span class="o">~</span><span class="mi">7</span><span class="n">의</span> <span class="n">데이터</span>
+<span class="n">df4</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df2</span><span class="p">,</span> <span class="n">df3</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="n">의</span> <span class="n">데이터로</span> <span class="n">연결해서</span> <span class="n">DataFrame만들기</span>
+<span class="n">질문</span> <span class="mi">1</span><span class="p">)</span> <span class="n">왜</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="n">은</span> <span class="n">안되는</span> <span class="n">걸까</span><span class="err">?</span> <span class="o">-&gt;</span> <span class="n">아래의</span> <span class="n">axis</span> <span class="n">개념을</span> <span class="n">보고</span> <span class="n">생각해</span> <span class="n">본다면</span> 
+<span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="n">은</span> <span class="n">가장</span> <span class="n">고차원에서</span> <span class="n">본다는</span> <span class="n">뜻</span> <span class="n">그</span> <span class="n">즉슨</span> <span class="n">데이터</span> <span class="p">[]</span> <span class="o">+</span> <span class="n">데이터</span> <span class="p">[]</span> <span class="n">의</span> <span class="n">의미라는</span> <span class="n">뜻이라</span>
+<span class="n">목적은</span> <span class="n">다른</span> <span class="n">컬럼의</span> <span class="n">데이터를</span> <span class="n">하나로</span> <span class="n">합치고</span> <span class="n">싶음</span><span class="p">(</span><span class="n">A의</span> <span class="n">나이</span><span class="p">,</span> <span class="n">학점과</span> <span class="n">A의</span> <span class="n">키</span><span class="p">,</span> <span class="n">무게를</span> <span class="n">하나로</span> <span class="p">,,,</span> <span class="n">나이학점</span> <span class="n">따로</span>
+<span class="n">키</span><span class="p">,</span> <span class="n">무게를</span> <span class="n">따로</span> <span class="n">합치고</span> <span class="n">싶은</span> <span class="n">의도가</span> <span class="n">아님</span><span class="p">,</span> <span class="n">A의</span> <span class="n">나이</span> <span class="n">학점</span> <span class="n">키</span> <span class="n">무게를</span> <span class="n">한번에</span> <span class="n">저장하고</span> <span class="n">싶음</span><span class="p">)</span>
+<span class="n">그렇기</span> <span class="n">때문에</span> <span class="n">가장</span> <span class="n">낮은</span> <span class="n">차원인</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="n">에서</span> <span class="n">데이터를</span> <span class="n">concat하는</span> <span class="n">것이다</span><span class="p">.</span>
+</code></pre></div></div>
+
+<h3 id="세상-중요-">
+<strong>**</strong><strong>**</strong><strong>**</strong>세상 중요 <strong>**</strong><strong>**</strong><strong>**</strong><strong>**</strong>**</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">DataFrame의</span> <span class="n">조건에</span> <span class="n">맞는</span> <span class="n">원소</span> <span class="n">접근</span>
+<span class="n">df</span><span class="p">[</span> <span class="n">df</span><span class="p">[</span><span class="s">"bloodtype"</span><span class="p">]</span><span class="o">==</span><span class="s">"B"</span><span class="p">]</span>
+<span class="n">데이터프레임</span><span class="p">[</span><span class="n">데이터프레임</span><span class="p">[</span><span class="n">컬럼</span><span class="p">]</span> <span class="n">조건식</span><span class="p">]</span> 
+<span class="o">-&gt;</span> <span class="n">모든</span> <span class="n">데이터에서</span> <span class="n">조건식을</span> <span class="n">만족하는</span> <span class="n">원소들만</span> <span class="n">출력</span>
+
+<span class="n">여러</span> <span class="n">조건식</span> <span class="n">예시</span>
+<span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s">"bloodtype"</span><span class="p">]</span> <span class="o">==</span> <span class="s">"B"</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="n">혈액형이</span> <span class="n">B인</span> <span class="n">원소들의</span> <span class="n">레코드</span> <span class="n">출력</span>
+<span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s">"bloodtype"</span><span class="p">].</span><span class="n">isin</span><span class="p">({[</span><span class="s">"A"</span><span class="p">,</span> <span class="s">"B"</span><span class="p">])</span> <span class="p">,</span> <span class="p">[</span><span class="s">"name"</span><span class="p">,</span> <span class="s">"age"</span><span class="p">]]</span>
+<span class="o">-&gt;</span> <span class="n">A</span><span class="p">,</span> <span class="n">B형</span> <span class="n">인</span> <span class="n">원소들의</span> <span class="n">레코드</span> <span class="n">중에서</span> <span class="n">이름과</span> <span class="n">나이만</span> <span class="n">출력</span>
+                             
+<span class="n">축</span> <span class="n">개념</span> <span class="n">이해하기</span>
+<span class="p">[[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]],[[</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">],[</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">]]]</span> <span class="n">의</span> <span class="n">배열을</span> <span class="n">생각해보자</span>
+<span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span> <span class="n">가장</span> <span class="n">고차원에서</span> <span class="n">보기</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]]</span> <span class="o">-&gt;</span> <span class="p">[[</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">],[</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">]]</span>
+<span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span> <span class="n">또는</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">]</span>
+<span class="n">axis</span> <span class="o">=</span> <span class="mi">2</span> <span class="mi">1</span><span class="o">-&gt;</span><span class="mi">2</span> <span class="n">또는</span> <span class="mi">3</span><span class="o">-&gt;</span><span class="mi">4</span> <span class="n">또는</span> <span class="mi">5</span><span class="o">-&gt;</span><span class="mi">6</span> <span class="n">또는</span> <span class="mi">7</span><span class="o">-&gt;</span><span class="mi">8</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">DataFrame의</span> <span class="n">컬럼</span> <span class="n">추가하기</span>
+<span class="n">df</span><span class="p">[</span><span class="s">"새로 넣고싶은 컬럼"</span><span class="p">]</span> <span class="o">=</span> <span class="n">원</span> <span class="n">하는</span> <span class="n">데이터</span>
+<span class="n">DataFrame</span> <span class="n">에서는</span><span class="p">...</span> <span class="n">df</span><span class="p">[</span><span class="s">"새로운 컬럼"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">"어떠한 컬럼"</span><span class="p">]</span> <span class="p">(</span><span class="n">연산</span><span class="p">)</span> <span class="n">df</span><span class="p">[</span><span class="s">"다른 컬럼"</span><span class="p">]</span>
+
+<span class="n">python</span> <span class="n">에서</span> <span class="n">제곱</span> 
+<span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="n">세제곱</span> <span class="n">a</span><span class="o">**</span><span class="mi">3</span> <span class="p">....</span>
+
+<span class="n">Pandas로</span> <span class="n">데이터</span> <span class="n">읽기</span>
+<span class="n">dff</span><span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"footsize.csv"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">"cp949"</span><span class="p">)</span>
+
+<span class="n">병합</span>
+<span class="n">df3</span><span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">dff</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s">'name'</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s">'realname'</span><span class="p">)</span>
+<span class="n">merge</span> <span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="n">키</span> <span class="p">)</span> <span class="p">:</span> <span class="n">기본은</span> <span class="n">inner</span> <span class="n">join</span>
+    
+<span class="n">데이터</span> <span class="n">프레임의</span> <span class="n">데이터</span> <span class="n">정렬</span> <span class="n">방법</span> <span class="o">-&gt;</span> <span class="n">groupby</span>
+<span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">"grade"</span><span class="p">).</span><span class="n">mean</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">데이터</span> <span class="n">프레임을</span> <span class="n">grade로</span> <span class="n">정렬하고</span> <span class="n">그것의</span> <span class="n">평균을</span> <span class="n">구한다</span><span class="p">.</span>
+
+<span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">([</span><span class="s">"sex"</span><span class="p">,</span><span class="s">"bloodtype"</span><span class="p">]).</span><span class="n">mean</span><span class="p">()</span> <span class="o">//</span> <span class="n">여러</span> <span class="n">컬럼을</span> <span class="n">사용할</span> <span class="n">수</span> <span class="n">있다</span><span class="p">.</span>
+<span class="n">size</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">크기</span> <span class="n">출력</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Matplot</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+<span class="n">x는</span> <span class="n">자동으로</span> <span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="n">으로</span><span class="p">,</span> <span class="n">y는</span> <span class="n">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">temp</span><span class="p">[</span><span class="mi">1</span><span class="p">]...</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span> <span class="n">A가</span> <span class="n">x</span><span class="p">,</span> <span class="n">B가</span> <span class="n">y</span>
+
+<span class="nb">input</span> <span class="n">데이터는</span> <span class="n">numpy</span> <span class="n">배열이나</span> <span class="n">pandas</span> <span class="n">column이</span> <span class="n">가능하다</span>
+
+<span class="n">plot의</span> <span class="n">모양은</span> 
+<span class="n">plot</span> <span class="nb">type</span>
+<span class="s">"ro"</span> <span class="n">red</span> <span class="n">circle</span>
+<span class="s">"b-"</span> <span class="n">solid</span> <span class="n">blue</span> <span class="n">line</span><span class="p">(</span><span class="n">디폴트</span><span class="p">)</span>
+<span class="s">"r--"</span> <span class="n">red</span> <span class="n">dasesh</span>
+<span class="s">"bs"</span> <span class="n">blue</span> <span class="n">squares</span>
+<span class="s">"g^"</span> <span class="n">green</span> <span class="n">trianles</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">([</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">축의</span> <span class="n">범위를</span> <span class="n">지정</span>
+
+<span class="n">하나의</span> <span class="n">plot에</span> <span class="n">여러</span> <span class="n">그래프를</span> <span class="n">같이</span> <span class="n">그리기</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="s">'r--'</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">t</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="s">'bs'</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">t</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span> <span class="s">'g^'</span><span class="p">)</span>
+<span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">표시방법</span><span class="p">,</span><span class="n">x1</span><span class="p">,</span><span class="n">y1</span><span class="p">,</span><span class="n">표시방법</span> <span class="p">,,,,</span><span class="n">으로</span> <span class="n">plot을</span> <span class="n">만들고</span>
+<span class="n">x를</span> <span class="n">고정하든</span> <span class="n">y를</span> <span class="n">고정하든</span> <span class="n">방법은</span> <span class="n">많다</span><span class="p">.</span>
+<span class="n">기준</span> <span class="n">중</span> <span class="n">가장</span> <span class="n">큰</span> <span class="n">것을</span> <span class="n">plt의</span> <span class="n">기준으로</span> <span class="n">한다</span><span class="p">.</span>
+
+<span class="n">차트에는</span> <span class="n">여러가지</span> <span class="n">종류가</span> <span class="n">존재</span><span class="p">(</span><span class="n">bar</span><span class="p">,</span> <span class="n">scatter</span><span class="p">,</span> <span class="n">plot</span><span class="p">)</span>
+<span class="n">막대</span> <span class="n">그래프를</span> <span class="n">의도할</span> <span class="n">경우</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">bar</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+<span class="n">산점도</span> <span class="n">그래프를</span> <span class="n">의도할</span> <span class="n">경우</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">하나의</span> <span class="n">그림에</span> <span class="n">여러</span> <span class="n">그래프를</span> <span class="n">그리고</span> <span class="n">싶을</span> <span class="n">경우</span>
+<span class="n">subplot</span><span class="p">()</span><span class="n">을</span> <span class="n">이용한다</span><span class="p">.</span>
+<span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">)</span>
+<span class="n">linspace</span> <span class="o">-&gt;</span> <span class="n">linspace</span><span class="p">(</span><span class="n">시작</span><span class="p">,</span> <span class="n">끝</span><span class="p">,</span> <span class="n">개수</span><span class="p">)</span> <span class="n">시작</span><span class="p">,</span> <span class="n">끝</span> <span class="n">까지의</span> <span class="n">개수</span> <span class="n">만큼의</span> <span class="n">리스트</span><span class="p">(</span><span class="n">끝</span> <span class="n">포함</span><span class="p">)</span>
+<span class="n">linsapce</span><span class="p">(</span><span class="n">시작</span><span class="p">,</span> <span class="n">끝</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">시작</span><span class="p">,</span> <span class="n">끝까지의</span> <span class="mi">50</span><span class="n">개의</span> <span class="n">일정한</span> <span class="n">차이의</span> <span class="n">리스트</span><span class="p">(</span><span class="n">끝</span> <span class="n">포함</span><span class="p">)</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">)</span>
+
+<span class="n">y1</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">x1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x1</span><span class="p">)</span>
+<span class="n">y2</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">x2</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="mi">2</span><span class="o">*</span><span class="mi">1</span><span class="n">의</span> <span class="n">서브</span> <span class="n">플롯</span> <span class="n">중에서</span> <span class="n">첫번째에</span> <span class="n">위치시키기</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="s">'o-'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'1st Graph'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'Damped oscillation'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="mi">2</span><span class="o">*</span><span class="mi">1</span><span class="n">의</span> <span class="n">서브</span> <span class="n">플롯</span> <span class="n">중에서</span> <span class="n">두번째에</span> <span class="n">위치시키기</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="s">'.-'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'2nd Graph'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'time (s)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'Undamped'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span><span class="c1">#예쁘게 나타내기 위해서
+</span><span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">bar</span><span class="p">([</span><span class="s">"A"</span><span class="p">,</span><span class="s">"B"</span><span class="p">,</span><span class="s">"AB"</span><span class="p">,</span><span class="s">"O"</span><span class="p">],</span> <span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">([</span><span class="s">"bloodtype"</span><span class="p">]).</span><span class="n">size</span><span class="p">())</span> <span class="o">-&gt;</span> <span class="n">groupby한</span> <span class="n">데이터를</span> <span class="n">size</span><span class="p">()</span><span class="n">로</span> <span class="n">표시한</span> <span class="n">것을</span>
+<span class="n">x의</span> <span class="n">컬럼</span> <span class="n">순서대로</span> <span class="n">나타낸다</span><span class="p">.</span>
+<span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">([</span><span class="s">"bloodtype"</span><span class="p">]).</span><span class="n">size</span><span class="p">().</span><span class="n">plot</span><span class="p">.</span><span class="n">bar</span><span class="p">()</span> <span class="o">//</span> <span class="n">dataframe에</span> <span class="n">있는</span> <span class="n">plt가</span> <span class="n">맞는건가</span><span class="p">...</span><span class="o">/</span> <span class="n">plt와</span> <span class="n">연계된다</span>
+<span class="p">(</span><span class="n">subplot으로</span> <span class="n">구별</span> <span class="n">가능</span><span class="p">)</span>
+
+<span class="n">여러</span> <span class="n">정보를</span> <span class="n">하나의</span> <span class="n">그림에</span> <span class="n">표시하기</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="s">"height"</span><span class="p">,</span> <span class="s">"weight"</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s">"grade"</span> <span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+<span class="n">해석</span> <span class="p">:</span> <span class="n">x축은</span> <span class="n">height로</span> <span class="n">y축은</span> <span class="n">weight로</span> <span class="n">해서</span> <span class="n">데이터를</span> <span class="n">표시하고</span> 
+<span class="n">그</span> <span class="n">데이터를</span> <span class="n">색깔로</span><span class="p">(</span><span class="n">기준은</span> <span class="n">grade</span><span class="p">)</span> <span class="n">또다시</span> <span class="n">구분한다</span><span class="p">.</span>
+
+</code></pre></div></div>
+
+<p>크롤링 종류
+스크레이핑 : 인간 사용자를 위해 제공된 웹페이지
+API 기반 정보 수집 : 프로그램을 위한 정보 제공 API가 존재</p>
+
+<p>Facebook API 활용 : OAuth - 특정 사용자의 동의를 얻어 상용자의 정보를 가져오는데 주로 활용
+<img src="/assets/img/0913/facebook.png" alt="one">
+개발 흐름은 user_token(동의)를 확보하고 api에 user_token 포함하여 호출한다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">크롤링</span> <span class="n">하기</span>
+<span class="n">Beautifulsoup를</span> <span class="n">활용한다</span><span class="p">.</span>
+<span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html형식데이터</span><span class="p">,</span> <span class="s">'html.parser'</span><span class="p">)</span> <span class="c1">#파싱하기
+</span><span class="n">soup</span> <span class="c1">#파싱한 객체
+</span><span class="n">prettyfy</span><span class="p">()</span> <span class="n">파싱된</span> <span class="n">객체</span> <span class="n">구조를</span> <span class="n">예쁘게</span> <span class="n">보여준다</span><span class="p">.</span>
+
+<span class="n">예제</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span> 
+<span class="n">html</span><span class="o">=</span> <span class="s">'''
+&lt;h1 id="title"&gt;숭실대학교&lt;/h1&gt;
+&lt;div class="top"&gt;
+&lt;ul class="menu"&gt;  &lt;li&gt; &lt;a href=http://www.ssu.ac.kr/member/login.html class="login"&gt;로그인 &lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+&lt;ul class="dept"&gt; 
+    &lt;li&gt;&lt;a href="http://www.ssu.ac.kr/sw/"&gt;소프트웨어학부&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="http://www.ssu.ac.kr/ai/"&gt;AI융합학부&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="http://www.ssu.ac.kr/stat/"&gt;정보통계학부&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+'''</span>
+<span class="n">soup</span><span class="o">=</span><span class="n">BeautifulSoup</span> <span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="s">'html.parser'</span><span class="p">)</span>
+
+<span class="c1">## 첫번째 아이템을 보여준다
+</span><span class="n">soup</span><span class="p">.</span><span class="n">h1</span> <span class="o">-&gt;</span> <span class="n">파싱한</span> <span class="n">객체에서</span> <span class="n">h1</span> <span class="n">컴포넌트를</span> <span class="n">가져온다</span>
+<span class="n">soup</span><span class="p">.</span><span class="n">ul</span> <span class="o">-&gt;</span> <span class="n">파싱한</span> <span class="n">객체에서</span> <span class="n">ul</span> <span class="n">컴포넌트를</span> <span class="n">가져온다</span>
+<span class="n">soup</span><span class="p">.</span><span class="n">li</span> <span class="o">-&gt;</span> <span class="n">파싱한</span> <span class="n">객체에서</span> <span class="n">li</span> <span class="n">컴포넌트를</span> <span class="n">가져온다</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="s">"소프트웨어학부"</span><span class="p">)</span> <span class="n">text찾기</span> <span class="o">//</span> <span class="n">text</span><span class="p">.</span><span class="n">string</span> <span class="o">-&gt;</span> <span class="s">"소프트웨어학부"</span>
+
+
+<span class="c1">## 검색한 모든 아이템을 보여준다 (리스트 형태로 보여줌)
+</span><span class="n">soup</span><span class="p">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">"ul"</span><span class="p">)</span>
+<span class="n">soup</span><span class="p">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">"li"</span><span class="p">)</span>
+<span class="n">soup</span><span class="p">.</span><span class="n">find_all</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s">"title"</span><span class="p">)</span> <span class="n">id가</span> <span class="n">title인</span> <span class="n">모든</span> <span class="n">정보를</span> <span class="n">보여줌</span>
+<span class="n">soup</span><span class="p">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s">'class'</span><span class="p">:</span><span class="s">'dept'</span><span class="p">})</span> <span class="n">class가</span> <span class="n">dept인</span> <span class="n">데이터를</span> <span class="n">검색한다</span>
+<span class="n">soup</span><span class="p">.</span><span class="n">find_all</span><span class="p">([</span><span class="s">'ul'</span><span class="p">,</span> <span class="s">'li'</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">여러</span> <span class="n">속성을</span> <span class="n">검색할</span> <span class="n">수</span> <span class="n">있다</span><span class="p">.</span>
+<span class="n">soup</span><span class="p">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">string</span> <span class="o">=</span><span class="n">re</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">"학부"</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="n">끝이</span>  <span class="s">"학부"</span><span class="n">로</span> <span class="n">끝나는</span> <span class="n">모든</span> <span class="n">데이터를</span> <span class="n">검색한다</span><span class="p">.(</span><span class="n">list로</span> <span class="n">리턴</span><span class="p">)</span>
+
+<span class="n">응용</span> <span class="o">-&gt;</span> <span class="nb">all</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">'a'</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">all</span><span class="p">:</span>
+    <span class="n">i</span><span class="p">.</span><span class="n">string</span>
+<span class="o">-&gt;</span> <span class="n">soup객체에서</span> <span class="n">a태그를</span> <span class="n">가지고</span> <span class="n">있는</span> <span class="n">모든</span> <span class="n">데이터의</span> <span class="n">string을</span> <span class="n">출력</span>
+
+
+
+
+<span class="c1">#태그로 검색하기
+</span><span class="n">tag_a</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">a</span> <span class="o">-&gt;</span> <span class="n">tag_a에</span> <span class="n">soup의</span> <span class="n">a</span> <span class="n">속성을</span> <span class="n">찾은</span> <span class="n">결과를</span> <span class="n">저장한다</span><span class="p">.</span>
+
+<span class="n">tag_a</span><span class="p">.</span><span class="n">attrs</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="n">tag의</span> <span class="n">모든</span> <span class="n">정보를</span> <span class="n">보여준다</span><span class="p">.</span>
+<span class="n">tag_a</span><span class="p">[</span><span class="s">'href'</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="n">tag의</span> <span class="s">'href'</span> <span class="n">정보를</span> <span class="n">보여준다</span>
+</code></pre></div></div>
+
+<h2 id="데이터-통계">데이터 통계⭐</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">테스트용</span> <span class="n">데이터</span> 
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
+<span class="n">titanic</span> <span class="o">=</span> <span class="n">sns</span><span class="p">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s">"titanic"</span><span class="p">)</span>
+<span class="n">또는</span> <span class="n">읽어</span> <span class="n">오기</span>
+<span class="n">titanic</span><span class="p">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s">"titanic.csv"</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span> 
+<span class="c1">#데이터의 기본 정보 보기
+</span><span class="n">titanic</span><span class="p">.</span><span class="n">info</span><span class="p">()</span>
+<span class="n">titanic</span><span class="p">.</span><span class="n">describe</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">일반적인</span> <span class="n">정보</span> <span class="n">확인</span>
+<span class="c1">#데이터 실제 데이터 보기
+</span><span class="n">titanic</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">titanic</span><span class="p">.</span><span class="n">tail</span><span class="p">()</span>
+<span class="c1">#데이터의 타입 확인하기
+</span><span class="n">titanic</span><span class="p">[</span><span class="s">'age'</span><span class="p">].</span><span class="n">dtype</span> <span class="o">-&gt;</span> <span class="n">titanic의</span> <span class="p">[</span><span class="s">"age"</span><span class="p">]</span><span class="n">의</span> <span class="n">dtype으로</span> <span class="n">접근</span> <span class="n">가능</span>
+<span class="n">titanic</span><span class="p">.</span><span class="n">dtypes</span> <span class="o">-&gt;</span> <span class="n">titanic의</span> <span class="n">타입들</span> <span class="n">모두</span> <span class="n">출력</span>
+<span class="n">dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">titanic</span><span class="p">.</span><span class="n">dtypes</span><span class="p">)</span><span class="n">로</span> <span class="n">딕셔너리로</span> <span class="n">만들</span> <span class="n">수</span> <span class="n">있다</span><span class="p">.</span>
+
+<span class="n">타입이</span> <span class="n">검사하고</span> <span class="n">싶은</span> <span class="n">타입과</span> <span class="n">같은지</span> <span class="n">확인</span> <span class="n">하고</span> <span class="n">싶을</span> <span class="n">때</span>
+<span class="n">titanic</span><span class="p">[</span><span class="s">'survived'</span><span class="p">].</span><span class="n">dtype</span>  <span class="o">==</span> <span class="n">np</span><span class="p">.</span><span class="n">int64</span>
+
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">titanic</span><span class="p">.</span><span class="n">columns</span> <span class="p">:</span> <span class="o">-&gt;</span> <span class="n">titanic</span><span class="p">.</span><span class="n">columns로</span> <span class="n">모든</span> <span class="n">컬럼에</span> <span class="n">접근이</span> <span class="n">가능하다</span>
+    <span class="k">print</span> <span class="p">(</span> <span class="n">titanic</span><span class="p">[</span><span class="n">c</span><span class="p">].</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">np</span><span class="p">.</span><span class="n">int64</span><span class="p">)</span> <span class="n">위에서</span> <span class="n">언급한</span> <span class="n">타입</span> <span class="n">검사를</span> <span class="n">위한</span> <span class="n">체크</span>
+    
+<span class="n">객체의</span> <span class="n">type을</span> <span class="n">변환시키고</span> <span class="n">싶다면</span>
+<span class="n">titanic</span><span class="p">[</span><span class="s">'survived'</span><span class="p">].</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">또는</span> <span class="s">'float'</span>
+<span class="n">물론</span> <span class="n">타입</span> <span class="n">변환은</span> <span class="n">가능</span> <span class="n">한</span> <span class="n">데이터</span> <span class="p">(</span><span class="n">숫자에서</span> <span class="n">숫자</span><span class="p">)</span><span class="n">만</span> <span class="n">가능하고</span>
+<span class="n">만약</span> <span class="n">NaN값이나</span> <span class="n">inf</span> <span class="n">값이</span> <span class="n">있다면</span> <span class="n">불가능</span> <span class="n">하다</span><span class="p">.</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">통계의</span> <span class="n">기본</span> <span class="o">-&gt;</span> <span class="n">nominal</span>
+<span class="n">도수</span><span class="p">(</span><span class="n">개수</span><span class="p">)</span>
+<span class="n">titanic</span><span class="p">.</span><span class="n">age</span><span class="p">.</span><span class="n">value_counts</span><span class="p">()</span> 
+<span class="n">데이터프레임</span><span class="p">.</span><span class="n">컬럼</span><span class="p">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="n">또는</span>
+<span class="n">titanic</span><span class="p">[</span><span class="s">'age'</span><span class="p">].</span><span class="n">value_counts</span><span class="p">()</span>
+
+<span class="n">비율로</span> <span class="n">나타내기</span>
+<span class="n">titanic</span><span class="p">.</span><span class="n">age</span><span class="p">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">titanic</span><span class="p">[</span><span class="s">'age]'</span><span class="p">].</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">의미상</span> <span class="n">nominal</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">object</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="nb">bool</span> <span class="n">이라고</span> <span class="n">할</span> <span class="n">수</span> <span class="n">있나</span><span class="err">?</span>
+
+<span class="n">plot으로</span> <span class="n">그려보기</span>
+<span class="n">막대</span> <span class="n">그래프</span>
+<span class="n">titanic</span><span class="p">.</span><span class="n">survived</span><span class="p">.</span><span class="n">value_counts</span><span class="p">().</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s">'bar'</span><span class="p">)</span>
+<span class="n">titanic</span><span class="p">.</span><span class="n">survived</span><span class="p">.</span><span class="n">value_counts</span><span class="p">().</span><span class="n">plot</span><span class="p">.</span><span class="n">bar</span><span class="p">()</span>
+<span class="n">원형그래프</span>
+<span class="n">titanic</span><span class="p">.</span><span class="n">survived</span><span class="p">.</span><span class="n">value_counts</span><span class="p">().</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s">'pie'</span><span class="p">)</span>
+<span class="n">titanic</span><span class="p">.</span><span class="n">survived</span><span class="p">.</span><span class="n">value_counts</span><span class="p">().</span><span class="n">plot</span><span class="p">.</span><span class="n">pie</span><span class="p">()</span>
+
+<span class="n">seaborn에서</span> <span class="n">제공하는</span> <span class="n">plot</span> <span class="n">사용하기</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">'survived'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">titanic</span><span class="p">)</span>
+<span class="n">seaborn에서</span> <span class="n">제공하는</span> <span class="n">도수</span> <span class="n">그래프</span> <span class="n">x또는</span> <span class="n">y</span><span class="p">(</span><span class="n">둘</span> <span class="n">중</span> <span class="n">하나</span><span class="p">)</span><span class="n">는</span> <span class="n">컬럼</span><span class="p">,</span> <span class="n">data는</span> <span class="n">대상</span> <span class="n">데이터</span>
+
+<span class="n">가장</span> <span class="n">기본적인</span> <span class="n">분석</span> <span class="o">-&gt;</span> <span class="n">범위</span><span class="p">,</span> <span class="n">최대</span><span class="p">,</span> <span class="n">최소</span><span class="p">,</span> <span class="n">평균</span> <span class="p">...</span> <span class="n">describe</span><span class="p">()</span><span class="n">로</span> <span class="n">볼</span> <span class="n">수</span> <span class="n">있음</span>
+
+<span class="n">numpy에서</span> <span class="n">제공하는</span> <span class="n">평균</span><span class="p">,</span> <span class="n">중간값</span><span class="p">,</span> <span class="n">Quartile값</span>
+<span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
+<span class="n">np</span><span class="p">.</span><span class="n">median</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
+<span class="n">np</span><span class="p">.</span><span class="n">median</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">짝수개이면</span> <span class="n">중간</span> <span class="n">두개의</span> <span class="n">평균값</span>
+<span class="n">넘파이</span> <span class="n">배열로는</span> <span class="n">quantile을</span> <span class="n">사용</span> <span class="n">불가</span>
+<span class="n">DF로</span> <span class="n">사용한다고</span> <span class="n">일단</span> <span class="n">알자</span>
+<span class="n">quantile사용법</span>
+<span class="n">titanic</span><span class="p">[</span><span class="s">'age'</span><span class="p">].</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">titanic</span><span class="p">.</span><span class="n">age</span><span class="p">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="o">-&gt;</span> <span class="n">titanic의</span> <span class="n">age</span> <span class="n">컬럼에서</span> <span class="mi">50</span><span class="o">%</span><span class="n">에</span> <span class="n">해당하는</span> <span class="n">값을</span> <span class="n">출력하기</span>
+
+<span class="n">titanic</span><span class="p">[</span><span class="s">'age'</span><span class="p">].</span><span class="n">median</span><span class="p">()</span>
+<span class="n">titanic</span><span class="p">.</span><span class="n">age</span><span class="p">.</span><span class="n">median</span><span class="p">()</span>
+<span class="o">-&gt;</span> <span class="n">titanic의</span> <span class="n">age</span> <span class="n">컬럼에서</span> <span class="n">중간값에</span> <span class="n">해당하는</span> <span class="n">값을</span> <span class="n">출력하기</span>
+
+<span class="n">Quartile</span> <span class="p">:</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span> <span class="n">단위로</span> <span class="n">자른</span> <span class="mi">0</span><span class="o">%</span><span class="p">,</span> <span class="mi">25</span><span class="o">%</span><span class="p">,</span> <span class="mi">50</span><span class="o">%</span><span class="p">,</span> <span class="mi">75</span><span class="o">%</span> <span class="p">,</span> <span class="mi">100</span><span class="o">%</span> <span class="n">의</span> <span class="n">값</span>
+<span class="n">Quantile</span> <span class="p">:</span> <span class="mi">100</span><span class="o">%</span> <span class="n">중에</span> <span class="n">어느</span> <span class="n">값</span>
+<span class="n">IQR</span> <span class="p">:</span> <span class="mi">25</span><span class="o">~</span><span class="mi">75</span><span class="o">%</span> <span class="n">의</span> <span class="n">범위</span> <span class="o">=&gt;</span> <span class="n">극단값에</span> <span class="n">영향을</span> <span class="n">받지</span> <span class="n">않는</span> <span class="n">중간</span> <span class="mi">50</span><span class="o">%</span> <span class="n">의</span> <span class="n">범위를</span> <span class="n">의미</span>
+    
+<span class="n">plt</span><span class="p">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">titanic</span><span class="p">.</span><span class="n">fare</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span> <span class="n">값의</span> <span class="n">분포를</span> <span class="n">보기위한</span> <span class="n">방법</span><span class="p">(</span><span class="n">일자로</span> <span class="n">정렬</span><span class="p">)</span>
+<span class="n">vert를</span> <span class="bp">True</span> <span class="n">로</span> <span class="n">하면</span> <span class="n">수직으로</span> <span class="n">보여주고</span> <span class="n">vert를</span> <span class="n">True로</span> <span class="n">하면</span> <span class="n">수평으로</span> <span class="n">보여준다</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">BOXPLOT의</span> <span class="n">기본적인</span> <span class="n">정보</span>
+
+<span class="n">값이</span> <span class="n">다른</span> <span class="n">데이터</span> <span class="n">분포를</span> <span class="n">크게</span> <span class="n">벗어나는</span> <span class="n">데이터</span>
+<span class="n">평균</span> <span class="n">등에</span> <span class="n">큰</span> <span class="n">영향을</span> <span class="n">줌</span>
+<span class="n">처리상의</span> <span class="n">오류일</span> <span class="n">수도</span> <span class="n">있고</span><span class="p">,</span> <span class="n">진짜</span> <span class="n">큰</span> <span class="n">값일</span> <span class="n">수도</span> <span class="n">있다</span> <span class="p">(</span><span class="n">몸무게</span> <span class="mi">300</span><span class="n">kg</span> <span class="n">vs</span><span class="p">.</span> <span class="mi">500</span><span class="n">kg</span><span class="p">,</span> <span class="n">연매출</span> <span class="mi">1</span><span class="n">조</span> <span class="n">vs</span><span class="p">.</span> <span class="mi">8000</span><span class="n">조</span> <span class="p">)</span>
+<span class="n">통계적</span> <span class="n">정의</span> <span class="p">(</span> <span class="n">by</span> <span class="n">John</span> <span class="n">Tukey</span><span class="p">)</span>
+<span class="mi">25</span><span class="o">%</span> <span class="n">값</span> <span class="o">-</span> <span class="mf">1.5</span> <span class="n">X</span> <span class="n">IQR</span> <span class="n">보다</span> <span class="n">작은</span> <span class="n">값</span>
+<span class="mi">75</span><span class="o">%</span> <span class="n">값</span> <span class="o">+</span> <span class="mf">1.5</span> <span class="n">X</span> <span class="n">IQR</span> <span class="n">보다</span> <span class="n">큰</span> <span class="n">값</span>
+
+<span class="n">IQR</span> <span class="n">구하기</span> <span class="o">-&gt;</span> <span class="mi">75</span><span class="o">%</span> <span class="o">-</span> <span class="mi">25</span><span class="o">%</span>
+</code></pre></div></div>
+
+<p>numeric (continuous) data =&gt; 구간화 (bin) 해서 출력
+countplot 으로 출력하는 경우 : 동일 값이 많이 나오면 그걸 보여주기는 하지만 어느 부분에 분포가 많이 되어 있는지와는 또 다르다
+정수 데이터와 실수 데이터는 또 양상이 다르다</p>
+
+<p>numeric(continuous) data(연속적인 분포를 가지는 데이터)
+구간화를 통해서 출력한다
+sns.countplot(x=’fare’, data=titanic)</p>
+
+<p><img src="/assets/img/0913/one.png" alt="image-3.png">
+히스토그램 -&gt; 도수 분포를 정보 그램으로 나타내기
+sns.histplot(x=’fare’, data=titanic)</p>
+
+<p><img src="/assets/img/0913/two.png" alt="image-2.png">
+bins의 범위를 정해서 출력이 가능하다.
+sns.histplot(x=’fare’, data=titanic, bins=[0,100,200,300,400,500,600]) # 또는 bins= 갯수</p>
+
+<p><img src="/assets/img/0913/three.png" alt="image.png"></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">결측치</span><span class="p">,</span> <span class="n">오류</span> <span class="n">데이터</span> <span class="n">처리</span>
+<span class="n">특이치</span> <span class="p">:</span> <span class="n">실제</span> <span class="n">데이터</span> <span class="n">값이</span> <span class="n">특이하게</span> <span class="n">크거나</span> <span class="n">작거나</span><span class="p">,</span> <span class="n">주로</span> <span class="n">numeric에서</span>
+<span class="n">원칙은</span> <span class="n">아웃라이어</span> <span class="n">기준으로</span> <span class="n">판단해야</span><span class="p">..</span>
+<span class="n">quantile</span> <span class="p">(</span><span class="mf">0.99</span><span class="p">)</span> <span class="n">값</span> <span class="n">등으로</span> <span class="n">대체</span> <span class="n">하기도</span> <span class="n">함</span>
+<span class="n">결측치</span> <span class="p">:</span> <span class="n">데이터</span> <span class="n">값이</span> <span class="n">없는</span> <span class="n">것</span> <span class="p">,</span> <span class="n">NA라고도</span> <span class="n">함</span>
+<span class="n">해당</span> <span class="n">레코드를</span> <span class="n">삭제하거나</span>
+<span class="n">통계시</span> <span class="p">(</span><span class="n">통계란</span> <span class="n">column</span> <span class="n">단위로</span> <span class="n">이뤄짐</span><span class="p">)</span> <span class="n">해당값</span> <span class="n">빼고</span> <span class="n">계산</span>
+<span class="n">대체</span> <span class="n">값</span> <span class="p">(</span><span class="n">평균</span><span class="p">,</span> <span class="n">중간값</span><span class="p">,</span> <span class="n">임의값</span><span class="p">,</span> <span class="n">random</span> <span class="n">값</span><span class="p">)</span> <span class="n">을</span> <span class="n">만들어</span> <span class="n">넣기</span>
+<span class="n">column</span> <span class="n">별로</span> <span class="n">통계를</span> <span class="n">내는</span> <span class="n">것이기</span> <span class="n">때문에</span> <span class="n">결측치가</span> <span class="n">있어도</span> <span class="n">상관없다</span><span class="p">.</span> <span class="n">엉뚱한</span> <span class="n">값을</span> <span class="n">억지로</span> <span class="n">넣는</span> <span class="n">것</span> <span class="n">보다는</span><span class="p">..</span>
+  <span class="o">-</span> <span class="n">다만</span><span class="p">,</span> <span class="n">paired</span> <span class="n">value</span> <span class="n">analysis</span> <span class="p">(</span><span class="n">같은</span> <span class="n">레코드의</span> <span class="n">두</span> <span class="n">값을</span> <span class="n">비교</span> <span class="p">)</span> <span class="n">하는</span> <span class="n">경우는</span> <span class="n">결측치가</span> <span class="n">있으면</span> <span class="n">안됨</span>
+<span class="n">오류</span> <span class="p">:</span> <span class="n">쓰레기</span> <span class="n">값이</span> <span class="n">들어있는</span> <span class="n">경우</span>
+<span class="n">cleansing</span> <span class="n">이</span> <span class="n">필요</span><span class="p">:</span> <span class="n">원래</span> <span class="n">값을</span> <span class="n">살릴</span> <span class="n">수</span> <span class="n">있으면</span> <span class="n">살리고</span><span class="p">,</span> <span class="n">아니면</span> <span class="n">NA화</span> <span class="n">후</span> <span class="n">처리</span>
+<span class="n">whitespace제거</span> <span class="n">등등</span>
+<span class="n">같은</span> <span class="n">항목으로</span> <span class="n">count될</span> <span class="n">수</span> <span class="n">있게</span>
+<span class="n">혈액형</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">O</span><span class="p">,</span> <span class="n">AB</span> <span class="n">만</span> <span class="n">있어야</span> <span class="o">&lt;=</span> <span class="n">category의</span> <span class="n">경우</span> <span class="n">프로그램적으로</span> <span class="n">거를</span> <span class="n">수</span> <span class="n">있다</span>
+<span class="n">결측치</span> <span class="p">(</span><span class="n">NA</span><span class="p">)</span> <span class="n">처리</span>
+<span class="n">결측치</span> <span class="n">찾기</span> <span class="p">:</span> <span class="n">isnull</span><span class="p">()</span>
+<span class="n">값</span> <span class="n">넣기</span> <span class="p">:</span> <span class="n">fillna</span> <span class="p">(</span> <span class="n">넣을값</span> <span class="p">)</span>
+<span class="n">결측치</span> <span class="n">포함</span> <span class="n">행</span> <span class="p">(</span><span class="n">레코드</span><span class="p">)</span> <span class="n">삭제</span> <span class="p">:</span> <span class="n">dropna</span><span class="p">(</span> <span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="n">체크할</span> <span class="n">컬럼명</span> <span class="p">]</span> <span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">결측인</span> <span class="n">데이터</span> <span class="n">확인</span>
+<span class="n">titanic</span><span class="p">.</span><span class="n">isnull</span><span class="p">().</span><span class="nb">sum</span><span class="p">()</span>
+<span class="n">결측</span> <span class="n">데이터</span> <span class="n">삭제하기</span>
+<span class="n">titanic</span><span class="o">=</span><span class="n">titanic</span><span class="p">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s">'age'</span><span class="p">])</span>
+<span class="n">결측</span> <span class="n">데이터를</span> <span class="n">중간값으로</span> <span class="n">충당하기</span>
+<span class="n">titanic</span><span class="p">.</span><span class="n">age</span><span class="o">=</span> <span class="n">titanic</span><span class="p">.</span><span class="n">age</span><span class="p">.</span><span class="n">fillna</span><span class="p">(</span> <span class="n">titanic</span><span class="p">.</span><span class="n">age</span><span class="p">.</span><span class="n">median</span><span class="p">())</span>
+
+<span class="mf">0.99</span> <span class="n">quantile</span> <span class="n">값보다</span> <span class="n">큰</span> <span class="n">값을</span> <span class="mf">0.99</span><span class="n">quantile</span> <span class="n">값으로</span> <span class="n">교체하기</span>
+<span class="n">titanic</span><span class="p">[</span><span class="s">'fare'</span><span class="p">][(</span><span class="n">titanic</span><span class="p">[</span><span class="s">'fare'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">titanic</span><span class="p">[</span><span class="s">'fare'</span><span class="p">].</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.99</span><span class="p">))]</span> <span class="o">=</span> <span class="n">titanic</span><span class="p">[</span><span class="s">'fare'</span><span class="p">].</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.99</span><span class="p">)</span>
+<span class="o">-&gt;</span> <span class="n">DataFrame</span> <span class="n">문법</span> <span class="n">활용</span>
+
+<span class="n">Category</span> <span class="n">활용을</span> <span class="n">위한</span> <span class="n">설정</span>
+<span class="n">컬럼</span><span class="p">.</span><span class="n">unique</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">unique한</span> <span class="n">값</span> <span class="n">조회</span>
+<span class="n">pd</span><span class="p">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">컬럼</span><span class="p">,</span> <span class="n">categories</span><span class="o">=</span><span class="p">[</span><span class="n">컬럼의</span> <span class="n">값1</span><span class="p">,</span> <span class="n">값2</span><span class="p">,,...])</span> <span class="n">지정한</span> <span class="n">컬럼의</span> <span class="n">값을</span> <span class="n">제외하고는</span> <span class="n">모두</span> <span class="n">NaN처리</span>
+<span class="n">who의</span> <span class="n">데이터</span> <span class="n">출력</span><span class="p">(</span><span class="n">카테고리</span><span class="p">)</span>
+<span class="n">titanic</span><span class="p">.</span><span class="n">who</span><span class="p">.</span><span class="n">unique</span><span class="p">()</span>
+
+<span class="n">pd</span><span class="p">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">titanic</span><span class="p">.</span><span class="n">who</span><span class="p">,</span> <span class="n">categories</span><span class="o">=</span><span class="p">[</span><span class="s">"man"</span><span class="p">,</span> <span class="s">"woman"</span><span class="p">]).</span><span class="n">unique</span><span class="p">()</span>
+<span class="n">타이타닉의</span> <span class="n">성별</span> <span class="n">man</span><span class="p">,</span> <span class="n">woman을</span> <span class="n">제외한</span> <span class="n">값을</span> <span class="n">NaN으로</span> <span class="n">처리한다</span><span class="p">.</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">통계적</span> <span class="n">추정</span>
+<span class="n">빅데이터</span> <span class="p">:</span> <span class="n">전체</span> <span class="p">(</span><span class="n">투표</span><span class="p">)</span> <span class="p">,</span> <span class="n">통계</span> <span class="p">:</span> <span class="n">샘플</span> <span class="p">(</span><span class="n">여론조사</span><span class="p">)</span>
+<span class="n">샘플</span> <span class="o">-&gt;</span> <span class="n">전체를</span> <span class="n">추정</span> <span class="p">(</span><span class="n">여론</span> <span class="n">조사</span><span class="p">)</span>
+<span class="n">샘플통계</span> <span class="p">:</span> <span class="n">샘플</span> <span class="mi">1000</span><span class="n">명을</span> <span class="n">조사</span> <span class="n">해본</span> <span class="n">결과</span> <span class="mi">400</span><span class="n">명이</span> <span class="n">지지했다</span>
+<span class="n">점추정</span> <span class="p">:</span> <span class="n">전체</span> <span class="n">인구의</span> <span class="n">지지율도</span> <span class="mi">40</span><span class="o">%</span> <span class="n">일</span> <span class="n">것이다</span>
+<span class="n">구간</span> <span class="n">추정</span>
+<span class="n">여론조사</span> <span class="n">결과</span> <span class="mi">40</span><span class="o">%</span> <span class="p">(</span><span class="mi">95</span><span class="o">%</span> <span class="n">신뢰</span> <span class="n">구간에서</span> <span class="err">±</span><span class="mi">4</span><span class="o">%</span> <span class="n">오차</span><span class="p">)</span>
+<span class="o">=</span> <span class="n">모집단</span><span class="p">(</span><span class="n">전체</span> <span class="n">인구</span><span class="p">)</span> <span class="n">의</span> <span class="p">(</span><span class="n">실제</span><span class="p">)</span><span class="n">지지율은</span> <span class="mi">95</span><span class="o">%</span><span class="n">의</span> <span class="n">확률로</span> <span class="mi">40</span><span class="o">%</span><span class="err">±</span><span class="mi">4</span><span class="o">%</span> <span class="n">인</span> <span class="mi">36</span><span class="o">%~</span><span class="mi">44</span><span class="o">%</span> <span class="n">사이에</span> <span class="n">있을</span> <span class="n">것이다</span><span class="p">.</span>
+<span class="o">=</span> <span class="mi">36</span><span class="o">~</span><span class="mi">44</span><span class="o">%</span> <span class="n">사이에</span> <span class="n">있을</span> <span class="n">확률이</span> <span class="mi">95</span><span class="o">%</span>
+<span class="o">=</span> <span class="mi">5</span><span class="o">%</span><span class="n">의</span> <span class="n">가능성으로</span> <span class="mi">36</span><span class="o">%</span> <span class="n">보다</span> <span class="n">작거나</span> <span class="mi">44</span><span class="o">%</span> <span class="n">보다</span> <span class="n">클</span> <span class="n">수</span> <span class="n">있다</span><span class="p">.</span>
+
+<span class="n">신뢰구간</span> <span class="n">구하기</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="n">st</span>
+<span class="mi">30</span> <span class="n">개</span> <span class="n">이하의</span> <span class="n">샘플</span> <span class="p">:</span> <span class="n">st</span><span class="p">.</span><span class="n">t</span><span class="p">.</span><span class="n">interval</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="n">신뢰구간</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">샘플</span> <span class="n">갯수</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="n">평균</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">평균오차</span><span class="p">)</span>
+<span class="mi">30</span> <span class="n">개</span> <span class="n">이상</span> <span class="p">:</span> <span class="n">st</span><span class="p">.</span><span class="n">norm</span><span class="p">.</span><span class="n">interval</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">scale</span><span class="o">=</span><span class="n">st</span><span class="p">.</span><span class="n">sem</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+<span class="n">샘플</span> <span class="n">뽑기</span> <span class="p">:</span> <span class="n">df</span><span class="p">.</span><span class="n">sample</span><span class="p">(</span> <span class="n">n</span><span class="o">=</span><span class="n">샘플갯수</span> <span class="ow">or</span> <span class="n">frac</span><span class="o">=</span> <span class="n">샘플비율</span><span class="p">)</span>
+    
+<span class="n">sample1</span><span class="o">=</span><span class="n">titanic</span><span class="p">.</span><span class="n">sample</span> <span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">sample2</span><span class="o">=</span><span class="n">titanic</span><span class="p">.</span><span class="n">sample</span> <span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="p">(</span><span class="s">"sample1:"</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sample1</span><span class="p">.</span><span class="n">fare</span><span class="p">),</span> <span class="n">st</span><span class="p">.</span><span class="n">t</span><span class="p">.</span><span class="n">interval</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">sample1</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sample1</span><span class="p">.</span><span class="n">fare</span><span class="p">),</span> <span class="n">scale</span><span class="o">=</span><span class="n">st</span><span class="p">.</span><span class="n">sem</span><span class="p">(</span><span class="n">sample1</span><span class="p">.</span><span class="n">fare</span><span class="p">)))</span>
+<span class="k">print</span> <span class="p">(</span><span class="s">"sample2:"</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sample2</span><span class="p">.</span><span class="n">fare</span><span class="p">),</span> <span class="n">st</span><span class="p">.</span><span class="n">norm</span><span class="p">.</span><span class="n">interval</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sample1</span><span class="p">.</span><span class="n">fare</span><span class="p">),</span> <span class="n">scale</span><span class="o">=</span><span class="n">st</span><span class="p">.</span><span class="n">sem</span><span class="p">(</span><span class="n">sample1</span><span class="p">.</span><span class="n">fare</span><span class="p">)))</span>
+<span class="k">print</span> <span class="p">(</span><span class="s">"population:"</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">titanic</span><span class="p">.</span><span class="n">fare</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">평균비교와</span> <span class="n">도수</span> <span class="n">비교</span>
+
+<span class="n">평균비교</span>
+
+<span class="mi">2</span><span class="n">개의</span> <span class="n">평균이</span> <span class="n">있을</span> <span class="n">때</span><span class="p">,</span> <span class="n">샘플에서는</span> <span class="n">평균이</span> <span class="n">차이가</span> <span class="n">나는데</span> <span class="n">실제</span> <span class="n">모집단에서도</span> <span class="n">차이가</span> <span class="n">날지</span> <span class="n">분석</span>
+
+<span class="n">one</span> <span class="n">sample</span> <span class="n">t</span><span class="o">-</span><span class="n">test</span> <span class="p">:</span> <span class="mi">1</span><span class="n">개의</span> <span class="n">기준값</span> <span class="p">(</span><span class="n">ex</span><span class="p">,</span> <span class="n">지난</span> <span class="n">선거에서</span> <span class="n">지지율</span><span class="p">)</span> <span class="n">이</span> <span class="n">주어져</span> <span class="n">있고</span><span class="p">,</span> <span class="n">샘플</span> <span class="n">데이터</span> <span class="p">(</span><span class="n">ex</span><span class="p">.</span> <span class="n">이번달</span> <span class="n">여론조사</span> <span class="n">데이터</span><span class="p">)</span> <span class="n">가</span> <span class="n">주어진</span> <span class="n">경우</span><span class="p">,</span> <span class="n">유의미한</span> <span class="n">차이가</span> <span class="n">있나</span><span class="err">?</span>
+
+<span class="n">가설</span> <span class="n">검정</span>
+
+<span class="n">가설</span> <span class="p">:</span> <span class="n">실제</span> <span class="n">모집단에서는</span> <span class="n">차이가</span> <span class="n">없다</span>
+<span class="n">검정</span> <span class="p">:</span> <span class="n">가설이</span> <span class="n">맞는지</span> <span class="n">판단하는</span> <span class="n">절차</span>
+<span class="n">예</span>
+
+<span class="n">키</span> <span class="n">크는</span> <span class="n">약이</span> <span class="n">효과가</span> <span class="n">있는지</span><span class="p">..</span> <span class="n">약을</span> <span class="n">먹인</span> <span class="n">몇</span> <span class="n">명의</span> <span class="n">결과를</span> <span class="n">놓고</span> <span class="n">판단하고자</span> <span class="n">함</span>
+<span class="n">원래</span> <span class="n">중학교</span> <span class="mi">2</span><span class="n">학년</span> <span class="n">인구의</span> <span class="n">키</span> <span class="n">평균</span> <span class="o">=</span> <span class="mi">164</span>
+<span class="mi">1</span><span class="n">학년부터</span> <span class="n">약먹은</span> <span class="mi">2</span><span class="n">학년</span><span class="p">(</span><span class="n">샘플</span><span class="p">)</span> <span class="n">평균</span> <span class="o">=</span> <span class="mi">167</span>
+<span class="n">영가설</span> <span class="p">:</span> <span class="n">원래</span> <span class="n">키에서</span> <span class="n">변동이</span> <span class="n">없다</span> <span class="p">(</span><span class="n">샘플에서만</span> <span class="n">평균이</span> <span class="n">높게</span> <span class="n">나왔을</span> <span class="n">뿐</span><span class="p">)</span>
+<span class="n">검정</span> <span class="p">:</span> <span class="n">샘플로</span> <span class="n">추정할</span> <span class="n">수</span> <span class="n">있는</span> <span class="n">모집단의</span> <span class="n">신뢰구간</span> <span class="p">(</span><span class="n">전체</span> <span class="n">중학생에게</span> <span class="n">약을</span> <span class="n">먹였을</span> <span class="n">때</span><span class="p">,</span> <span class="n">그</span> <span class="n">평균은</span> <span class="mi">95</span><span class="o">%</span><span class="n">의</span> <span class="n">확률로</span> <span class="n">이</span> <span class="n">구간내에</span> <span class="n">있을</span> <span class="n">것이다</span><span class="p">)</span> <span class="n">안에</span> <span class="n">원래</span> <span class="n">평균</span><span class="p">(</span><span class="mi">164</span><span class="p">)</span> <span class="n">이</span> <span class="n">있다면</span><span class="p">,</span> <span class="n">영가설이</span> <span class="n">맞다</span> <span class="p">(</span><span class="n">변동이</span> <span class="n">없다</span><span class="o">=</span><span class="n">효과가</span> <span class="n">없다</span><span class="p">)</span>
+<span class="n">만약</span> <span class="n">검정</span> <span class="n">결과</span> <span class="n">원래</span> <span class="n">평균이</span> <span class="n">신뢰</span> <span class="n">구간</span> <span class="n">밖이라면</span><span class="p">,</span> <span class="n">영가설</span> <span class="n">기각</span> <span class="p">(</span><span class="n">변동이</span> <span class="n">있다</span><span class="p">)</span>
+<span class="n">평균값이</span> <span class="o">=&gt;</span> <span class="n">통계적으로</span> <span class="n">유의미한</span> <span class="n">차이가</span> <span class="n">있다</span><span class="p">.</span>
+<span class="n">st</span><span class="p">.</span><span class="n">ttest_1samp</span><span class="p">(</span><span class="n">데이터</span><span class="p">,</span> <span class="n">비교평균</span><span class="p">)</span>
+
+<span class="n">pvalue</span> <span class="o">&lt;</span> <span class="mf">0.05</span> <span class="n">이면</span> <span class="n">영가설</span> <span class="n">기각</span> <span class="p">(</span><span class="n">아니면</span> <span class="n">영가설이</span> <span class="n">맞음</span><span class="p">)</span>
+
+<span class="n">비교</span> <span class="n">코드</span>
+<span class="n">st</span><span class="p">.</span><span class="n">ttest_1samp</span> <span class="p">(</span><span class="n">sample1</span><span class="p">.</span><span class="n">fare</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="c1"># 샘플 집단의 배 삯 평균은 20
+</span>
+<span class="n">도수비교</span>
+
+<span class="n">nominal</span> <span class="n">데이터의</span> <span class="n">값</span> <span class="n">별</span> <span class="n">분포가</span> <span class="n">차이가</span> <span class="n">있는가</span><span class="err">?</span> <span class="p">(</span><span class="n">샘플에서</span> <span class="n">그렇게</span> <span class="n">나왔는데</span> <span class="n">전체도</span> <span class="n">그렇다고</span> <span class="n">추정할</span> <span class="n">수</span> <span class="n">있나</span><span class="err">?</span><span class="p">)</span>
+<span class="n">특정</span> <span class="n">혈액형이</span> <span class="n">더</span> <span class="n">많은가</span><span class="err">?</span>
+<span class="n">가설</span> <span class="p">:</span> <span class="n">혈액형</span> <span class="n">분포는</span> <span class="n">같다</span> <span class="o">=</span> <span class="n">고르게</span> <span class="n">분포한다</span> <span class="p">(</span><span class="n">영가설</span><span class="p">)</span>
+<span class="n">검정</span> <span class="p">:</span> <span class="n">chisquare</span> <span class="p">(</span> <span class="n">데이터</span> <span class="p">)</span>
+<span class="n">실제</span> <span class="n">분포가</span> <span class="n">균등한데</span><span class="p">,</span> <span class="n">샘플이</span> <span class="n">이렇게</span> <span class="n">나올</span> <span class="n">확률을</span> <span class="n">얻음</span>
+<span class="k">if</span> <span class="n">pvalue</span> <span class="o">&lt;</span> <span class="mf">0.05</span> <span class="n">전체도</span> <span class="n">다르다고</span> <span class="n">추정할</span> <span class="n">수</span> <span class="n">있음</span>
+<span class="n">카테코리</span> <span class="n">별로</span> <span class="o">=&gt;</span> <span class="n">통계적으로</span> <span class="n">유의미한</span> <span class="n">차이가</span> <span class="n">있다</span><span class="p">.</span>
+
+<span class="n">비교</span> <span class="n">코드</span>
+
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">chisquare</span>
+<span class="n">chisquare</span> <span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>  <span class="c1"># 원래는 균등 분포인데, 샘플에서만 우연히 이렇게 차이나왔을 가능성 28%
+# 샘플이 커지면 
+</span><span class="n">chisquare</span> <span class="p">([</span><span class="mi">100</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">130</span><span class="p">,</span> <span class="mi">50</span> <span class="p">]</span> <span class="p">)</span> <span class="c1"># 원래는 균등 분포인데, 이렇게 큰 샘플에서 우연히 이렇게 차이가 많이 나게 나올 가능성 0.000002 %
+# titanic data에 적용 
+</span><span class="n">num_class</span><span class="o">=</span><span class="n">sample1</span><span class="p">[</span><span class="s">"class"</span><span class="p">].</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">num_class</span><span class="p">)</span>
+<span class="k">print</span> <span class="p">(</span> <span class="n">chisquare</span> <span class="p">(</span><span class="n">num_class</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">num_class</span><span class="o">=</span><span class="n">sample2</span><span class="p">[</span><span class="s">"class"</span><span class="p">].</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">num_class</span><span class="p">)</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">chisquare</span> <span class="p">(</span><span class="n">num_class</span><span class="p">))</span>
+<span class="c1">#num_class
+</span></code></pre></div></div>
+
+<p>##5주차 복습</p>
+
+<p>종속 변수와 독립변수에 대해서 생각해보자
+독립변수가 종속변수에 영향을 주었는지에 관해서 고민
+<img src="/assets/img/0913/four.png" alt="image.png">
+셀수있는(셀수 없는 것을 정렬한), 셀수 없는(추상적인 셀수 있는것)
+numeric과 numeric -&gt; 상관분석(cor : Correlation Analysis) oR 회귀분석(lm : Regression Analysis)
+평균비교
+교차분석</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nominal</span> <span class="o">-</span> <span class="n">nominal</span><span class="p">(</span><span class="n">숫자가</span> <span class="n">아닌것</span> <span class="n">간의</span> <span class="n">관계</span><span class="p">)</span> <span class="p">:</span> <span class="n">교차분석</span>
+<span class="n">ex</span><span class="p">)</span> <span class="n">성별에</span> <span class="n">따라</span> <span class="n">생존자</span> <span class="n">숫자가</span> <span class="n">다른가</span>
+<span class="n">pd</span><span class="p">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">변수1</span><span class="p">,</span> <span class="n">변수2</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="bp">True</span> <span class="n">또는</span> <span class="bp">False</span><span class="p">)</span> <span class="p">:</span> <span class="n">normalize</span> <span class="o">=</span> <span class="n">비율로</span> <span class="n">보여줄지</span> <span class="n">말지</span> <span class="n">선택</span>
+<span class="n">예제</span> <span class="p">:</span> 
+<span class="n">titanic</span><span class="o">=</span> <span class="n">sns</span><span class="p">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s">"titanic"</span><span class="p">)</span>
+<span class="n">pd</span><span class="p">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">.</span><span class="n">sex</span><span class="p">,</span> <span class="n">titanic</span><span class="p">.</span><span class="n">survived</span><span class="p">)</span>
+
+<span class="c1">##crosstab을 활용해서 plot을 만들 수 있다
+</span><span class="n">ct</span><span class="o">=</span><span class="n">pd</span><span class="p">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">.</span><span class="n">sex</span><span class="p">,</span> <span class="n">titanic</span><span class="p">.</span><span class="n">survived</span><span class="p">)</span>
+<span class="n">ct</span><span class="p">.</span><span class="n">plot</span><span class="p">.</span><span class="n">bar</span><span class="p">(</span><span class="n">stacked</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>   <span class="c1"># seaborn lib
+</span><span class="n">ct</span><span class="p">.</span><span class="n">plot</span><span class="p">.</span><span class="n">pie</span><span class="p">(</span><span class="n">subplots</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">차이의</span> <span class="n">통계적</span> <span class="n">유의성</span>
+<span class="n">통계적</span> <span class="n">유의성</span> <span class="p">(</span><span class="o">=</span> <span class="n">모집단에서도</span> <span class="n">그럴</span> <span class="n">것인가</span> <span class="o">=</span> <span class="n">지금</span> <span class="n">샘플의</span> <span class="n">결과에서의</span> <span class="n">차이가</span> <span class="n">통계적으로</span> <span class="n">유의미한</span> <span class="n">차이인가</span><span class="p">)</span>
+<span class="n">chi2_contingency</span><span class="p">(</span><span class="n">crosstab</span><span class="p">)</span>
+<span class="n">pvalue</span> <span class="o">&lt;</span> <span class="mf">0.05</span> <span class="n">이면</span> <span class="p">(</span><span class="n">남녀</span> <span class="n">생존율이</span><span class="p">)</span> <span class="n">통계적으로</span> <span class="n">유의미한</span> <span class="n">차이가</span> <span class="n">있다</span><span class="p">.</span>
+
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="c1">#ct는 위에서 구한 교차 분석 결과
+</span><span class="n">stats</span><span class="p">.</span><span class="n">chi2_contingency</span><span class="p">(</span><span class="n">ct</span><span class="p">)</span> <span class="c1"># 2번째 값이 p value
+</span><span class="n">결과</span> <span class="p">:</span>
+    <span class="p">(</span><span class="mf">260.71702016732104</span><span class="p">,</span>
+ <span class="mf">1.1973570627755645e-58</span><span class="p">,</span>
+ <span class="mi">1</span><span class="p">,</span>
+ <span class="n">array</span><span class="p">([[</span><span class="mf">193.47474747</span><span class="p">,</span> <span class="mf">355.52525253</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">120.52525253</span><span class="p">,</span> <span class="mf">221.47474747</span><span class="p">]]))</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nominal</span><span class="o">-</span><span class="n">numeric</span> <span class="p">:</span> <span class="n">평균</span> <span class="n">비교</span>
+<span class="n">nominal</span> <span class="n">data</span> <span class="n">value</span> <span class="n">group</span> <span class="p">(</span><span class="n">독립변수</span><span class="p">)</span> <span class="n">에</span> <span class="n">따라</span> <span class="n">numeric</span> <span class="n">value</span> <span class="p">(</span><span class="n">종속변수</span><span class="p">)</span> <span class="n">의</span> <span class="n">mean이</span> <span class="n">다른가</span><span class="err">?</span>
+<span class="n">독립변수</span> <span class="o">-&gt;</span> <span class="n">종속변수</span>
+<span class="n">df</span><span class="p">.</span><span class="n">groupby</span> <span class="p">(</span><span class="n">독립변수</span><span class="p">).</span><span class="n">종속변수</span><span class="p">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="c1">#변수 둘
+</span><span class="n">sns</span><span class="p">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">'sex'</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s">'fare'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">titanic</span><span class="p">)</span>
+<span class="c1">#변수 셋
+</span><span class="n">sns</span><span class="p">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">'sex'</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s">'fare'</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s">'class'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">titanic</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">2</span><span class="n">변수</span> <span class="n">평균</span> <span class="n">비교</span> <span class="o">-</span> <span class="n">통계적</span> <span class="n">유의성</span>
+<span class="n">Nominal인</span> <span class="n">독립변수</span> <span class="n">값의</span> <span class="n">종류가</span> <span class="mi">2</span><span class="n">가지</span> <span class="n">일</span> <span class="n">때</span> <span class="p">:</span> <span class="n">t</span><span class="o">-</span><span class="n">test</span>
+
+<span class="n">numeric</span> <span class="n">종속변수</span>
+<span class="mi">3</span><span class="n">가지</span> <span class="n">이상일</span> <span class="n">때</span> <span class="p">:</span> <span class="n">anova</span> <span class="p">(</span> <span class="mi">3</span><span class="n">변수</span> <span class="n">이상과</span> <span class="n">구분</span> <span class="p">)</span>
+<span class="n">T</span><span class="o">-</span><span class="n">test도</span> <span class="mi">2</span><span class="n">종류가</span> <span class="n">있음</span>
+
+<span class="n">독립적</span> <span class="mi">2</span> <span class="n">sample</span> <span class="n">비교</span> <span class="p">:</span> <span class="n">서로</span> <span class="n">다른</span> <span class="n">group의</span> <span class="n">값을</span> <span class="n">비교하는</span> <span class="n">경우</span> <span class="p">(</span><span class="n">예</span><span class="p">:</span> <span class="n">남</span> <span class="n">vs</span><span class="p">.</span><span class="n">여</span><span class="p">)</span>
+<span class="n">paired</span> <span class="mi">2</span> <span class="n">sample</span> <span class="n">비교</span> <span class="p">:</span> <span class="n">같은</span> <span class="n">대상의</span> <span class="n">서로</span> <span class="n">다른</span> <span class="n">값을</span> <span class="n">비교하는</span> <span class="n">경우</span> <span class="p">(</span><span class="n">예</span><span class="p">:</span> <span class="n">약먹기전의</span> <span class="n">수치</span> <span class="n">vs</span><span class="p">.</span> <span class="n">약먹은</span> <span class="n">후의</span> <span class="n">수치</span><span class="p">)</span>
+<span class="n">독립적</span> <span class="mi">2</span> <span class="n">sample</span> <span class="n">비교</span>
+
+<span class="n">우선</span><span class="p">,</span> <span class="n">분산</span> <span class="n">비교</span><span class="p">(</span><span class="n">F</span><span class="o">-</span><span class="n">test</span><span class="p">:</span> <span class="n">등분산성</span><span class="p">,</span> <span class="n">분산이</span> <span class="n">차이가</span> <span class="n">있는지</span> <span class="n">없는지</span> <span class="p">)</span><span class="n">를</span> <span class="n">해야</span> <span class="n">함</span>
+<span class="n">levene</span> <span class="p">(</span> <span class="n">sample1</span><span class="p">,</span> <span class="n">sample2</span><span class="p">)</span> <span class="p">:</span> <span class="n">p</span><span class="o">-</span><span class="n">value</span> <span class="o">&lt;</span> <span class="mf">0.05</span> <span class="n">이면</span><span class="p">,</span> <span class="n">통계적</span> <span class="n">유의성이</span> <span class="n">있게</span> <span class="n">분산의</span> <span class="n">차이가</span> <span class="n">있음</span>
+<span class="n">ttest_ind</span> <span class="p">(</span> <span class="n">sample1</span><span class="p">,</span> <span class="n">sample2</span><span class="p">,</span> <span class="n">equal_var</span><span class="o">=</span><span class="bp">True</span> <span class="n">of</span> <span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">levene</span><span class="p">,</span> <span class="n">ttest_ind</span><span class="p">,</span> <span class="n">ttest_rel</span>
+
+<span class="c1"># 값이 2 종인 독립변수
+</span><span class="n">titanic</span><span class="p">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'sex'</span><span class="p">).</span><span class="n">fare</span><span class="p">.</span><span class="n">mean</span><span class="p">()</span> 
+<span class="n">male</span><span class="o">=</span> <span class="n">titanic</span><span class="p">[</span><span class="n">titanic</span><span class="p">.</span><span class="n">sex</span><span class="o">==</span><span class="s">"male"</span><span class="p">]</span>
+<span class="n">female</span><span class="o">=</span> <span class="n">titanic</span><span class="p">[</span><span class="n">titanic</span><span class="p">.</span><span class="n">sex</span><span class="o">==</span><span class="s">"female"</span><span class="p">]</span>
+<span class="n">levene</span><span class="p">(</span><span class="n">male</span><span class="p">.</span><span class="n">fare</span><span class="p">,</span><span class="n">female</span><span class="p">.</span><span class="n">fare</span><span class="p">)</span>
+<span class="n">결과</span> <span class="p">:</span> <span class="n">LeveneResult</span><span class="p">(</span><span class="n">statistic</span><span class="o">=</span><span class="mf">19.188225990910503</span><span class="p">,</span> <span class="n">pvalue</span><span class="o">=</span><span class="mf">1.3255194429754062e-05</span><span class="p">)</span>
+<span class="n">ttest_ind</span><span class="p">(</span><span class="n">male</span><span class="p">.</span><span class="n">fare</span><span class="p">,</span> <span class="n">female</span><span class="p">.</span><span class="n">fare</span><span class="p">,</span> <span class="n">equal_var</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">결과</span> <span class="p">:</span> <span class="n">Ttest_indResult</span><span class="p">(</span><span class="n">statistic</span><span class="o">=-</span><span class="mf">5.077499013458909</span><span class="p">,</span> <span class="n">pvalue</span><span class="o">=</span><span class="mf">5.388057409693912e-07</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">paired</span> <span class="mi">2</span> <span class="n">sample</span>
+<span class="n">paired</span> <span class="mi">2</span> <span class="n">sample</span> <span class="p">:</span> <span class="n">ttest_rel</span> <span class="p">(</span> <span class="n">벡터1</span><span class="p">,</span> <span class="n">벡터2</span><span class="p">)</span>
+<span class="n">벡터1</span><span class="p">,</span> <span class="mi">2</span><span class="n">의</span> <span class="n">길이가</span> <span class="n">같아야</span><span class="p">..</span>
+<span class="n">같은</span> <span class="n">레코드</span> <span class="n">내의</span> <span class="mi">2</span><span class="n">개</span> <span class="n">변수</span> <span class="n">pair</span>
+<span class="mi">2</span><span class="n">개</span> <span class="n">변수는</span> <span class="n">같은</span> <span class="n">종류</span> <span class="p">(</span><span class="n">예</span><span class="p">,</span> <span class="n">몸무게</span><span class="p">)</span>
+<span class="n">약을</span> <span class="n">먹기</span> <span class="n">전</span> <span class="n">후에</span> <span class="n">몸무게</span> <span class="n">비교</span>
+<span class="n">NA</span> <span class="n">가</span> <span class="n">없어야</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="n">sl</span><span class="o">=</span><span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"studentlist.csv"</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="s">"cp949"</span><span class="p">)</span>
+<span class="n">sl</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s">'height2'</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">sl</span><span class="p">.</span><span class="n">height</span><span class="o">+</span><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sl</span><span class="p">)))</span>
+<span class="n">ttest_rel</span> <span class="p">(</span> <span class="n">sl</span><span class="p">.</span><span class="n">height</span><span class="p">,</span> <span class="n">sl</span><span class="p">.</span><span class="n">height2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">3</span><span class="n">가지</span> <span class="n">이상의</span> <span class="n">독립변수의</span> <span class="n">경우</span>
+<span class="n">titanic</span><span class="p">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'pclass'</span><span class="p">).</span><span class="n">fare</span><span class="p">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">'pclass'</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s">'fare'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">titanic</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">one</span> <span class="n">way</span> <span class="n">anova</span>
+<span class="n">m</span><span class="o">=</span><span class="n">ols</span> <span class="p">(</span><span class="s">'종속변수~독립변수'</span><span class="p">,</span> <span class="n">df</span><span class="p">).</span><span class="n">fit</span> <span class="p">()</span> <span class="p">:</span> <span class="n">모델</span> <span class="n">생성</span>
+<span class="n">anova_lm</span> <span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="p">:</span> <span class="n">모델에</span> <span class="n">대한</span> <span class="n">정보</span> <span class="n">조회</span>
+<span class="n">데이터분석에서</span> <span class="n">모델이란</span> <span class="p">:</span> <span class="n">간단히</span> <span class="n">데이터</span> <span class="n">또는</span> <span class="n">데이터</span> <span class="n">간의</span> <span class="n">관계를</span> <span class="n">설명하는</span> <span class="n">도구</span>
+    
+<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
+<span class="kn">from</span> <span class="nn">statsmodels.stats.anova</span> <span class="kn">import</span> <span class="n">anova_lm</span>
+<span class="n">model</span><span class="o">=</span><span class="n">ols</span><span class="p">(</span><span class="s">'fare~pclass'</span><span class="p">,</span> <span class="n">titanic</span><span class="p">).</span><span class="n">fit</span><span class="p">()</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">anova_lm</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
+<span class="o">-</span><span class="n">해석</span> <span class="p">:</span> <span class="k">class</span> <span class="nc">별</span> <span class="n">차이가</span> <span class="n">통계적</span> <span class="n">유의성이</span> <span class="n">있는</span> <span class="n">수준이다</span><span class="p">.</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numeric</span><span class="o">-</span><span class="n">numeric</span> <span class="p">(</span><span class="n">상관분석</span><span class="p">)</span>
+<span class="n">상관관계</span> <span class="p">:</span> <span class="n">같이</span> <span class="n">증가</span><span class="p">,</span> <span class="n">같이</span> <span class="n">감소</span> <span class="p">(</span><span class="n">선형적</span> <span class="n">상관관계</span><span class="p">)</span>
+<span class="n">독립변수</span> <span class="o">-&gt;</span> <span class="n">종속</span> <span class="n">변수</span> <span class="n">같은</span> <span class="n">순서가</span> <span class="n">없음</span>
+<span class="n">데이터를</span> <span class="n">봐서는</span> <span class="n">상관관계를</span> <span class="n">알기</span> <span class="n">어려움</span><span class="p">,</span> <span class="n">시각화</span> <span class="n">필요</span>
+<span class="n">상관계수구하기</span><span class="p">:</span> <span class="n">df</span><span class="p">.</span><span class="n">corr</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">방향성이</span> <span class="n">없음</span>
+<span class="c1"># 변수 간 상관계수 구하기 
+</span><span class="n">titanic</span><span class="p">[[</span><span class="s">'age'</span><span class="p">,</span><span class="s">'fare'</span><span class="p">]].</span><span class="n">corr</span><span class="p">()</span>
+
+<span class="n">상관분석</span> <span class="p">:</span> <span class="n">상관도가</span> <span class="n">높은</span> <span class="n">변수</span> <span class="n">pair를</span> <span class="n">찾아내기</span>
+<span class="n">위의</span> <span class="n">table</span> <span class="n">도</span> <span class="n">눈에</span> <span class="n">안들어오니</span> <span class="n">시각화</span> <span class="n">필요</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="n">키변수</span><span class="p">)</span> <span class="p">,</span> <span class="n">키</span> <span class="n">변수</span> <span class="p">:</span> <span class="n">제3의</span> <span class="n">변수</span> <span class="n">추가</span> <span class="n">분석</span>
+    
+<span class="n">pairplot</span><span class="p">,</span> <span class="n">heatmap을</span> <span class="n">활용한다</span><span class="p">.</span>
+<span class="n">iris</span><span class="o">=</span><span class="n">sns</span><span class="p">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s">'iris'</span><span class="p">)</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">iris</span><span class="p">,</span> <span class="n">hue</span> <span class="o">=</span> <span class="s">'species'</span><span class="p">)</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">heatmap</span><span class="p">(</span> <span class="n">titanic</span><span class="p">.</span><span class="n">corr</span><span class="p">())</span>
+</code></pre></div></div>
+
+<p>discrete vs. continous
+discrete vs. continous 과 nominal vs. numeric 에 대해 다시 생각
+상관계수의 강도 보기 : heatmap(), 밝을 수록 높은 상관관계</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## numeric-numeric (회귀분석)
+</span><span class="o">-</span> <span class="n">상관관계</span> <span class="p">:</span> <span class="mi">2</span> <span class="n">변수가</span> <span class="n">같이</span> <span class="n">증가</span><span class="p">,</span> <span class="n">같이</span> <span class="n">감소</span> <span class="p">(</span><span class="n">선형적</span> <span class="n">상관관계</span><span class="p">,</span> <span class="n">직선에</span> <span class="n">얼마나</span> <span class="n">몰려있는지</span><span class="p">)</span>
+<span class="o">-</span> <span class="n">회귀분석</span> <span class="p">:</span> <span class="n">독립변수</span> <span class="o">-&gt;</span> <span class="n">종속변수</span> <span class="n">선형적</span> <span class="n">상관관계의</span> <span class="n">정도</span><span class="p">(</span><span class="n">기울기</span><span class="p">)</span><span class="n">까지</span> <span class="n">분석</span>
+<span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">y2</span><span class="o">=</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span>
+<span class="n">stats</span><span class="p">.</span><span class="n">pearsonr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y2</span><span class="p">)</span>
+<span class="n">stats</span><span class="p">.</span><span class="n">spearmanr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>스피어만 상관계수
+기본은 pearson : 선형관계 (값의 크기 자체가 의미가 있는 numeric : 곱하기 나누기가 의미를 갖는 숫자)
+수치형 변수 종류 (3가지)
+순서만 의미있는 수치 : 학력 (고졸, 대졸, 대학원졸.. )
++/- 가 가능한 수치 : 섭씨온도, 지능지수
+*/ / 가 의미있는 수치 : 중량
+spearman: 값의 크기 대신 순위로 계산 (순서가 있는 nominal 데이터)</p>
+
+<p>상관 분석 시 주의점
+상관계수의 해석이 주관적임(다음 같은 기준이 있긴 하나..)
+<img src="/assets/img/0913/five.png" alt="image.png"></p>
+
+<p>특히,개별 관측치에 속한 2변수 (예, 키-몸무게) 가 아닌, 상이한 2개의 통계 데이터( 연도 별 키의 통계, 연도 별 몸무게의 통계) 의 상관관계는 큰 의미가 없다</p>
+
+<p>30개 이상의 관측치(레코드)가 있어야 의미가 있다. t-test에서도 마찬가지..</p>
+
+<p>회귀 분석 (regression)
+단순 선형회귀 : 하나의 독립변수 -&gt; 하나의 종속변수
+모델 생성 : 모델=ols( ‘종속변수~독립변수’, data=데이터).fit()
+모델 정보 조회 : 모델.summary(), 모델.params()</p>
+
+<p>from scipy import stats
+from statsmodels.formula.api import ols, glm</p>
+
+<p>m1 = ols ( ‘quality~alcohol’, data=wine).fit()
+m1.summary()
+<img src="/assets/img/0913/six.png" alt="ima">
+해석
+coef : 선형 모델 (1차함수 직선)의 기울기 (선형적으로 어느 정도 영향을 주었는지 분석)
+intercept: 절편
+y(종속변수)= coef*x(독립변수) + intercept
+시각화 plot_ccpr ( 모델, 독립변수)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 모델의 시각화
+</span><span class="n">sns</span><span class="p">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">"alcohol"</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s">"quality"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wine</span><span class="p">)</span>
+<span class="n">모델과</span> <span class="n">예측</span>
+<span class="n">모델이란</span> <span class="err">?</span> <span class="n">데이터를</span> <span class="n">설명하는</span> <span class="n">단순한</span> <span class="n">툴</span> <span class="p">(</span><span class="n">여기서는</span> <span class="mi">1</span><span class="n">차함수의</span> <span class="n">절편</span><span class="p">,</span> <span class="n">기울기</span> <span class="o">=&gt;</span> <span class="n">linear</span> <span class="n">model</span><span class="p">)</span>
+<span class="n">모델을</span> <span class="n">이용해서</span> <span class="n">예측을</span> <span class="n">할</span> <span class="n">수</span> <span class="n">있다</span><span class="p">.</span>
+
+<span class="n">red_df</span><span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"winequality-red.csv"</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">";"</span><span class="p">)</span>
+<span class="n">red_df</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">m1</span> <span class="o">=</span> <span class="n">ols</span> <span class="p">(</span> <span class="s">'quality~alcohol'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wine</span><span class="p">[:</span><span class="mi">3000</span><span class="p">]).</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">m1</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span> <span class="n">wine</span><span class="p">[</span><span class="mi">3000</span><span class="p">:].</span><span class="n">alcohol</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">중선형</span> <span class="n">회귀</span>
+<span class="n">중선형회귀</span> <span class="p">:</span> <span class="n">독립변수가</span> <span class="n">여러개</span> <span class="n">일때</span>
+<span class="n">모델</span> <span class="n">생성</span> <span class="p">:</span> <span class="n">모델</span><span class="o">=</span><span class="n">ols</span><span class="p">(</span> <span class="s">'종속변수~독립변수1+독립변수2+ ... '</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">데이터</span><span class="p">).</span><span class="n">fit</span><span class="p">()</span>
+<span class="c1">#공백있는 column 이름 처리 
+</span><span class="n">wine</span><span class="p">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">' '</span><span class="p">,</span> <span class="s">'_'</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">wine</span><span class="p">.</span><span class="n">columns</span><span class="p">]</span>
+
+
+<span class="n">m2</span> <span class="o">=</span> <span class="n">ols</span> <span class="p">(</span> <span class="s">'quality~fixed_acidity+volatile_acidity+citric_acid+residual_sugar'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">wine</span><span class="p">).</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">m2</span><span class="p">.</span><span class="n">summary</span><span class="p">()</span>
+<span class="n">각</span> <span class="n">독립변수의</span> <span class="n">영향이</span> <span class="n">출력됨</span>
+<span class="n">p</span> <span class="o">&lt;</span> <span class="mf">0.05</span> <span class="n">작은</span> <span class="n">경우만</span> <span class="n">유의성을</span> <span class="n">가짐</span>
+<span class="n">시각화</span> <span class="p">:</span> <span class="n">plot_partregress_grid</span> <span class="p">(</span><span class="n">모델</span><span class="p">)</span>
+
+<span class="c1">#시각화 
+</span><span class="kn">from</span> <span class="nn">statsmodels.graphics.regressionplots</span> 
+<span class="kn">import</span> <span class="n">plot_partregress_grid</span>
+<span class="n">fig</span><span class="o">=</span><span class="n">plot_partregress_grid</span><span class="p">(</span><span class="n">m2</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">pad</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/project/2022/09/08/vis.html" title="내가 보려고 정리한 시각화 1">내가 보려고 정리한 시각화 1</a><a class="next" href="/jekyll-theme-yat/machine/learning/2022/09/15/ml.html" title="머신러닝 1">머신러닝 1</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/jekyll-theme-yat/project/2022/09/06/basic.html" title="머신러닝 1">내가 보려고 정리한 데이터분석 기본 3</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/spring/2022/12/14/springjpa3.html" title="머신러닝 1">Spring JPA 3일차</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/project/2022/09/05/basic.html" title="머신러닝 1">내가 보려고 정리한 데이터분석 기본 2</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/machine/learning/2022/09/21/decision.html" title="머신러닝 1">의사 결정 트리</a></li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2022-2023 박정우</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

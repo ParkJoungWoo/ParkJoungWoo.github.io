@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>스프링 부트 요소와 한글 깨짐 해결 | 정우의 블로그</title>
+<meta name="generator" content="Jekyll v4.3.2">
+<meta property="og:title" content="스프링 부트 요소와 한글 깨짐 해결">
+<meta name="author" content="박정우">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="스프링 부트 시작하기">
+<meta property="og:description" content="스프링 부트 시작하기">
+<link rel="canonical" href="https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/12/cotatoStudy2.html">
+<meta property="og:url" content="https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/12/cotatoStudy2.html">
+<meta property="og:site_name" content="정우의 블로그">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2023-01-12T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="스프링 부트 요소와 한글 깨짐 해결">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"박정우"},"dateModified":"2023-01-12T00:00:00+00:00","datePublished":"2023-01-12T00:00:00+00:00","description":"스프링 부트 시작하기","headline":"스프링 부트 요소와 한글 깨짐 해결","mainEntityOfPage":{"@type":"WebPage","@id":"https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/12/cotatoStudy2.html"},"url":"https://parkjoungwoo.github.io/jekyll-theme-yat/spring/2023/01/12/cotatoStudy2.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://parkjoungwoo.github.io/jekyll-theme-yat/feed.xml" title="정우의 블로그">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="정우의 블로그" src="" onerror="this.style.display='none'">
+  정우의 블로그
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">스프링 부트 요소와 한글 깨짐 해결</h1>
+  <h2 class="post-subtitle">스프링 1주차</h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2023-01-12T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Jan 12, 2023
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 4 mins</span>
+  </p>
+<div class="post-tags"><a class="post-tag" href="/jekyll-theme-yat/tags.html#spring">#spring</a></div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h2 id="스프링-부트-시작하기">스프링 부트 시작하기</h2>
+
+<p>⚠️ 본 게시물은 <code class="language-plaintext highlighter-rouge">스프링 부트와 AWS로 혼자 구현하는 웹서비스</code>를 참고도서로 활용합니다. 저작권은 본 책의 저서에게 있음을 알립니다.</p>
+
+<h3 id="스프링-부트-알아가기">스프링 부트 알아가기</h3>
+
+<p>먼저 IntelliJ, Java 11, Gradle을 설치하고 프로젝트를 Gradle로 생성했을 때를 기준으로 합니다. 이 책에서 나온 몇가지 컨벤션입니다.</p>
+
+<ol>
+  <li>패키지명은 웹사이트의 역순으로 합니다.
+    <ul>
+      <li>ex) jungwoo.java.com -&gt; com.java.jungwoo</li>
+    </ul>
+  </li>
+  <li>테스트 코드도 기존 패키지와 구성을 같게 합니다
+    <ul>
+      <li>ex) 실제 클래스 명이 jungwoo.java.com의 Function이면 test 패키지에서도 jungwoo.java.com의 FunctionTest로 정의합니다.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>build.gradle의 구성요소도 확인해보겠습니다.</p>
+
+<ol>
+  <li>plugins : 스프링 부트 의존성 관리와 어플리케이션 패키징을 도와주는 도구.</li>
+  <li>group : 프로젝트를 정의하는 고유 식별자 정보</li>
+  <li>version : 현재 프로젝트의 버전(snapshot이 붙을 경우 개발이 완료되지 않은 상황)</li>
+  <li>sourceCompatibility<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> : 컴파일에서 사용하는 JDK 버전입니다.
+    <ul>
+      <li>실수로 더 높은 버전의 java 기능을 사용하는 것을 방지합니다.</li>
+      <li>
+<code class="language-plaintext highlighter-rouge">targetCompatibility</code>라는 기능도 있습니다.(직접 추가해야함)
+        <ul>
+          <li>생성된 클래스 파일의 버전을 제어합니다.</li>
+          <li>프로그램에서 실행할 수 있는 <code class="language-plaintext highlighter-rouge">가장 낮은 java 버전</code>을 말합니다.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>rerpositories<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> : 프로젝트의 저장소를 구성합니다.<br>
+ 라이브러리를 어떤 원격 저장소에서 받을지를 결정합니다.
+    <ul>
+      <li>mavenCentral : 기존에 많이 쓰인 저장소, 직접 만든 라이브러리를 업로드 어려움</li>
+      <li>jcenter : mavenCentral의 단점을 개선한 저장소</li>
+    </ul>
+  </li>
+  <li>test : Test task를 추가, 본 프로젝트에서는 JUnit을 사용하기 때문에 <code class="language-plaintext highlighter-rouge">useJUnitPlatform()</code>을 사용한다.</li>
+  <li>dependencies : 프로젝트 개발에 필요한 의존성들을 선언하는 곳.
+    <ul>
+      <li>주의할 점은 어떠한 버전에 종속적인 의존성을 선언하는 것을 지양해야 합니다.</li>
+    </ul>
+  </li>
+  <li>implementation<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup> : 의존 라이브러리 수정시 본 모듈까지만 리빌드한다.
+    <ul>
+      <li>testImplementation : 테스트 코드를 수행할 때만 적용</li>
+      <li>runtimeOnly : runtime 시에만 필요한 라이브러리일 경우</li>
+      <li>compileOnly : 컴파일 시에만 빌드하고 빌드 결과물에는 포함하지 않는다.</li>
+      <li>annotationProcessor : annotation processor 명시한다.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>implementation 추가 설명 :<br>
+A &lt;- B &lt;- C 의 의존관계를 가진다고 가정해보자.</p>
+
+<ul>
+  <li>compile은 A 수정시 B,C 등 의존 오브젝트가 모두 다시 빌드되어야 한다.</li>
+  <li>implementation은 A 수정시 B만 다시 빌드하면 된다.</li>
+</ul>
+
+<p>gradle 3.0 이상부터는 compile 사용을 권하지 않는다.</p>
+
+<p>artifact란?<br>
+spring에서는 보통 <code class="language-plaintext highlighter-rouge">jar</code>파일, 빌드 결과물을 말한다.</p>
+
+<p>jar 파일이란?<br>
+<code class="language-plaintext highlighter-rouge">Java Archive</code>를 뜻한다. 여러개의 자바 클래스 파일과 클래스들이 이용하는 리소스(텍스트, 그림) 및 메타데이터(데이터를 설명하는 데이터)를 하나의 파일로 모아 자바 플랫폼에서 <code class="language-plaintext highlighter-rouge">응용 소프트웨어</code> 또는 <code class="language-plaintext highlighter-rouge">라이브러리</code>를 <code class="language-plaintext highlighter-rouge">배포하기 위한</code> 소프트웨어 <code class="language-plaintext highlighter-rouge">패키지 파일 포맷</code>이다. - wiki 정의</p>
+
+<p>Maven 저장소<sup id="fnref:4" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup>는 일반적으로 maven artifacts가 저장되고 관리되는 공간이다.<br>
+한번 maven artifact가 maven 저장소에 등록되면 다른 maven 프로젝에서 검색, 포함될 수 있다.</p>
+
+<p><img src="/assets/img/230112/maven.jpg" alt="img3"></p>
+
+<p>org.springframework.boot 란?<br>
+위에서 언급한 스프링부트의 groupId이다.</p>
+<ul>
+  <li>boot-starter란? : 라이브러리간 의존성, 버전 조합을 미리 정의해서 제공
+    <ul>
+      <li>모든 경우에 대한 완벽한 조합은 아니지만 자주 사용하는 라이브러리에 한에서는 안정적인 사용이 가능하다.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="한글-깨짐-현상">한글 깨짐 현상</h3>
+<p>처음으로 인텔리제이를 사용하면 한글이 제대로 출력되지 않는 현상이 나타난다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Help -&gt; Edit Custom VM Options
+vmoption파일에 
+-----------------------
+-Dfile.encoding=UTF-8
+-Dconsole.encoding=UTF-8
+-----------------------
+을 추가하고 다시 실행한다.
+</code></pre></div></div>
+<h3 id="어노테이션-정리">어노테이션 정리</h3>
+<p>@RestController</p>
+<ul>
+  <li>컨트롤러를 JSON으로 변환하는 컨트롤러로 만들어준다.</li>
+  <li>@ResponseBody를 각 메소드마다 선언했던 것을 한번에 사용할 수 있다고 생각하면 된다.</li>
+</ul>
+
+<p>@GetMapping</p>
+<ul>
+  <li>HTTP Method인 Get 요청을 받을 수 있는 API로 만들어 준다.</li>
+  <li>레거시의 @RequestMapping(method = RequestMethod.GET)의 기능을 생각하면 된다.</li>
+</ul>
+
+<p>@ExtendWith(SpringExtension.class)</p>
+<ul>
+  <li>테스트를 진행할 때 JUnit에 내장된 실행자 외에 다른 실행자를 실행</li>
+  <li>여기서는 SpringExtension 스프링 실행자를 사용</li>
+  <li>스프링 부트 테스트와 JUnit사이의 연결자 역할</li>
+</ul>
+
+<p>@WebMvcTest</p>
+<ul>
+  <li>여러 스프링 테스트 어노테이션 중 Web에 집중할 수 있는 어노테이션</li>
+  <li>@Controller, @ControllerAdvice를 사용가능</li>
+  <li>@Service, @Component, @Repository등은 사용할 수 없다</li>
+</ul>
+
+<p>@Autowired</p>
+<ul>
+  <li>스프링이 관리하는 Bean을 주입받는다.</li>
+</ul>
+
+<p>MockMvc</p>
+<ul>
+  <li>Mock(가짜의), 웹 API를 테스트할 때 사용한다.</li>
+  <li>스프링 MVC 테스트의 시작점</li>
+  <li>이 클래스로 HTTP GET, POST등 API 테스트가 가능하다.</li>
+</ul>
+
+<p>mvc.perform(get(“/hello”))</p>
+<ul>
+  <li>MockMvc를 통해 /hello 주소로 GET 요청을 보낸다.</li>
+  <li>
+    <p>체이닝이 지원되어 아래와 같이 여러 검증 기능을 이어서 선언 가능하다.</p>
+  </li>
+  <li>andExpect(status().isOk())
+    <ul>
+      <li>mvc.perform의 결과를 검증한다.</li>
+      <li>HTTP Header의 status를 검증한다.</li>
+      <li>200, 404, 500 등의 상태를 검증</li>
+    </ul>
+  </li>
+  <li>andExpect(content().string(hello))
+    <ul>
+      <li>mvc.perform의 결과를 검증</li>
+      <li>응답 본문의 내용을 검증한다.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>@Getter</p>
+<ul>
+  <li>선언된 모든 필드의 get 메소드를 생성</li>
+</ul>
+
+<p>@RequiredArgsConstructor</p>
+<ul>
+  <li>선언된 모든 final 필드가 포함된 생성자를 생성</li>
+  <li>final이 없는 필드는 생성자에 포함되지 않는다.</li>
+</ul>
+
+<p>assertThat</p>
+<ul>
+  <li>assertJ라는 테스트 검정 라이브러리</li>
+</ul>
+
+<p>isEqualTo</p>
+<ul>
+  <li>assertJ의 동등 비교 메소드</li>
+</ul>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>https://dlee0129.tistory.com/265 <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>https://pgnt.tistory.com/134 <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p>https://cantcoding.tistory.com/59 <a href="#fnref:3" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+    <li id="fn:4" role="doc-endnote">
+      <p>https://www.cloudrepo.io/articles/what-is-a-maven-repository.html#overview <a href="#fnref:4" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+  </ol>
+</div>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/spring/2023/01/12/cotatoStudy.html" title="스프링의 개요 알아보기">스프링의 개요 알아보기</a><a class="next" href="/jekyll-theme-yat/spring/2023/01/16/cotatoStudy3.html" title="Stream 문법 알아보기">Stream 문법 알아보기</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/jekyll-theme-yat/project/2022/09/02/basic.html" title="Stream 문법 알아보기">내가 보려고 정리한 데이터분석 기본 1</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/spring/2023/01/19/cotatoStudy4.html" title="Stream 문법 알아보기">JVM 알아보기</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/project/2022/09/08/basic.html" title="Stream 문법 알아보기">내가 보려고 정리한 데이터분석 기본 5</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/spring/2022/12/14/springjpa3.html" title="Stream 문법 알아보기">Spring JPA 3일차</a></li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2022-2023 박정우</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

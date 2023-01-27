@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>내가 보려고 정리한 데이터분석 기본 3 | 정우의 블로그</title>
+<meta name="generator" content="Jekyll v4.3.2">
+<meta property="og:title" content="내가 보려고 정리한 데이터분석 기본 3">
+<meta name="author" content="박정우">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="타이타닉">
+<meta property="og:description" content="타이타닉">
+<link rel="canonical" href="https://parkjoungwoo.github.io/jekyll-theme-yat/project/2022/09/06/basic.html">
+<meta property="og:url" content="https://parkjoungwoo.github.io/jekyll-theme-yat/project/2022/09/06/basic.html">
+<meta property="og:site_name" content="정우의 블로그">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-09-06T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="내가 보려고 정리한 데이터분석 기본 3">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"박정우"},"dateModified":"2022-09-06T00:00:00+00:00","datePublished":"2022-09-06T00:00:00+00:00","description":"타이타닉","headline":"내가 보려고 정리한 데이터분석 기본 3","mainEntityOfPage":{"@type":"WebPage","@id":"https://parkjoungwoo.github.io/jekyll-theme-yat/project/2022/09/06/basic.html"},"url":"https://parkjoungwoo.github.io/jekyll-theme-yat/project/2022/09/06/basic.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://parkjoungwoo.github.io/jekyll-theme-yat/feed.xml" title="정우의 블로그">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="정우의 블로그" src="" onerror="this.style.display='none'">
+  정우의 블로그
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">내가 보려고 정리한 데이터분석 기본 3</h1>
+  <h2 class="post-subtitle">데이터 분석</h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-09-06T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Sep 06, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 13 mins</span>
+  </p>
+<div class="post-tags"><a class="post-tag" href="/jekyll-theme-yat/tags.html#data%20analysis">#data analysis</a></div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h1 id="타이타닉">타이타닉</h1>
+
+<p>seaborn이 제공하는 대표적인 dataset</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">sns</span><span class="p">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s">"titanic"</span><span class="p">)</span>
+</code></pre></div></div>
+<p>/+ 저번에 배운 저장방식과 함께 생각해본다면</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s">'titanic.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span> <span class="c1"># (숫자, 문자열은 인지하나 날짜/시간, Category, timedelta는 인지하지 못한다.)
+</span><span class="n">df</span><span class="p">.</span><span class="n">to_excel</span><span class="p">(</span><span class="s">'titanic.xlsx'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">shelve</span>
+<span class="c1">#with를 사용하면 자동으로 읽기+쓰기 용으로 파일을 연다.
+#쓰기
+</span><span class="k">with</span> <span class="n">shelve</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="s">'kb_data'</span><span class="p">)</span> <span class="k">as</span> <span class="n">data</span><span class="p">:</span>
+    <span class="n">data</span><span class="p">[</span><span class="s">'titanic'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span>
+<span class="c1">#읽기
+</span><span class="k">with</span> <span class="n">shelve</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="s">'kb_data'</span><span class="p">)</span> <span class="k">as</span> <span class="n">data</span><span class="p">:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">'titanic'</span><span class="p">]</span>
+</code></pre></div></div>
+<blockquote>
+  <p>중간 중간 파일의 버전을 만들어 놓자.</p>
+</blockquote>
+
+<h3 id="dir-명령어">dir 명령어</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">shelve</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="s">'kb_data'</span><span class="p">)</span> <span class="k">as</span> <span class="n">data</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">keys</span><span class="p">())</span> <span class="c1"># 출력이 되지 않는다..
+</span>    <span class="k">print</span><span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">keys</span><span class="p">()))</span> <span class="c1"># -&gt; 사용방법을 알 수 있다.
+</span></code></pre></div></div>
+
+<h2 id="데이터-요약">데이터 요약</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#앞에서 5개
+</span><span class="n">df</span><span class="p">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1">#뒤에서 5개
+</span><span class="n">df</span><span class="p">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div></div>
+<h3 id="dfinfo">df.info()</h3>
+<p>컬럼별 정보, 데이터 개수, 데이터 타입를 알려준다.</p>
+<ul>
+  <li>결측치 여부 : 결측치가 있는 경우 해결해야한다.</li>
+  <li>columns에 대한 각 dtype 확인 : numeric이 아닌 것을 numeric으로 변경해야함(int, float)
+-&gt; info로 확인하고 이 두가지 작업을 수행해줘야 한다.</li>
+</ul>
+
+<h3 id="범주형-변수">범주형 변수</h3>
+
+<ul>
+  <li>encoding 필요( 머신, 딥러닝 에서는 숫자가 아닌 것을 숫자로 변경하는 것을 의미)</li>
+  <li>문자 인코딩 - 사용자가 입력한 문자나 기호들을 컴퓨터가 이용할 수 있는 신호로 만들기
+    <ul>
+      <li>label encoding : 0, 1, 2, 3… 의 일련의 숫자로 변환</li>
+      <li>one hot encoding : 범주의 수 만큼 dummy 변수를 생성, 변수 중에서 1개만 1로 표현, 나머지 0으로 표현</li>
+    </ul>
+  </li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3">encoding 정리</th>
+      
+      
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>who</td>
+      <td>label encoding</td>
+      <td>one hot encoding</td>
+    </tr>
+    <tr>
+      <td>‘man’</td>
+      <td>1</td>
+      <td>1 0 0</td>
+    </tr>
+    <tr>
+      <td>‘woman’</td>
+      <td>2</td>
+      <td>0 1 0</td>
+    </tr>
+    <tr>
+      <td>‘child’</td>
+      <td>0</td>
+      <td>0 0 1</td>
+    </tr>
+    <tr>
+      <td>‘man’</td>
+      <td>1</td>
+      <td>1 0 0</td>
+    </tr>
+    <tr>
+      <td>‘woman’</td>
+      <td>2</td>
+      <td>0 1 0</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># label encoding
+</span><span class="n">temp</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">temp</span><span class="p">[</span><span class="s">'who'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">'man'</span><span class="p">,</span> <span class="s">'woman'</span><span class="p">,</span> <span class="s">'child'</span><span class="p">,</span> <span class="s">'man'</span><span class="p">,</span> <span class="s">'woman'</span><span class="p">]</span>
+<span class="n">temp</span><span class="p">[</span><span class="s">'who_label_encoding'</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span><span class="p">[</span><span class="s">'who'</span><span class="p">].</span><span class="n">astype</span><span class="p">(</span><span class="s">'category'</span><span class="p">).</span><span class="n">cat</span><span class="p">.</span><span class="n">codes</span>
+
+<span class="c1"># one hot encoding
+</span><span class="n">dummy</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="s">'who'</span><span class="p">])</span>
+<span class="n">temp2</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">concat</span><span class="p">([</span><span class="n">temp</span><span class="p">,</span> <span class="n">dummy</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">temp2</span><span class="p">)</span>
+</code></pre></div></div>
+<p>출력</p>
+
+<p><img src="/assets/img/0906/encoding.png" alt="example"></p>
+
+<h3 id="연속형-범주형이산형의-차이">연속형, 범주형(이산형)의 차이</h3>
+<ul>
+  <li>연속형
+    <ul>
+      <li>A, B의 값을 알때, A=10, B=20일 경우 예측값이 데이터를 더 수집했을 때의 값을 C 라고 했을때</li>
+      <li>이때 C가 A보다 작거나 B보다 크거나 A~B사이 값이 나와도 될 때</li>
+    </ul>
+  </li>
+  <li>범주형(이산형)
+    <ul>
+      <li>A,B 값이 있을 때, 예측값이 데이터를 더 수집했을 때의 값을 C 라고 했을 때</li>
+      <li>C는 A 또는 B인 경우
+```python
+df.info()
+df.info(memory_usage=’deep’)#메모리 사용량을 자세히 알고싶을 때</li>
+    </ul>
+  </li>
+</ul>
+
+<p>#각 컬럼에 대한 요약 통계
+df.describe()</p>
+
+<p>#컬럼별 분포를 확인할 때.
+df[‘who’].value_counts() # 결과가 Series
+df[‘who’].value_counts().to_frame() # 결과가 DataFrame
+df.groupby([‘who’,’survived’])[‘who’].count()</p>
+
+<p>df.ndim
+df.shape
+df.index
+df.columns
+df.values
+df.T #행과 열을 바꾸기 df.transpose()
+df[‘plcass’]</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>### 검정하기
+
+- 범주형 - 범주형 두개의 변수는 독립인가 종속인가
+- 카이 제곱 검정
+- 귀무 가설 : 두 변수의 관계는 독립이다
+- 대립 가설 : 두 변수의 관계는 독립이 아니다.
+- 귀무 가설을 기각하고 대립 가설을 채택했을 때 잘못 판단이 되었을 확률 p-value(제 1종 오류)
+
+- 관계 분석하기
+    - p &lt; 0.05 일때 두 변수는 독립이 아닌 관계가 있는 것 
+        - p 값이 작을 수록 가설이 옳다.
+
+    - t-test : 연속값에 대해 범주별(그룹별)로 차이가 있는지 검정(2개 그룹, sample 수가 많지 않을 때)
+    - oneway anova test : 연속값에 대해 범주별(그룹별)로 차이가 있는지 검정 (2개 이상)
+    - chi-square test : 두개의 범주변수에 대해 두 변수의 독립성 검정
+
+### 타입 변경하기
+
+&gt; df의 'pclass' column에 대해 'int32'로 데이터 타입을 변경하고 앞에서부터 5개 데이터를 출력합니다.
+```python
+s1 = pd.Series([-128,-127,127,128], dtype='int8')
+s2 = pd.Series([-128,-127,127,128]).astype('int8') #overflow
+display(s1,s2)
+</code></pre></div></div>
+<p>타입에 따라서 overflow가 나타날 수 있다는 생각을 해야한다.</p>
+
+<p>float 32로 바꾸기</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#float32
+</span><span class="n">df</span><span class="p">[</span><span class="s">'pclass'</span><span class="p">].</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">float32</span><span class="p">).</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> 
+
+<span class="c1">#object로 변경
+# df['pclass'].astype('object').head(5) -&gt; object로 바뀐다, 원하는 타입으로 변경된 것은 X
+</span><span class="n">df</span><span class="p">[</span><span class="s">'pclass'</span><span class="p">].</span><span class="n">astype</span><span class="p">(</span><span class="s">'str'</span><span class="p">).</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1">#category로 변경
+#메모리를 절약할 수 있다.
+</span><span class="n">df</span><span class="p">[</span><span class="s">'pclass'</span><span class="p">].</span><span class="n">astype</span><span class="p">(</span><span class="s">'category'</span><span class="p">).</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s">'embark_town'</span><span class="p">].</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s">'embark_town'</span><span class="p">].</span><span class="n">astype</span><span class="p">(</span><span class="s">'category'</span><span class="p">).</span><span class="n">info</span><span class="p">(</span><span class="n">memory_usage</span><span class="o">=</span><span class="s">'deep'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="정렬하기">정렬하기</h3>
+
+<p>sort_index: index 정렬</p>
+<ul>
+  <li>index 기준으로 정렬 기본 오름차순</li>
+  <li>내림차순 정렬을 적용하려면, <code class="language-plaintext highlighter-rouge">ascending=False</code> 옵션 설정</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1">#생략 = axis=0
+</span><span class="n">temp</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span> <span class="c1"># 10%만 랜덤으로 샘플 뽑기
+</span><span class="n">temp</span><span class="p">.</span><span class="n">sort_index</span><span class="p">().</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># 오름차순 정렬하고 앞에서 5개 뽑기
+</span><span class="n">temp</span><span class="p">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">).</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># 내림차순 정렬하고 앞에서 5개 뽑기
+</span>
+<span class="c1"># columns 기준을 axis = 1
+</span><span class="n">temp</span><span class="p">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">).</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># 오름차순 정렬하고 앞에서 5개 뽑기
+</span><span class="n">temp</span><span class="p">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span> <span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">).</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># 내림차순 정렬하고 앞에서 5개 뽑기
+</span></code></pre></div></div>
+
+<p>sort_values: 값에 대한 정렬</p>
+<ul>
+  <li>값을 기준으로 행을 정렬</li>
+  <li>by에 기준이 되는 행을 설정</li>
+  <li>by에 2개 이상의 컬럼을 지정하여 정렬가능</li>
+  <li>오름차순/내림차순을 컬럼 별로 지정가능</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s">'age'</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="bp">False</span><span class="p">).</span><span class="n">head</span><span class="p">()</span> <span class="c1"># 오름차순 + 'age'컬럼 기준, 인덱스를 표시한다.
+</span><span class="n">df</span><span class="p">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s">'age'</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="bp">True</span><span class="p">).</span><span class="n">head</span><span class="p">()</span> <span class="c1"># 내림차순 + 'age'컬럼 기준, 인덱스를 표시하지 않는다.
+</span></code></pre></div></div>
+
+<p>카테고리의 정렬 순서를 알고 싶을 때</p>
+<blockquote>
+  <p>df[‘컬럼명’].unique() 으로 사용한다.</p>
+</blockquote>
+
+<p>다중 칼럼 정렬</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 우선 fare로 정렬하고 동일할 경우 age로 정렬하기
+</span><span class="n">df</span><span class="p">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s">'fare'</span><span class="p">,</span><span class="s">'age'</span><span class="p">])</span>
+<span class="c1"># fare를 내림 차순으로 정렬, 동일할 경우 age로 오름 차순 정렬
+</span><span class="n">df</span><span class="p">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s">'fare'</span><span class="p">,</span><span class="s">'age'</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="p">[</span><span class="bp">False</span><span class="p">,</span> <span class="bp">True</span><span class="p">])</span>
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="2">Basic Indexing</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>single element indexer</td>
+      <td>column label</td>
+    </tr>
+    <tr>
+      <td>index array indexer</td>
+      <td>column label</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">boolean array indexer</code></td>
+      <td><code class="language-plaintext highlighter-rouge">row 개수</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">slice indexer</code></td>
+      <td><code class="language-plaintext highlighter-rouge">row label</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># index가 5, columns가 'class'인 것에 대한 데이터를 조회
+</span><span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="s">'class'</span><span class="p">]</span>
+<span class="c1"># index가 2~5인 것에 대해 columns 중 'age', 'fare', 'who'에 대한 데이터를 조회
+# loc으로 하기 때문에 2:5로 해도 2부터 5까지가 적용된다.
+</span><span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">5</span><span class="p">,[</span><span class="s">'age'</span><span class="p">,</span><span class="s">'fare'</span><span class="p">,</span><span class="s">'who'</span><span class="p">]]</span>
+<span class="c1"># columns의 slicing 적용
+</span><span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="s">'class'</span><span class="p">:</span><span class="s">'deck'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>Selection by Label, Selection by Integer</p>
+<ul>
+  <li>column_indexer는 생략 가능’
+    <div class="language-python highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s">'A'</span><span class="p">]</span> <span class="c1">#추천
+</span><span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="s">'A'</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="s">'A'</span><span class="p">,]</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>조건문 활용</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">condition</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'who'</span><span class="p">]</span><span class="o">==</span><span class="s">'man'</span>
+<span class="n">df</span><span class="p">[</span><span class="n">condition</span><span class="p">]</span>
+
+<span class="n">condition1</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'fare'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">condition2</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'who'</span><span class="p">]</span> <span class="o">==</span> <span class="s">'woman'</span><span class="p">)</span>
+
+<span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">condition1</span> <span class="o">&amp;</span> <span class="n">condition2</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">condition1</span> <span class="o">|</span> <span class="n">condition2</span><span class="p">]</span>
+
+<span class="c1">#20~40세의 pclass가 1또는 2의 survived,pclass,age,fare만 10개 출력
+</span><span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s">'age'</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">20</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'age'</span><span class="p">]</span><span class="o">&lt;</span> <span class="mi">40</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">((</span><span class="n">df</span><span class="p">[</span><span class="s">'pclass'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'pclass'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)),[</span><span class="s">'survived'</span><span class="p">,</span><span class="s">'pclass'</span><span class="p">,</span><span class="s">'age'</span><span class="p">,</span><span class="s">'fare'</span><span class="p">]].</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s">'pclass'</span><span class="p">].</span><span class="n">unique</span><span class="p">()</span> <span class="n">으로</span> <span class="n">도메인</span> <span class="n">확인하기</span><span class="p">.</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># iloc 활용법
+</span><span class="n">df</span><span class="p">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">iloc</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]]</span>
+<span class="n">df</span><span class="p">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:</span><span class="mi">5</span><span class="p">]</span>
+
+<span class="c1"># at을 사용해 시간을 줄일 수 있지만 권장 X
+</span><span class="o">%</span><span class="n">timeit</span> <span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s">'fare'</span><span class="p">]</span>
+<span class="o">%</span><span class="n">timeit</span> <span class="n">df</span><span class="p">.</span><span class="n">at</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s">'fare'</span><span class="p">]</span>
+
+<span class="o">%</span><span class="n">timeit</span> <span class="n">df</span><span class="p">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="o">%</span><span class="n">timeit</span> <span class="n">df</span><span class="p">.</span><span class="n">iat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>조건문활용</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">[</span><span class="s">'fare'</span><span class="p">].</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'fare'</span><span class="p">]</span><span class="o">&lt;</span><span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">).</span><span class="n">tail</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="c1"># 20보다 작은것은 그대로, 크거가 같은 것은 0으로 바꾸기
+</span>
+<span class="n">sample</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s">'name'</span><span class="p">:</span> <span class="p">[</span><span class="s">'kim'</span><span class="p">,</span> <span class="s">'lee'</span><span class="p">,</span> <span class="s">'park'</span><span class="p">,</span> <span class="s">'choi'</span><span class="p">],</span> 
+                        <span class="s">'age'</span><span class="p">:</span> <span class="p">[</span><span class="mi">24</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">19</span><span class="p">]</span>
+                      <span class="p">})</span>
+<span class="c1"># 도메인에 포함되는지 확인하기
+</span><span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sample</span><span class="p">[</span><span class="s">'name'</span><span class="p">].</span><span class="n">isin</span><span class="p">([</span><span class="s">'kim'</span><span class="p">,</span> <span class="s">'lee'</span><span class="p">])]</span>
+</code></pre></div></div>
+<h2 id="통계">통계</h2>
+
+<p>개수(도수) 세기</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 열에대한 
+</span><span class="n">df</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1"># 행에 대한
+</span><span class="n">df</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1">#컬럼별
+</span><span class="n">df</span><span class="p">[</span><span class="s">'age'</span><span class="p">].</span><span class="n">count</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>평균 구하기</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 만약 nominal data일 경우 평균을 구할 수 없으므로 출력되지 않는다.
+# 열에대한 
+</span><span class="n">df</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1"># 행에 대한
+</span><span class="n">df</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1">#컬럼별
+</span><span class="n">df</span><span class="p">[</span><span class="s">'age'</span><span class="p">].</span><span class="n">mean</span><span class="p">()</span>
+<span class="c1"># numeric data만
+</span><span class="n">df</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">numeric_only</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="c1"># NaN값 제외
+</span><span class="n">df</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">skipna</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># 조건문과 함께
+</span>
+<span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s">'adult_male'</span><span class="p">]</span><span class="o">==</span><span class="bp">True</span><span class="p">].</span><span class="n">mean</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>중앙값</p>
+<ul>
+  <li>outlier가 있을 경우 median을 대표값으로 더 선호
+    <div class="language-python highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="c1"># 홀수개
+</span><span class="o">-&gt;</span> <span class="mi">3</span>
+<span class="n">pd</span><span class="p">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]).</span><span class="n">median</span><span class="p">()</span>
+<span class="c1"># 짝수개
+</span><span class="o">-&gt;</span> <span class="mi">3</span><span class="p">,</span><span class="mi">4</span>
+<span class="n">pd</span><span class="p">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]).</span><span class="n">median</span><span class="p">()</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>합계</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">[</span><span class="s">'fare'</span><span class="p">].</span><span class="nb">sum</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>누적합</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">[</span><span class="s">'age'</span><span class="p">].</span><span class="n">cumsum</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>누적곱</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">[</span><span class="s">'age'</span><span class="p">].</span><span class="n">cumprod</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>분산</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">((</span><span class="n">df</span><span class="p">[</span><span class="s">'fare'</span><span class="p">].</span><span class="n">values</span> <span class="o">-</span> <span class="n">fare_mean</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">).</span><span class="nb">sum</span><span class="p">()</span> <span class="o">/</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'fare'</span><span class="p">].</span><span class="n">count</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s">'fare'</span><span class="p">].</span><span class="n">var</span><span class="p">()</span>
+<span class="c1"># 모분산
+</span><span class="n">df</span><span class="p">[</span><span class="s">'fare'</span><span class="p">].</span><span class="n">var</span><span class="p">(</span><span class="n">ddof</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1"># 표준편차
+</span><span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">my_var</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s">'fare'</span><span class="p">].</span><span class="n">std</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>최대, 최소</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">[</span><span class="s">'age'</span><span class="p">].</span><span class="nb">min</span><span class="p">()</span>
+<span class="n">df</span><span class="p">[</span><span class="s">'age'</span><span class="p">].</span><span class="nb">max</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>분위(quantile)</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 10%의 분위
+</span><span class="n">df</span><span class="p">[</span><span class="s">'age'</span><span class="p">].</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="c1"># IQR 구하기
+</span><span class="n">Q1</span><span class="p">,</span> <span class="n">Q3</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'age'</span><span class="p">].</span><span class="n">quantile</span><span class="p">([</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">])</span>
+<span class="n">IQR</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">-</span> <span class="n">Q1</span>
+
+<span class="c1"># lower보다 낮거나 upper 보다 높은 값은 통계적으로 의미가 없음
+</span><span class="n">lower_fence</span> <span class="o">=</span> <span class="n">Q1</span> <span class="o">-</span> <span class="p">(</span><span class="n">IQR</span> <span class="o">*</span> <span class="mf">1.5</span><span class="p">)</span>
+<span class="n">upper_fence</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">+</span> <span class="p">(</span><span class="n">IQR</span> <span class="o">*</span> <span class="mf">1.5</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">IQR</span><span class="p">,</span> <span class="n">lower_fence</span><span class="p">,</span> <span class="n">upper_fence</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>고유값, 고유값 개수, 최빈값, 상관관계</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 고유값
+</span><span class="n">df</span><span class="p">[</span><span class="s">'who'</span><span class="p">].</span><span class="n">unique</span><span class="p">()</span>
+<span class="c1"># 고유값 개수
+</span><span class="n">df</span><span class="p">[</span><span class="s">'who'</span><span class="p">].</span><span class="n">nunique</span><span class="p">()</span>
+<span class="c1"># 최빈값
+</span><span class="n">df</span><span class="p">[</span><span class="s">'who'</span><span class="p">].</span><span class="n">mode</span><span class="p">()</span>
+<span class="c1"># 각 column 사이의 상관 관계
+</span><span class="n">df</span><span class="p">.</span><span class="n">corr</span><span class="p">()</span>
+<span class="c1"># 생존자 상관관계
+</span><span class="n">df</span><span class="p">.</span><span class="n">corr</span><span class="p">()[</span><span class="s">'survived'</span><span class="p">]</span>
+</code></pre></div></div>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/language/2022/09/05/python.html" title="내가 보려고 정리한 파이썬 4">내가 보려고 정리한 파이썬 4</a><a class="next" href="/jekyll-theme-yat/project/2022/09/07/basic.html" title="내가 보려고 정리한 데이터분석 기본 4">내가 보려고 정리한 데이터분석 기본 4...</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/jekyll-theme-yat/spring/2023/01/12/cotatoStudy2.html" title="내가 보려고 정리한 데이터분석 기본 4">스프링 부트 요소와 한글 깨짐 해결</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/spring/2023/01/12/cotatoStudy.html" title="내가 보려고 정리한 데이터분석 기본 4">스프링의 개요 알아보기</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/machine/learning/2022/09/21/decision.html" title="내가 보려고 정리한 데이터분석 기본 4">의사 결정 트리</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/project/2022/09/13/deathnote.html" title="내가 보려고 정리한 데이터분석 기본 4">데이터 분석 데스 노트</a></li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2022-2023 박정우</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

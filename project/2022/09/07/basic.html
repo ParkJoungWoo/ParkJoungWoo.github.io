@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>내가 보려고 정리한 데이터분석 기본 4 | 정우의 블로그</title>
+<meta name="generator" content="Jekyll v4.3.2">
+<meta property="og:title" content="내가 보려고 정리한 데이터분석 기본 4">
+<meta name="author" content="박정우">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="결측치 처리방법 결측값이 없다면 머신러닝, 딥러닝이 가능하다.">
+<meta property="og:description" content="결측치 처리방법 결측값이 없다면 머신러닝, 딥러닝이 가능하다.">
+<link rel="canonical" href="https://parkjoungwoo.github.io/jekyll-theme-yat/project/2022/09/07/basic.html">
+<meta property="og:url" content="https://parkjoungwoo.github.io/jekyll-theme-yat/project/2022/09/07/basic.html">
+<meta property="og:site_name" content="정우의 블로그">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-09-07T00:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="내가 보려고 정리한 데이터분석 기본 4">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"박정우"},"dateModified":"2022-09-07T00:00:00+00:00","datePublished":"2022-09-07T00:00:00+00:00","description":"결측치 처리방법 결측값이 없다면 머신러닝, 딥러닝이 가능하다.","headline":"내가 보려고 정리한 데이터분석 기본 4","mainEntityOfPage":{"@type":"WebPage","@id":"https://parkjoungwoo.github.io/jekyll-theme-yat/project/2022/09/07/basic.html"},"url":"https://parkjoungwoo.github.io/jekyll-theme-yat/project/2022/09/07/basic.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/jekyll-theme-yat/assets/css/main.css">
+  <script src="/jekyll-theme-yat/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="https://parkjoungwoo.github.io/jekyll-theme-yat/feed.xml" title="정우의 블로그">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/jekyll-theme-yat/">
+  <img class="site-favicon" title="정우의 블로그" src="" onerror="this.style.display='none'">
+  정우의 블로그
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/jekyll-theme-yat/about.html">ABOUT</a><a class="page-link" href="/jekyll-theme-yat/archives.html">ARCHIVES</a><a class="page-link" href="/jekyll-theme-yat/categories.html">CATEGORIES</a><a class="page-link" href="/jekyll-theme-yat/">HOME</a><a class="page-link" href="/jekyll-theme-yat/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
+</div>
+
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
+</div>
+
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">내가 보려고 정리한 데이터분석 기본 4</h1>
+  <h2 class="post-subtitle">데이터 분석</h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-09-07T00:00:00+00:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Sep 07, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 13 mins</span>
+  </p>
+<div class="post-tags"><a class="post-tag" href="/jekyll-theme-yat/tags.html#data%20analysis">#data analysis</a></div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h1 id="결측치-처리방법">결측치 처리방법</h1>
+<p>결측값이 없다면 머신러닝, 딥러닝이 가능하다.</p>
+
+<p>그러므로 데이터 전처리가 기계학습에서 매우 중요하다.
+그렇다면 결측값을 어떻게 처리해야 할까?</p>
+
+<ol>
+  <li>결측값 확인</li>
+  <li>결측값이 아닌 데이터와 비교</li>
+  <li>결측값 대체 or 결측값 제거</li>
+</ol>
+
+<p>만약 데이터(sample, row, instance)가 많으면 제거하는 것이 좋다.</p>
+
+<p>범주형 변수의 결측값 대체에서 자주 쓰이는 방법</p>
+
+<p>결측치 범주를 만들어 결측치 비율이 5%이하일 경우에는 삭제하는 것이 바람직하다.</p>
+
+<p>연속형 범주데이터의 결측값 대체에서 자주 쓰이는 방법</p>
+
+<ol>
+  <li>평균값으로 대체</li>
+  <li>이상값이 많으면 중앙값으로 대체</li>
+</ol>
+
+<p>시계열 변수 : 1시, 2시, 3시…</p>
+
+<p>머신러닝에 의해 예측 모델 만들고 모델로 예측값 채우기</p>
+
+<h3 id="참고">참고</h3>
+<p>머신러닝의 경우 한개의 데이터를 어떤 전처리를 했는가에 따라
+여러개의 데이터 셋으로 만들어 사용할 수 있다.</p>
+
+<p>이때 그 여러개의 데이터 셋을 잘 저장하고, 가져다 쓰는 것이 중요하다.</p>
+
+<h2 id="결측치-찾기">결측치 찾기</h2>
+
+<p>isnull(),isna()</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span> <span class="o">=</span> <span class="n">sns</span><span class="p">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s">'titanic'</span><span class="p">)</span>
+<span class="c1"># boolean으로 리턴해줌
+</span><span class="n">df</span><span class="p">.</span><span class="n">isnull</span><span class="p">()</span>
+<span class="n">df</span><span class="p">.</span><span class="n">isna</span><span class="p">()</span>
+<span class="c1"># 결측치가 아닌 경우우
+</span><span class="n">df</span><span class="p">.</span><span class="n">notnull</span><span class="p">()</span>
+<span class="n">df</span><span class="p">.</span><span class="n">notna</span><span class="p">()</span>
+
+<span class="c1"># 각 컬럼의 null인 수
+</span><span class="n">df</span><span class="p">.</span><span class="n">isnull</span><span class="p">().</span><span class="nb">sum</span><span class="p">()</span> 
+
+<span class="c1"># 전체 null의 수
+</span><span class="n">df</span><span class="p">.</span><span class="n">isnull</span><span class="p">().</span><span class="nb">sum</span><span class="p">().</span><span class="nb">sum</span><span class="p">()</span>
+
+<span class="c1"># boolean 이기 때문에 당연히 인덱싱이 가능하다
+# null 인 값만 가져오기
+</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">.</span><span class="n">isnull</span><span class="p">()]</span>
+<span class="c1"># age컬럼이 null인 값만 가져오기
+</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s">'age'</span><span class="p">].</span><span class="n">isnull</span><span class="p">()]</span>
+</code></pre></div></div>
+
+<h2 id="결측치-채우기">결측치 채우기</h2>
+
+<h3 id="fillna를-통해서-채우기가-가능하다">fillna를 통해서 채우기가 가능하다.</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 값을 복사하기(깊은 복사)
+</span><span class="n">df1</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="c1"># df1의 age컬럼에서 nan인 값을 700으로 채우고 하위 5개를 가져오기
+</span><span class="n">df1</span><span class="p">[</span><span class="s">'age'</span><span class="p">].</span><span class="n">fillna</span><span class="p">(</span><span class="mi">700</span><span class="p">).</span><span class="n">tail</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1">#df1에는 반영되지 않는다.
+</span>
+<span class="c1"># 카테고리형 데이터는 카테고리를 추가하고 그 카테고리를 결측치 채울 수 있다.
+# No Data라는 카테고리를 추가하고
+# 없는 값을 No Data라고 추가한다.
+</span><span class="n">df1</span> <span class="o">=</span> <span class="n">df1</span><span class="p">[</span><span class="s">'deck'</span><span class="p">].</span><span class="n">cat</span><span class="p">.</span><span class="n">add_categories</span><span class="p">(</span><span class="s">'No Data'</span><span class="p">)</span>
+<span class="n">df1</span><span class="p">.</span><span class="n">fillna</span><span class="p">(</span><span class="s">'No Data'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 연속형 범주 데이터에서 결측치 채우기
+</span>
+<span class="c1"># 평균으로 채우고 하위 5개 보기
+</span><span class="n">df1</span><span class="p">[</span><span class="s">'age'</span><span class="p">].</span><span class="n">fillna</span><span class="p">(</span><span class="n">df1</span><span class="p">[</span><span class="s">'age'</span><span class="p">].</span><span class="n">mean</span><span class="p">()).</span><span class="n">tail</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># 중앙값으로 채우고 하위 5개 보기
+</span><span class="n">df1</span><span class="p">[</span><span class="s">'age'</span><span class="p">].</span><span class="n">fillna</span><span class="p">(</span><span class="n">df1</span><span class="p">[</span><span class="s">'age'</span><span class="p">].</span><span class="n">median</span><span class="p">()).</span><span class="n">tail</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># 최빈값으로 채우고 하위 5개 보기
+</span><span class="n">df1</span><span class="p">[</span><span class="s">'deck'</span><span class="p">].</span><span class="n">mode</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Series</span> <span class="n">타입이다</span><span class="p">.</span>
+<span class="n">df1</span><span class="p">[</span><span class="s">'deck'</span><span class="p">].</span><span class="n">fillna</span><span class="p">(</span><span class="n">df1</span><span class="p">[</span><span class="s">'deck'</span><span class="p">].</span><span class="n">mode</span><span class="p">()[</span><span class="mi">0</span><span class="p">]).</span><span class="n">tail</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div></div>
+<h3 id="fillna의-method를-비교해보기">fillna의 method를 비교해보기</h3>
+
+<p><img src="/assets/img/0907/test.png" alt="test"></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">A</span><span class="p">[</span><span class="s">'org'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">Series</span><span class="p">([</span><span class="n">np</span><span class="p">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="n">A</span><span class="p">[</span><span class="s">'bfill'</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="s">'org'</span><span class="p">].</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s">'bfill'</span><span class="p">)</span>
+<span class="n">A</span><span class="p">[</span><span class="s">'ffill'</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="s">'org'</span><span class="p">].</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s">'ffill'</span><span class="p">)</span>
+<span class="n">A</span>
+</code></pre></div></div>
+<h3 id="여러-컬럼-결측치">여러 컬럼 결측치</h3>
+<p>만약 여러 컬럼의 결측치를 채우기 위해서는 어떻게 해야 할까</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 일반적인 생각
+# DF의 나이 컬럼에서 남자이고 결측치인 것을 나이의 평균으로 채우기
+</span>
+<span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s">'who'</span><span class="p">]</span><span class="o">==</span><span class="s">'man'</span><span class="p">)</span><span class="o">&amp;</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'age'</span><span class="p">].</span><span class="n">isna</span><span class="p">()),</span><span class="s">'age'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s">'who'</span><span class="p">]</span><span class="o">==</span><span class="s">'man'</span><span class="p">,</span> <span class="s">'age'</span><span class="p">].</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="c1"># transform을 활용하기
+</span>
+<span class="c1"># transform으로 평균을 구하면 who에 따라서 평균으로 채워진 것이다.
+# 즉 위와 같이 평균 따로 구하고 결측치 대입이 아닌 알아서 각 컬럼의 평균에 맞게 만드는 것
+</span><span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'who'</span><span class="p">)[</span><span class="s">'age'</span><span class="p">].</span><span class="n">transform</span><span class="p">(</span><span class="s">'mean'</span><span class="p">)</span>
+</code></pre></div></div>
+<h3 id="dropna로-하나라도-결측치가-존재하는-행-삭제하기">dropna로 하나라도 결측치가 존재하는 행 삭제하기</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dropna</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">default는</span> <span class="n">how</span><span class="o">=</span><span class="s">'any'</span>
+<span class="c1"># 하나라도 nan값이 존재하면 그 행을 삭제한다는 의미
+</span>
+<span class="n">how</span><span class="o">=</span><span class="s">'all'</span><span class="n">일</span> <span class="n">경우에는</span> 
+<span class="c1"># 모든 열이 nan일경우 그 행을 삭제한다는 의미이다.
+</span><span class="n">display</span><span class="p">(</span><span class="n">df1</span><span class="p">.</span><span class="n">dropna</span><span class="p">(),</span><span class="n">df1</span><span class="p">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s">'all'</span><span class="p">),</span><span class="n">df1</span><span class="p">)</span>
+
+<span class="c1"># 열을 삭제하고 싶은 경우 axis=1을 옵션으로 설정한다.
+</span><span class="n">display</span><span class="p">(</span><span class="n">df1</span><span class="p">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="n">df1</span><span class="p">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">how</span><span class="o">=</span><span class="s">'all'</span><span class="p">),</span><span class="n">df1</span><span class="p">)</span>
+
+<span class="c1"># 결측치 비율을 설정해서 삭제
+</span><span class="n">df</span><span class="p">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">*</span><span class="mf">0.6</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="전처리하기추가-삭제">전처리하기(추가, 삭제)</h2>
+
+<h3 id="컬럼-추가하기">컬럼 추가하기</h3>
+
+<p>새로운 컬럼을 지정해서 추가할 수 있다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df1</span><span class="p">[</span><span class="s">'VIP'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+</code></pre></div></div>
+<h3 id="행-삭제하기">행 삭제하기</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># index 1번행 삭제하기
+</span><span class="n">df1</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># 동일한 방법 = df1.drop(1, axis=0)
+</span>
+<span class="c1"># 여러 행 삭제하기
+# 테스트를 위한 mydf
+</span><span class="n">mydf</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">).</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">'A'</span><span class="p">,</span> <span class="s">'B'</span><span class="p">])</span>
+<span class="c1"># index를 이렇게 설정
+</span><span class="n">mydf</span><span class="p">.</span><span class="n">index</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="s">'abcdefghij'</span><span class="p">)</span>
+<span class="c1"># a,i,e 행 삭제하기
+</span><span class="n">mydf</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="s">"aie"</span><span class="p">))</span>
+<span class="c1"># 상위 5개 행 삭제하기
+</span><span class="n">mydf</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="n">mydf</span><span class="p">.</span><span class="n">index</span><span class="p">[:</span><span class="mi">5</span><span class="p">])</span>
+
+<span class="c1">#range 활용하기
+</span><span class="n">df1</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">df1</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="n">df1</span><span class="p">.</span><span class="n">index</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">10</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
+
+</code></pre></div></div>
+<h3 id="열-삭제하기">열 삭제하기</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df1</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="s">'class'</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">).</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># 다수의 열 삭제하기
+</span><span class="n">df1</span><span class="p">.</span><span class="n">drop</span><span class="p">([</span><span class="s">'who'</span><span class="p">,</span> <span class="s">'deck'</span><span class="p">,</span> <span class="s">'alive'</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df1</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="s">'who deck alive'</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">' '</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="컬럼간의-연산">컬럼간의 연산</h2>
+
+<h3 id="컬럼의-합으로-새로운-컬럼-만들기">컬럼의 합으로 새로운 컬럼 만들기</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># df1의 'sibsp' 컬럼과 'parch' 컬럼을 더하여 'family'라는 새로운 컬럼을 추가
+</span><span class="n">df1</span><span class="p">[</span><span class="s">'family'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'sibsp'</span><span class="p">]</span><span class="o">+</span><span class="n">df</span><span class="p">[</span><span class="s">'parch'</span><span class="p">]</span>
+<span class="c1"># 문자열인 경우 concat으로 가능하다.
+</span><span class="n">df1</span><span class="p">[</span><span class="s">'gender'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'who'</span><span class="p">]</span> <span class="o">+</span> <span class="s">'-'</span><span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s">'sex'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>소수점 두번째 자리 까지 나누어서 컬럼에 추가하기</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># round 함수를 사용하기
+</span><span class="n">df1</span><span class="p">[</span><span class="s">'round'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df1</span><span class="p">[</span><span class="s">'fare'</span><span class="p">]</span><span class="o">/</span><span class="n">df1</span><span class="p">[</span><span class="s">'age'</span><span class="p">]).</span><span class="nb">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">df1</span><span class="p">[</span><span class="s">'round'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">df1</span><span class="p">[</span><span class="s">'fare'</span><span class="p">]</span><span class="o">/</span><span class="n">df1</span><span class="p">[</span><span class="s">'age'</span><span class="p">],</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="타입-변환">🌟타입 변환</h2>
+
+<p>여러 타입이 존재한다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df1</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df1</span><span class="p">.</span><span class="n">info</span><span class="p">()</span>
+<span class="p">.....</span>
+<span class="n">dtypes</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">category</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">float64</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">int64</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="nb">object</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div></div>
+<h3 id="astype을-활용하자">astype을 활용하자</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df1</span><span class="p">[</span><span class="s">'pclass'</span><span class="p">].</span><span class="n">astype</span><span class="p">(</span><span class="s">'int32'</span><span class="p">).</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">df1</span><span class="p">[</span><span class="s">'pclass'</span><span class="p">].</span><span class="n">astype</span><span class="p">(</span><span class="s">'float32'</span><span class="p">).</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">df1</span><span class="p">[</span><span class="s">'pclass'</span><span class="p">].</span><span class="n">astype</span><span class="p">(</span><span class="s">'str'</span><span class="p">).</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">df1</span><span class="p">[</span><span class="s">'who'</span><span class="p">].</span><span class="n">astype</span><span class="p">(</span><span class="s">'category'</span><span class="p">).</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># 타입 확인
+</span><span class="k">print</span><span class="p">(</span><span class="n">df1</span><span class="p">[</span><span class="s">'who'</span><span class="p">].</span><span class="n">dtype</span><span class="p">)</span>
+</code></pre></div></div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 카테고리로 타입을 바꿨을 경우
+</span><span class="n">df1</span><span class="p">[</span><span class="s">'who'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df1</span><span class="p">[</span><span class="s">'who'</span><span class="p">].</span><span class="n">astype</span><span class="p">(</span><span class="s">'category'</span><span class="p">)</span>
+<span class="n">df1</span><span class="p">[</span><span class="s">'who'</span><span class="p">].</span><span class="n">cat</span><span class="p">.</span><span class="n">codes</span>
+
+<span class="c1">#카테고리 이름을 바꾸기
+</span><span class="p">[</span><span class="s">"Group (%s)"</span> <span class="o">%</span> <span class="n">g</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">df1</span><span class="p">[</span><span class="s">'who'</span><span class="p">].</span><span class="n">cat</span><span class="p">.</span><span class="n">categories</span><span class="p">]</span>
+</code></pre></div></div>
+<p>출력</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0      1
+1      2
+2      2
+3      2
+4      1
+      ..
+886    1
+887    2
+888    2
+889    1
+890    1
+위와 같이 category code를 출력할 수 있다.
+</code></pre></div></div>
+
+<p>카테고리 정렬</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">A</span><span class="p">[</span><span class="s">'요일1'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">Series</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="s">"월월수목금화목수목금월"</span><span class="p">))</span>
+<span class="n">A</span><span class="p">[</span><span class="s">'요일2'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="s">'요일1'</span><span class="p">],</span> <span class="n">categories</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="s">"월화수목금토"</span><span class="p">))</span>
+<span class="n">A</span><span class="p">[</span><span class="s">'요일3'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="s">'요일1'</span><span class="p">],</span> <span class="n">categories</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="s">"월화수목금토일"</span><span class="p">))</span>
+<span class="c1"># A.sort_values('요일2')
+</span><span class="n">A</span><span class="p">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s">'요일2'</span><span class="p">)</span>
+
+<span class="c1"># 만약 요일1로 정렬한다면 사전순으로 정렬이 되지만
+</span>
+<span class="c1"># Categorical로 생성한 요일2로 정렬한다면 사용자가 원하는 순서로 정렬할 수 있다.
+</span>
+<span class="c1"># 앞으로 데이터가 추가될 수 있으므로 categories를 고려하는 것이 좋다.
+</span>
+<span class="c1"># 새로운 카테고리가 나왔을 경우
+</span><span class="n">A</span><span class="p">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s">'일'</span> <span class="c1"># 카테고리가 존재하지 않기 때문에 불가능
+</span><span class="n">A</span><span class="p">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s">'일'</span> <span class="c1"># 가능
+</span></code></pre></div></div>
+<h2 id="날짜-시간">🌟날짜, 시간</h2>
+<p>⛔ 날짜 타입은 따로 존재한다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 선언방식
+</span><span class="n">dates</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">date_range</span><span class="p">(</span><span class="s">'20210101'</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="n">df</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">freq</span><span class="o">=</span><span class="s">'15H'</span><span class="p">)</span>
+<span class="c1"># 20210101부터 15시의 간격으로 만들기
+</span></code></pre></div></div>
+<p>datetime 타입에서는 dt 접근자로 다음과 같은 날짜 속성에 쉽게 접근할 수 있다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">A</span><span class="p">[</span><span class="s">'year'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df1</span><span class="p">[</span><span class="s">'date'</span><span class="p">].</span><span class="n">dt</span><span class="p">.</span><span class="n">year</span>
+<span class="n">A</span><span class="p">[</span><span class="s">'month'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df1</span><span class="p">[</span><span class="s">'date'</span><span class="p">].</span><span class="n">dt</span><span class="p">.</span><span class="n">month</span>
+
+</code></pre></div></div>
+<p>만약 타입이 datetime이 아닐 경우</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 타입을 변경시켜줘야한다.
+</span><span class="n">df2</span><span class="p">[</span><span class="s">'대여일자'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df2</span><span class="p">[</span><span class="s">'대여일자'</span><span class="p">].</span><span class="n">astype</span><span class="p">(</span><span class="s">'datetime64'</span><span class="p">)</span>
+<span class="n">df2</span><span class="p">[</span><span class="s">'대여일자'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="s">'대여일자'</span><span class="p">])</span>
+
+<span class="c1"># pd.to_datetime을 써야하는 경우는?
+</span><span class="n">A</span><span class="p">[</span><span class="s">'date'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">Series</span><span class="p">([</span><span class="s">'220907'</span><span class="p">,</span><span class="s">'220908'</span><span class="p">,</span><span class="s">'211209'</span><span class="p">])</span>
+<span class="n">A</span><span class="p">[</span><span class="s">'astype'</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="s">'date'</span><span class="p">].</span><span class="n">astype</span><span class="p">(</span><span class="s">'datetime64'</span><span class="p">)</span>
+<span class="n">A</span><span class="p">[</span><span class="s">'to_datetime'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="s">'date'</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s">'%y%m%d'</span><span class="p">)</span>
+<span class="n">A</span>
+</code></pre></div></div>
+<p>날짜가 astype과 to_datetime이 다르다</p>
+
+<p><img src="/assets/img/0907/date.png" alt="date"></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 대입시킨 이후에는 dt를 통해서 접근하기
+</span><span class="n">df2</span><span class="p">[</span><span class="s">'대여일자'</span><span class="p">].</span><span class="n">dt</span><span class="p">.</span><span class="n">dayofweek</span>
+<span class="n">df2</span><span class="p">[</span><span class="s">'대여일자'</span><span class="p">].</span><span class="n">dt</span><span class="p">.</span><span class="n">weekday</span>
+</code></pre></div></div>
+
+<p>Datetime 분리하기</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">t</span> <span class="o">=</span> <span class="n">df1</span><span class="p">[</span><span class="s">'date'</span><span class="p">].</span><span class="n">dt</span>
+<span class="n">dt_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">'year'</span><span class="p">,</span> <span class="s">'month'</span><span class="p">,</span> <span class="s">'day'</span><span class="p">,</span> <span class="s">'hour'</span><span class="p">,</span> <span class="s">'dayofweek'</span><span class="p">]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span><span class="nb">eval</span><span class="p">(</span><span class="sa">f</span><span class="s">'t.</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s">) for x in dt_list}
+A = pd.DataFrame(data)
+</span></code></pre></div></div>
+
+<p>🌱팁</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">데이터</span> <span class="n">프레임</span> <span class="n">유지</span> <span class="n">방법</span> <span class="o">-&gt;</span> <span class="p">[[]]</span> <span class="n">로</span> <span class="n">표현하기</span>
+<span class="c1"># ValueError: Unable to parse string "\N" at position 2344
+</span><span class="err">✔️</span><span class="n">이러한</span> <span class="n">에러가</span> <span class="n">나타나면</span> <span class="n">int가</span> <span class="n">문제가</span> <span class="n">있다는</span> <span class="n">의미</span><span class="p">.</span>
+<span class="n">df2</span><span class="p">.</span><span class="n">iloc</span><span class="p">[[</span><span class="mi">2344</span><span class="p">,]]</span>
+
+<span class="c1"># to_numeric에서 errors 설정을 coerce로 설정한다면 NaN 값으로 치환한다.
+</span><span class="n">temp</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="s">'운동량'</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s">'coerce'</span> <span class="p">)</span>
+<span class="c1"># errors='ignore'로 지정하면 변환이 되지 않고 무시한다.
+</span></code></pre></div></div>
+
+<h2 id="group-by">group by</h2>
+
+<p>그룹별로 데이터 프레임을 집계하기</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span> <span class="o">=</span> <span class="n">sns</span><span class="p">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s">'titanic'</span><span class="p">)</span>
+<span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'survived'</span><span class="p">).</span><span class="n">mean</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">생존</span> <span class="n">기준으로</span> <span class="n">평균을</span> <span class="n">집계하기</span>
+
+<span class="c1"># 여러 칼럼 지정해서 원하는 집계 수행
+</span><span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">([</span><span class="s">'sex'</span><span class="p">,</span><span class="s">'pclass'</span><span class="p">])[</span><span class="s">'survived'</span><span class="p">].</span><span class="n">mean</span><span class="p">()</span>
+<span class="c1"># 데이터 프레임으로 유지하기
+</span><span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">([</span><span class="s">'sex'</span><span class="p">,</span><span class="s">'pclass'</span><span class="p">])[[</span><span class="s">'survived'</span><span class="p">]].</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="c1"># 다중 컬럼 활용
+</span><span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">([</span><span class="s">'sex'</span><span class="p">,</span><span class="s">'pclass'</span><span class="p">])[[</span><span class="s">'survived'</span><span class="p">,</span><span class="s">'age'</span><span class="p">]].</span><span class="n">mean</span><span class="p">()</span>
+<span class="c1"># 다중 컬럼 + 다중 함수
+</span><span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">([</span><span class="s">'sex'</span><span class="p">,</span><span class="s">'pclass'</span><span class="p">])[[</span><span class="s">'survived'</span><span class="p">,</span><span class="s">'age'</span><span class="p">]].</span><span class="n">agg</span><span class="p">([</span><span class="s">'mean'</span><span class="p">,</span><span class="s">'sum'</span><span class="p">])</span>
+<span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">([</span><span class="s">'sex'</span><span class="p">,</span><span class="s">'pclass'</span><span class="p">])[[</span><span class="s">'survived'</span><span class="p">,</span><span class="s">'age'</span><span class="p">]].</span><span class="n">agg</span><span class="p">([</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">])</span>
+</code></pre></div></div>
+
+<h2 id="reset-index">reset index</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># urvived의 평균을 성별과 pclass을 기준으로 집계 후 index를 초기화
+</span><span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">([</span><span class="s">'sex'</span><span class="p">,</span><span class="s">'pclass'</span><span class="p">])[[</span><span class="s">'survived'</span><span class="p">]].</span><span class="n">mean</span><span class="p">().</span><span class="n">reset_index</span><span class="p">()</span>
+</code></pre></div></div>
+<p>출력</p>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="2">
+</th>
+      <th>sex</th>
+      <th>pclass</th>
+      <th>survived</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td> </td>
+      <td>0</td>
+      <td>female</td>
+      <td>1</td>
+      <td>0.968085</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>1</td>
+      <td>female</td>
+      <td>2</td>
+      <td>0.921053</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>2</td>
+      <td>female</td>
+      <td>3</td>
+      <td>0.500000</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>3</td>
+      <td>male</td>
+      <td>1</td>
+      <td>0.368852</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>4</td>
+      <td>male</td>
+      <td>2</td>
+      <td>0.157407</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>5</td>
+      <td>male</td>
+      <td>3</td>
+      <td>0.135447</td>
+    </tr>
+  </tbody>
+</table>
+
+
+    </div>
+
+</article>
+<div class="post-nav">
+<a class="previous" href="/jekyll-theme-yat/project/2022/09/06/basic.html" title="내가 보려고 정리한 데이터분석 기본 3">내가 보려고 정리한 데이터분석 기본 3...</a><a class="next" href="/jekyll-theme-yat/language/2022/09/07/cozzb.html" title="iterable의 수정이 가능할까요">iterable의 수정이 가능할까요</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/jekyll-theme-yat/machine/learning/2022/09/15/ml.html" title="iterable의 수정이 가능할까요">머신러닝 1</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/spring/2023/01/16/cotatoStudy3.html" title="iterable의 수정이 가능할까요">Stream 문법 알아보기</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/language/2022/09/05/python.html" title="iterable의 수정이 가능할까요">내가 보려고 정리한 파이썬 4</a></li>
+<li><a class="post-link" href="/jekyll-theme-yat/project/2022/10/06/SQL.html" title="iterable의 수정이 가능할까요">SQL</a></li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/jekyll-theme-yat/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2022-2023 박정우</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/jekyll-theme-yat/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
